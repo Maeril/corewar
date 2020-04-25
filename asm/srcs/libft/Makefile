@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 17:52:34 by myener            #+#    #+#              #
-#    Updated: 2019/11/26 18:57:46 by myener           ###   ########.fr        #
+#    Updated: 2020/04/26 00:10:18 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,12 @@ SRCS	=	ft_abs.c 						\
 			ft_bzero.c 						\
 			ft_floatmod.c 					\
 			ft_free_join.c 					\
+			ft_grabword.c 					\
 			ft_hexlen.c 					\
 			ft_intlen.c 					\
 			ft_isalpha.c 					\
+			ft_isalphalow.c 				\
+			ft_isalphaup.c 					\
 			ft_isdigit.c 					\
 			ft_isalnum.c 					\
 			ft_isascii.c 					\
@@ -90,6 +93,7 @@ SRCS	=	ft_abs.c 						\
 			ft_strjoin.c 					\
 			ft_strtrim.c 					\
 			ft_strsplit.c 					\
+			ft_tablen.c 					\
 			ft_toupper.c 					\
 			ft_tolower.c 					\
 			ft_strndup.c 					\

@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/11 18:16:32 by myener            #+#    #+#              #
-#    Updated: 2020/04/11 18:17:41 by myener           ###   ########.fr        #
+#    Updated: 2020/04/24 19:30:59 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,15 @@ NAME = asm
 SRCDIR	:=	./srcs
 OBJDIR	:=	./objs
 
-SRCS_NAME =
+SRCS_NAME =		init.c			\
+				main.c
 
-FLAGS =	 -Wall -Wextra -Werror -I ../libft/includes
+FLAGS =	 -Wall -Wextra -Werror -I srcs/libft/includes
 
 OBJS	:=	$(addprefix $(OBJDIR)/,$(SRCS_NAME:.c=.o))
 SRCS	:=	$(addprefix $(SRCDIR)/,$(SRCS_NAME))
 
-LIBFT = ../libft/libft.a
+LIBFT = srcs/libft/libft.a
 
 all: $(NAME)
 
@@ -31,7 +32,7 @@ $(NAME): $(LIBFT) $(OBJS) srcs/includes/asm.h
 	@clang $(OBJS) $(LIBFT) -o $(NAME)
 
 $(LIBFT):
-	@make -C ../libft
+	@make -C srcs/libft
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@printf "\e[34m Compiling: \e[0m$< -> $@\n"
@@ -42,7 +43,7 @@ clean:
 	@printf "\e[34m Cleaning asm:	\e[0m$(OBJDIR)\e[0m\n"
 	@rm -f $(OBJ) $@
 	@rm -rf $(OBJDIR)
-	@make clean -C ../libft
+	@make clean -C srcs/libft
 
 fclean: clean
 	@printf "\e[36m Removing: \e[0m"
