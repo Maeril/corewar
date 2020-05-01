@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 17:52:34 by myener            #+#    #+#              #
-#    Updated: 2020/04/26 00:10:18 by myener           ###   ########.fr        #
+#    Updated: 2020/04/30 17:21:15 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -130,7 +130,7 @@ CFLAGS	=	-Wall -Werror -Wextra -I ./ -I ft_printf
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "\e[36m Creating: \e[32m$(NAME)\n"
+	@printf "\e[36m Creating: \e[32m$(NAME)\e[0m\n"
 	@ar -rcs $(NAME) $(OBJS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

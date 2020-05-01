@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/11 18:16:32 by myener            #+#    #+#              #
-#    Updated: 2020/04/24 19:30:59 by myener           ###   ########.fr        #
+#    Updated: 2020/05/01 19:26:03 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCDIR	:=	./srcs
 OBJDIR	:=	./objs
 
 SRCS_NAME =		init.c			\
-				main.c
+				main.c			\
+				tools.c
 
 FLAGS =	 -Wall -Wextra -Werror -I srcs/libft/includes
 
@@ -25,13 +26,13 @@ SRCS	:=	$(addprefix $(SRCDIR)/,$(SRCS_NAME))
 
 LIBFT = srcs/libft/libft.a
 
-all: $(NAME)
+all: libft $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS) srcs/includes/asm.h
 	@printf "\e[36m Creating: \e[32m$(NAME)\e[0m\n"
 	@clang $(OBJS) $(LIBFT) -o $(NAME)
 
-$(LIBFT):
+libft:
 	@make -C srcs/libft
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

@@ -6,11 +6,27 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 00:12:13 by myener            #+#    #+#             */
-/*   Updated: 2020/04/26 01:04:28 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/01 21:02:16 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
+
+int		empty_or_comment_line(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '#')
+			break;
+		if (ft_isalpha(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int		is_instruc(char *word)
 {
