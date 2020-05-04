@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 13:57:15 by myener            #+#    #+#             */
-/*   Updated: 2020/03/03 16:06:22 by myener           ###   ########.fr       */
+/*   Updated: 2020/04/26 00:10:06 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,13 @@ char			*ft_free_join(const char *s1, const char *s2);
 int				ft_intlen(long long int n);
 int				ft_uintlen(unsigned long long int n);
 int				ft_octlen(unsigned long long int n);
+char			*ft_grabword(char *str, int start, int upper, int lower);
 int				ft_hexlen(unsigned long long int n);
 float			ft_floatmod(float x, float y);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
+int				ft_isalphalow(int c);
+int				ft_isalphaup(int c);
 int				ft_isascii(int c);
 int				ft_isblank(int c);
 int				ft_isdigit(int c);
@@ -106,6 +109,7 @@ char			**ft_strsplit(char const *s, char c);
 char			*ft_strstr(const char *str, const char *find);
 char			*ft_strsub(const char *s, unsigned int start, size_t len);
 char			*ft_strtrim(const char *s);
+int				ft_tablen(char **tab);
 int				ft_tolower(int c);
 int				ft_toupper(int c);
 int				get_next_line(const int fd, char **line);
