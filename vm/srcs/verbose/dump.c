@@ -79,7 +79,7 @@ static void			dump(t_vm *vm)
 	char	addr[5];
 
 	pc = 0;
-	width = vm->display.el_per_line;
+	width = 32;
 	printer(vm, 1, "0x%s: ", fill_hex(addr, pc));
 	while (pc < MEM_SIZE)
 	{
