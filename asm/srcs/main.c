@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/05/01 21:57:59 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/07 13:56:05 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void	stock_label(line_t *struct_tab, char *line)
 	stock_instruction(struct_tab, line, i + 1); // otherwise stock the rest of the line.
 }
 
-void	fill_struct_tab(char **input, line_t *struct_tab, header_t *header, tools_t *tools)
+void	fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools)
 {
 	int			i;
 	int			j;
@@ -202,22 +202,129 @@ void	fill_struct_tab(char **input, line_t *struct_tab, header_t *header, tools_t
 
 }
 
+int		get_param_sz(char *param, int label_size)
+{
+	if (param[0] == 'r') // if registre
+		return (1);
+	else if (param[0] == '%') // if direct
+		return (label_size  == 1 ? 2 : 4);
+	else if (param[0] == ':' || ft_isdigit(param[0])) // if indirect
+		return (2);
+	return (0);
+}
+
+int		is_legit_label(char *label, line_t *tab, int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (tab[i].label && !ft_strcmp(label, tab[i].label))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*get_called_label(line_t *tab, int i, int len) // in which we assume only one label is called per line
+{
+	int		j;
+	int		start;
+	char	*label;
+	char	*param;
+
+	param = NULL;
+	if (tab[i].param1 && tab[i].param1_sz > 1) // if param exists and isn't a register
+		param = ft_strdup(tab[i].param1);
+	else if (tab[i].param2 && tab[i].param2_sz > 1)
+		param = ft_strdup(tab[i].param2);
+	else if (tab[i].param3 && tab[i].param3_sz > 1)
+		param = ft_strdup(tab[i].param3);
+	j = 0;
+	start = 0;
+	label = NULL;
+	while (param[j])
+	{
+		if (ft_isalphalow(param[j]) || ft_isdigit(param[j]) || param[j] == '_')
+		{
+			start = j;
+			while (param[j] && (ft_isalphalow(param[j]) || ft_isdigit(param[j]) || param[j] == '_'))
+				j++;
+			label = ft_strsub(param, start, j - start);
+			free (param);
+			return (is_legit_label(label, tab, len) ? label : NULL);
+		}
+		j++;
+	}
+	param ? free (param) : 0;
+	return (NULL);
+}
+
+void	fill_tab_sizes(line_t *tab, int len, tools_t *tools)
+{
+	int	i;
+	int nb;
+	int	l;
+
+	i = 0;
+	nb = 0;
+	l = 0;
+	while (i < len) // let's go through the structure array.
+	{
+		if (tab[i].instruc) // if node contains an instruc, we've got sizes to compute.
+		{
+			l = has_label_size(tab[i].instruc);
+			nb = tab[i].nb_param;
+			tools->cor_line_counter += (i > 1 ? tab[i - 1].line_cor_ln : 0); // needs vetting
+			tab[i].param1_sz = get_param_sz(tab[i].param1, l);
+			tab[i].param2_sz = nb == 1 ? 0 : get_param_sz(tab[i].param2, l);
+			tab[i].param3_sz = nb == 3 ? get_param_sz(tab[i].param3, l) : 0;
+			tab[i].line_cor_ln = tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz + 2; // +2 for the opcode and coding byte (each have a size of 1)
+			tab[i].relative_cor_addr = tools->cor_line_counter;
+			tab[i].called_label = get_called_label(tab, i, len);
+			// ft_printf("label = %s && called label = %s\n", tab[i].label, tab[i].called_label);
+		}
+		i++;
+	}
+}
+
+// void	write_to_cor(line_t *tab, int len, int fd)
+// {
+// 	int i;
+
+// 	// write_header();
+// 	while (i < len)
+// 	{
+// 		if (tab[i].instruc)
+// 		{
+// 			ft_putnbr_base_fd(fd, get_opcode(), HEXL);
+// 			ft_putnbr_base_fd(fd, get_coding_byte(), HEXL);
+// 		}
+// 		if (tab[i].called_label)
+// 		i++;
+// 	}
+// }
+
 void	asm_translator(int fd, char **input, tools_t *tools) // fd = fd du .cor
 {
-
+	int			len;
 	header_t	*header; // here header's still uninitialized
 	line_t		*struct_tab;
 
 	(void)fd; // TEST
+	len = ft_tablen(input);
 	if (!(header = malloc(sizeof(header_t) * 1)))
 		return ;
-	if (!(struct_tab = malloc(sizeof(line_t) * ft_tablen(input))))
+	if (!(struct_tab = malloc(sizeof(line_t) * len)))
 		return ;
 	asm_header_init(header);
-	asm_struct_tab_init(struct_tab, ft_tablen(input));
+	asm_struct_tab_init(struct_tab, len);
 	// ft_putstr("segfault finder\n");
-	fill_struct_tab(input, struct_tab, header, tools);
-	print_struct_tab(struct_tab, ft_tablen(input)); // TEST
+	fill_tab_input(input, struct_tab, header, tools);
+	fill_tab_sizes(struct_tab, len, tools);
+	// print_struct_tab(struct_tab, len); // TEST
+	// write_to_cor(struct_tab, len, fd);
 	// parse_struct_tab(fd, struct_tab)
 }
 
@@ -258,6 +365,7 @@ int		main(int ac, char **av)
 	char	**in_file_content;
 
 	// test_10 = 10;
+	ft_printf("11 en hexa donne %#04x\n", 11);// TEST affichage hexa
 	asm_tools_init(&tools);
 	if (ac < 2)
 		return (-1); // temporary error output

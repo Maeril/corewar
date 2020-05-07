@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 13:57:15 by myener            #+#    #+#             */
-/*   Updated: 2020/04/26 00:10:06 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/07 13:50:40 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define LIBFT_H
 # define BUFF_SIZE 4096
 # define MAX_FD 8192
+# define OCT "01234567"
+# define DECI "0123456789"
+# define HEXL "0123456789abcdef"
+# define HEXU "0123456789ABCDEF"
+# define UINT_MAX 4294967296
+# define INT_MAX 2147483647
+# define INT_MIN -2147483648
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -74,6 +81,7 @@ void			ft_putendl_fd(char const *s, int fd);
 void			ft_putnbr(int nb);
 void			ft_putnbr_fd(int n, int fd);
 void			ft_putnbr_base(long long int nb, const char *base);
+void			ft_putnbr_base_fd(int fd, long long int nb, const char *base);
 void			ft_putunbr_base(unsigned long long int nb, const char *base);
 void			ft_putstr(char *str);
 void			ft_putstr_fd(char const *s, int fd);

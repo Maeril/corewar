@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/05/01 19:57:23 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/07 12:35:39 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef	struct		tools_s
 {
 	bool	name_filled;
 	bool	com_filled;
+	int		cor_line_counter;
 }					tools_t;
 
 typedef struct		line_s
@@ -49,6 +50,7 @@ void	asm_tools_init(tools_t *tools);
 void	asm_translator(int fd, char **input, tools_t *tools);
 int		empty_or_comment_line(char *str);
 char	**get_file_content(char *file_name);
+int		has_label_size(char *word);
 int		has_one_param(char *word);
 int		has_two_params(char *word);
 int		has_three_params(char *word);

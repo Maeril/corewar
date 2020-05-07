@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 19:08:29 by myener            #+#    #+#             */
-/*   Updated: 2020/04/29 19:42:26 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/07 12:35:59 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ void	asm_tools_init(tools_t *tools)
 {
 	tools->name_filled = 0;
 	tools->com_filled = 0;
+	tools->cor_line_counter = 0;
 }
