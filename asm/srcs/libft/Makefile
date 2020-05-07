@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 17:52:34 by myener            #+#    #+#              #
-#    Updated: 2020/04/30 17:21:15 by myener           ###   ########.fr        #
+#    Updated: 2020/05/07 17:29:38 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,14 @@ NAME	=	libft.a
 SRCDIR	:=	./
 OBJDIR	:=	./objs
 
-SRCS	=	ft_abs.c 						\
+SRCS	=	base_converter.c				\
+			ft_abs.c						\
 			ft_atoi.c 						\
+			ft_atoi_base.c 					\
 			ft_atoll.c 						\
 			ft_baselen.c 					\
 			ft_bzero.c 						\
+			ft_convert_base.c				\
 			ft_floatmod.c 					\
 			ft_free_join.c 					\
 			ft_grabword.c 					\
@@ -63,6 +66,7 @@ SRCS	=	ft_abs.c 						\
 			ft_putnbr.c 					\
 			ft_putnbr_fd.c 					\
 			ft_putnbr_base.c				\
+			ft_putnbr_base_fd.c				\
 			ft_putunbr_base.c 				\
 			ft_putstr_fd.c 					\
 			ft_putnbr_long.c 				\

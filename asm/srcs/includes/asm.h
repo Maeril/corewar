@@ -6,15 +6,13 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/05/07 12:35:39 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/07 16:53:49 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 
 # define ASM_H
-# define MAX_INT 2147483647
-# define MIN_INT -2147483648
 # include <fcntl.h>
 # include <stdlib.h>
 # include <stdbool.h>
@@ -50,6 +48,7 @@ void	asm_tools_init(tools_t *tools);
 void	asm_translator(int fd, char **input, tools_t *tools);
 int		empty_or_comment_line(char *str);
 char	**get_file_content(char *file_name);
+int		has_coding_byte(char *word);
 int		has_label_size(char *word);
 int		has_one_param(char *word);
 int		has_two_params(char *word);

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 13:57:15 by myener            #+#    #+#             */
-/*   Updated: 2020/05/07 13:50:40 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:30:02 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # define BUFF_SIZE 4096
 # define MAX_FD 8192
+# define BIN "01"
 # define OCT "01234567"
 # define DECI "0123456789"
 # define HEXL "0123456789abcdef"
@@ -35,8 +36,10 @@ typedef struct	s_list
 	struct s_list	*next;
 }				t_list;
 
+char			*base_converter(char *nb, char *base_in, char *base_out);
 int				ft_abs(int nb);
 int				ft_atoi(const char *str);
+int				ft_atoi_base(char *str, char *base);
 long long int	ft_atoll(const char *str);
 void			ft_bzero(void *s, size_t n);
 int				ft_baselen(long long int n, int len);

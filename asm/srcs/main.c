@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/05/07 13:56:05 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/07 17:55:09 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,22 +289,116 @@ void	fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 	}
 }
 
-// void	write_to_cor(line_t *tab, int len, int fd)
-// {
-// 	int i;
+int		get_opcode(char *instruc)
+{
+	if (!ft_strcmp(instruc, "live"))
+		return (1);
+	else if (!ft_strcmp(instruc, "ld"))
+		return (2);
+	else if (!ft_strcmp(instruc, "st"))
+		return (3);
+	else if (!ft_strcmp(instruc, "add"))
+		return (4);
+	else if (!ft_strcmp(instruc, "sub"))
+		return (5);
+	else if (!ft_strcmp(instruc, "and"))
+		return (6);
+	else if (!ft_strcmp(instruc, "or"))
+		return (7);
+	else if (!ft_strcmp(instruc, "xor"))
+		return (8);
+	else if (!ft_strcmp(instruc, "zjmp"))
+		return (9);
+	else if (!ft_strcmp(instruc, "ldi"))
+		return (10);
+	else if (!ft_strcmp(instruc, "sti"))
+		return (11);
+	else if (!ft_strcmp(instruc, "fork"))
+		return (12);
+	else if (!ft_strcmp(instruc, "lld"))
+		return (13);
+	else if (!ft_strcmp(instruc, "lldi"))
+		return (14);
+	else if (!ft_strcmp(instruc, "lfork"))
+		return (15);
+	else if (!ft_strcmp(instruc, "aff"))
+		return (16);
+	return (0);
+}
 
-// 	// write_header();
-// 	while (i < len)
-// 	{
-// 		if (tab[i].instruc)
-// 		{
-// 			ft_putnbr_base_fd(fd, get_opcode(), HEXL);
-// 			ft_putnbr_base_fd(fd, get_coding_byte(), HEXL);
-// 		}
-// 		if (tab[i].called_label)
-// 		i++;
-// 	}
-// }
+int		get_coding_byte(line_t *tab, int i)
+{
+	int		j;
+	int		counter;
+	char	*byte;
+
+	// 1: build coding byte binary from data in struc
+	counter = 0;
+	byte = ft_strnew(1);
+	if (tab[i].param1 > 0)
+	{
+		if (tab[i].param1[0] == '%') // if yes then it's a direct
+			byte = ft_free_join(byte, "10");
+		else // else it's: a register if sz = 1, an indirect otherwise.
+			byte = ft_free_join(byte, tab[i].param1_sz == 1 ? "01" : "11");
+		counter += 2;
+	}
+	if (tab[i].param2 > 0)
+	{
+		if (tab[i].param2[0] == '%') // if yes then it's a direct
+			byte = ft_free_join(byte, "10");
+		else // else it's: a register if sz = 1, an indirect otherwise.
+			byte = ft_free_join(byte, tab[i].param2_sz == 1 ? "01" : "11");
+		counter += 2;
+	}
+	if (tab[i].param3 > 0)
+	{
+		if (tab[i].param3[0] == '%') // if yes then it's a direct
+			byte = ft_free_join(byte, "10");
+		else // else it's: a register if sz = 1, an indirect otherwise.
+			byte = ft_free_join(byte, tab[i].param3_sz == 1 ? "01" : "11");
+		counter += 2;
+	}
+	j = 0;
+	while (j < (8 - counter))
+	{
+		byte = ft_free_join(byte, "0");
+		j++;
+	}
+	return (ft_atoi(base_converter(byte, BIN, DECI)));
+}
+
+void	write_param(char *str, int write_size); // TO DO
+
+void	write_to_cor(line_t *tab, int len, int fd)
+{
+	int i;
+
+	// write_header();
+	i = 0;
+	(void)fd; //test
+	while (i < len)
+	{
+		if (tab[i].instruc)
+		{
+			// ft_printf("instruc = %s & get opcode = %d\n", tab[i].instruc, get_opcode(tab[i].instruc));
+			ft_putnbr_base_fd(fd, get_opcode(tab[i].instruc), HEXL);
+			if (has_coding_byte(tab[i].instruc))
+			{
+				ft_putnbr_base_fd(fd, get_coding_byte(tab, i), HEXL);
+				// ft_putchar_fd(' ', fd); // TEST
+			}
+			if (tab[i].param1)
+				write_param(tab[i].param1, tab[i].param1_sz);
+			if (tab[i].param2)
+				write_param(tab[i].param2, tab[i].param2_sz);
+			if (tab[i].param3)
+				write_param(tab[i].param3, tab[i].param3_sz);
+		}
+		// if (tab[i].called_label)
+		i++;
+	}
+}
 
 void	asm_translator(int fd, char **input, tools_t *tools) // fd = fd du .cor
 {
@@ -324,7 +418,7 @@ void	asm_translator(int fd, char **input, tools_t *tools) // fd = fd du .cor
 	fill_tab_input(input, struct_tab, header, tools);
 	fill_tab_sizes(struct_tab, len, tools);
 	// print_struct_tab(struct_tab, len); // TEST
-	// write_to_cor(struct_tab, len, fd);
+	write_to_cor(struct_tab, len, fd);
 	// parse_struct_tab(fd, struct_tab)
 }
 
@@ -365,7 +459,7 @@ int		main(int ac, char **av)
 	char	**in_file_content;
 
 	// test_10 = 10;
-	ft_printf("11 en hexa donne %#04x\n", 11);// TEST affichage hexa
+	// ft_printf("11 en hexa donne %#04x\n", 11);// TEST affichage hexa
 	asm_tools_init(&tools);
 	if (ac < 2)
 		return (-1); // temporary error output
@@ -375,6 +469,7 @@ int		main(int ac, char **av)
 	out_file_name = ft_free_join(out_file_name, "cor"); // adds "cor" extension to file name; "file." becomes "file.cor"
 	// ft_printf("out_file_name = %s\n", out_file_name); // TEST
 	fd = open(out_file_name, O_WRONLY | O_CREAT); // opens out_file: it doesn't exists, so it creates it. open to WRITE in it.
+	// ft_printf("fd = %d\n", fd)
 	// write(fd, &test_10, sizeof(int)); // test for displaying in hex (to handle WAY LATER)
 	asm_translator(fd, in_file_content, &tools); // writes the content of in_file in out_file, translated in machinelang.
 	// close(fd);
