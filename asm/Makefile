@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/11 18:16:32 by myener            #+#    #+#              #
-#    Updated: 2020/05/08 16:49:27 by myener           ###   ########.fr        #
+#    Updated: 2020/05/13 01:28:09 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = asm
 SRCDIR	:=	./srcs
 OBJDIR	:=	./objs
 
-SRCS_NAME =		header_fts.c		\
+SRCS_NAME =		header_fill.c		\
 				init.c				\
 				main.c				\
 				struct_tab_fill.c	\

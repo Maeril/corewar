@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/05/08 22:20:50 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/13 03:07:29 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef	struct		tools_s
 	bool	name_filled;
 	bool	com_filled;
 	int		cor_line_counter;
+	int		prog_size;
 }					tools_t;
 
 typedef struct		line_s
@@ -42,24 +43,26 @@ typedef struct		line_s
 	int				relative_cor_addr; // current line's relative address in the cor file (which will allow us to deduce the relative address of the called label if there is one)
 }					line_t;
 
-void	asm_header_init(header_t *header);
-void	asm_struct_tab_init(line_t *line, int len);
-void	asm_tools_init(tools_t *tools);
-void	asm_translator(int fd, char **input, tools_t *tools);
-void	decimal_to_hex_2scomplement(int fd, int value);
-int		empty_or_comment_line(char *str);
-void	fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools);
-void	fill_tab_sizes(line_t *tab, int len, tools_t *tools);
-char	**get_file_content(char *file_name);
-int		has_coding_byte(char *word);
-int		has_label_size(char *word);
-int		has_one_param(char *word);
-int		has_two_params(char *word);
-int		has_three_params(char *word);
-int		is_called_label(char *str, int write_size);
-int		is_instruc(char *word);
-int		is_legit_label(char *label, line_t *tab, int len);
-void	write_to_cor(line_t *tab, int len, int fd);
+void			asm_header_init(header_t *header);
+void			asm_struct_tab_init(line_t *line, int len);
+void			asm_tools_init(tools_t *tools);
+void			asm_translator(int fd, char **input, tools_t *tools);
+void			decimal_to_hex_2scomplement(int fd, int value);
+int				empty_or_comment_line(char *str);
+void			fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools);
+void			fill_tab_sizes(line_t *tab, int len, tools_t *tools);
+unsigned int	swap_uint32(unsigned int nb); // for little to big endian conversion
+char			**get_file_content(char *file_name);
+int				has_coding_byte(char *word);
+int				has_label_size(char *word);
+int				has_one_param(char *word);
+int				has_two_params(char *word);
+int				has_three_params(char *word);
+void			header_fill(header_t *header, char **input, tools_t *tools);
+int				is_called_label(char *str, int write_size);
+int				is_instruc(char *word);
+int				is_legit_label(char *label, line_t *tab, int len);
+void			write_to_cor(line_t *tab, header_t *header, int len, int fd);
 
 
 #endif

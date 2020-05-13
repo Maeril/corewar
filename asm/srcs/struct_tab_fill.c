@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/05/08 16:57:55 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/13 03:50:49 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ char	*get_called_label(line_t *tab, int i, int len) // in which we assume only o
 			while (param[j] && (ft_isalphalow(param[j]) || ft_isdigit(param[j]) || param[j] == '_'))
 				j++;
 			label = ft_strsub(param, start, j - start);
-			free (param);
+			// free (param);
 			return (is_legit_label(label, tab, len) ? label : NULL);
 		}
 		j++;
 	}
-	param ? free (param) : 0;
+	// param ? free (param) : 0;
 	return (NULL);
 }
 
@@ -80,6 +80,9 @@ void	fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 			tab[i].relative_cor_addr = tools->cor_line_counter;
 			tab[i].called_label = get_called_label(tab, i, len);
 			// ft_printf("label = %s && called label = %s\n", tab[i].label, tab[i].called_label);
+			tools->prog_size += 1; // 1 for the opcode (1 byte)
+			tools->prog_size += has_coding_byte(tab[i].instruc) ? 1 : 0; // for the optional coding byte (1 byte too)
+			tools->prog_size += tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz; // additions up all sizes to get prog size;
 		}
 		i++;
 	}

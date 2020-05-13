@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/05/08 16:59:13 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/13 01:41:46 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,9 @@ void	asm_translator(int fd, char **input, tools_t *tools) // fd = fd du .cor
 	// ft_putstr("segfault finder\n");
 	fill_tab_input(input, struct_tab, header, tools);
 	fill_tab_sizes(struct_tab, len, tools);
-	// print_struct_tab(struct_tab, len); // TEST
-	write_to_cor(struct_tab, len, fd);
+	header_fill(header, input, tools);
+	// print_struct_tab(struct_tab, len); // DEBUG
+	write_to_cor(struct_tab, header, len, fd);
 	// parse_struct_tab(fd, struct_tab)
 }
 
@@ -126,6 +127,8 @@ int		main(int ac, char **av)
 	fd = open(out_file_name, O_WRONLY | O_CREAT); // opens out_file: it doesn't exists, so it creates it. open to WRITE in it.
 	// ft_printf("fd = %d\n", fd)
 	// write(fd, &test_10, sizeof(int)); // test for displaying in hex (to handle WAY LATER)
+	if (fd < 0)
+		return (0);
 	asm_translator(fd, in_file_content, &tools); // writes the content of in_file in out_file, translated in machinelang.
 	// close(fd);
 	free(in_file_name);
