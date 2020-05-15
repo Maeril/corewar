@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/05/13 01:41:46 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/15 21:32:10 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	asm_translator(int fd, char **input, tools_t *tools) // fd = fd du .cor
 		return ;
 	asm_header_init(header);
 	asm_struct_tab_init(struct_tab, len);
-	// ft_putstr("segfault finder\n");
 	fill_tab_input(input, struct_tab, header, tools);
 	fill_tab_sizes(struct_tab, len, tools);
 	header_fill(header, input, tools);
@@ -118,7 +117,10 @@ int		main(int ac, char **av)
 	// ft_printf("11 en hexa donne %#04x\n", 11);// TEST affichage hexa
 	asm_tools_init(&tools);
 	if (ac < 2)
-		return (-1); // temporary error output
+	{
+		ft_printf("Usage: ./asm_test [-a] <sourcefile.s>\n");
+		return (0); // temporary error output
+	}
 	in_file_name = ft_strdup(av[1]); // copies input file's name for later
 	in_file_content = get_file_content(in_file_name);
 	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1); //copies input file name except "s"; "file.s" becomes "file."

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 00:12:13 by myener            #+#    #+#             */
-/*   Updated: 2020/05/13 03:07:37 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/15 22:50:54 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,45 @@ int		is_legit_label(char *label, line_t *tab, int len)
 	return (0);
 }
 
+char			*string_cleaner(char *str)
+{
+	char	*out;
+	char	*tmp;
+
+	out = NULL;
+	tmp = NULL;
+	str = ft_strtrim(str); // start by removing all whitespaces around the string
+	if (str[0] == ',') // remove possible preceeding comma
+	{
+		out = ft_strsub(str, 1, ft_strlen(str) - 1);
+	}
+	if (str[ft_strlen(str) - 1] == ',') // remove possible succeeding comma
+	{
+		if (out)
+			tmp = ft_strsub(str, 0, ft_strlen(out) - 1);
+		else
+			out = ft_strsub(str, 0, ft_strlen(str) - 1);
+	}
+	if (tmp)
+	{
+		str ? free(str) : 0;
+		out ? free(out) : 0;
+		return (tmp);
+	}
+	else if(!tmp && out)
+	{
+		str? free(str) : 0;
+		return (out);
+	}
+	return (str);
+}
+
 unsigned int     swap_uint32(unsigned int nb) // for little to big endian conversion
 {
     int	swap;
 
-    swap = ((nb >> 24) & 0xFF)\
-        | ((nb >> 8) & 0xFF00)\
-        | ((nb << 8) & 0xFF0000)\
-        | ((nb << 24) & 0xFF000000);
+    swap = ((nb >> 24) & 0xFF) | ((nb >> 8) & 0xFF00)\
+        | ((nb << 8) & 0xFF0000) | ((nb << 24) & 0xFF000000);
     return (swap);
 }
 

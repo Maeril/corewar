@@ -1,0 +1,22 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    possible_errors                                    :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/05/15 21:47:47 by myener            #+#    #+#              #
+#    Updated: 2020/05/15 21:49:36 by myener           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+[] file.s contains lines starting with '.' that aren't followed by "name" or "comment"
+[] arg doesn't have a ".s" extension / doesn't have any extension at all
+[] 
+[] 
+[] 
+[] 
+[] 
+[] 
+[] 
+[] 

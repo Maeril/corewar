@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/05/13 03:50:49 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/15 23:41:01 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char	*get_called_label(line_t *tab, int i, int len) // in which we assume only o
 		param = ft_strdup(tab[i].param2);
 	else if (tab[i].param3 && tab[i].param3_sz > 1)
 		param = ft_strdup(tab[i].param3);
+	else
+		return (NULL); // else it means there only are registers, so no possible called label, so return.
 	j = 0;
 	start = 0;
 	label = NULL;
@@ -78,7 +80,10 @@ void	fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 			tab[i].param3_sz = nb == 3 ? get_param_sz(tab[i].param3, l) : 0;
 			tab[i].line_cor_ln = tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz + 2; // +2 for the opcode and coding byte (each have a size of 1)
 			tab[i].relative_cor_addr = tools->cor_line_counter;
+			// ft_printf("tab[%d].label = %s\n", i, tab[i].label);
+			// ft_printf("tab[%d].param1 = >%s<\n", i, tab[i].param1);
 			tab[i].called_label = get_called_label(tab, i, len);
+			// ft_printf("tab[%d].called_label = %s\n", i, tab[i].called_label);
 			// ft_printf("label = %s && called label = %s\n", tab[i].label, tab[i].called_label);
 			tools->prog_size += 1; // 1 for the opcode (1 byte)
 			tools->prog_size += has_coding_byte(tab[i].instruc) ? 1 : 0; // for the optional coding byte (1 byte too)
@@ -99,14 +104,14 @@ void	stock_instruction(line_t *struct_tab, char *line, int i)
 		i++;
 	if (line[i] == '\n' || line[i] == '#')
 		return ;
-	instruc_name = ft_grabword(line, i, 0, 1);
-	// ft_printf("instruc_name = >%s<\n", instruc_name);
-	instruc_name = ft_strtrim(instruc_name);
-	// ft_printf("instruc_name = >%s<\n\n", instruc_name);
+	instruc_name = ft_grabword(line, i, 0, 1, 0);
+	// ft_printf("line %d, instruc_name = >%s<\n", i, instruc_name);
+	instruc_name = string_cleaner(instruc_name);
+	// ft_printf("line %d, instruc_name = >%s<\n\n", i, instruc_name);
 	if (!is_instruc(instruc_name))
 	{
-		ft_printf("ERROR\n");
-		return ; // ERROR OUTPUT
+		// ft_printf("ERROR, instruc name '%s' on line %d isn't an actual instruction.\n", instruc_name, i);
+		exit(0) ; // ERROR OUTPUT
 	}
 	struct_tab->instruc = ft_strdup(instruc_name);
 	// GRAB PARAM 1
@@ -159,6 +164,7 @@ void	stock_label(line_t *struct_tab, char *line)
 	int	i;
 
 	i = 0;
+
 	while (line[i] && line[i] !=':')
 		i++;
 	struct_tab->label = ft_strsub(line, 0, i);
@@ -171,29 +177,78 @@ void	stock_label(line_t *struct_tab, char *line)
 
 void	fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools)
 {
-	int			i;
-	int			j;
+	int		i;
+	int		j;
+	int		k;
+	int		start;
+	char	*stock;
 
 	(void)header; // TEST
 	(void)tools; // TEST
+	(void)struct_tab; // TEST
 	i = 0;
 	j = 0;
+	k = 0;
+	start = 0;
+	stock = NULL;
 	while (input[i])
 	{
-		// if (input[i][0] == '.') // if line starts with '.'
-			// name_comment_stock(header, input[i], tools);//stock name or comment from that line to header (if it's on this line) in the header. otherwise do nothing
-		if ((input[i][0] == '\t' || input[i][0] == ' ')) // if line starts with '\t' or ' '
+		if (input[i][0] != '.')
 		{
-			// ft_printf("INSTRUC\n");
-			stock_instruction(&struct_tab[j], input[i], 0);//stock instruction line in struct_tab[j]
-		}
-		else if (ft_isalnum(input[i][0])) // if line starts with a number or character
-		{
-			// ft_printf("LABEL\n");
-			stock_label(&struct_tab[j], input[i]);//stock label line in struct_tab[j]
+			k = 0;
+			while (input[i][k] && ft_isblank(input[i][k])) // skip the eventual spaces in the beginning
+				k++;
+			if (ft_islownum(input[i][k])) // if the first real thing on the line (i.e. not spaces) is lowercases or a digit
+				start = k; // then we mark when it starts
+			while (input[i][k] && ft_islownum(input[i][k])) // go through until you meet a space or the line ends (that one's unlikely)
+				k++;
+			stock = ft_strsub(input[i], start, k - start + 1);
+			stock = string_cleaner(stock);
+			// ft_printf("stock = >%s<\n", stock);
+			if (stock[ft_strlen(stock) - 1] == ':')
+			{
+				stock_label(&struct_tab[j], input[i]);//stock label line in struct_tab[j]
+				j++;
+			}
+			else if (is_instruc(stock))
+			{
+				stock_instruction(&struct_tab[j], input[i], 0);//stock instruction line in struct_tab[j]
+				j++;
+			}
+			else
+				break ; // temporary "if none matches then it's bullshit so ignore" instruction
+			// is_instruc(stock) ? stock
 		}
 		i++;
-		j++;
 	}
-
 }
+
+// void	fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools)
+// {
+// 	int			i;
+// 	int			j;
+
+// 	(void)header; // TEST
+// 	(void)tools; // TEST
+// 	i = 0;
+// 	j = 0;
+// 	while (input[i])
+// 	{
+// 		// if (input[i][0] == '.') // if line starts with '.'
+// 			// name_comment_stock(header, input[i], tools);//stock name or comment from that line to header (if it's on this line) in the header. otherwise do nothing
+// 		ft_printf("line %d = %s\n", i, input[i]);
+// 		if ((input[i][0] == '\t' || input[i][0] == ' ')) // if line starts with '\t' or ' '
+// 		{
+// 			ft_printf("is instruct, line %d = %s\n", i, input[i]);
+// 			stock_instruction(&struct_tab[j], input[i], 0);//stock instruction line in struct_tab[j]
+// 		}
+// 		else if (ft_isalnum(input[i][0])) // if line starts with a number or character
+// 		{
+// 			ft_printf("is label, line %d = %s\n", i, input[i]);
+// 			stock_label(&struct_tab[j], input[i]);//stock label line in struct_tab[j]
+// 		}
+// 		i++;
+// 		j++;
+// 	}
+
+// }

@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 17:52:34 by myener            #+#    #+#              #
-#    Updated: 2020/05/08 21:55:33 by myener           ###   ########.fr        #
+#    Updated: 2020/05/15 23:09:07 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS	=	base_converter.c				\
 			ft_isalphalow.c 				\
 			ft_isalphaup.c 					\
 			ft_isdigit.c 					\
+			ft_islownum.c 					\
 			ft_isalnum.c 					\
 			ft_isascii.c 					\
 			ft_isprint.c 					\

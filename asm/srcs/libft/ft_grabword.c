@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/25 23:57:20 by myener            #+#    #+#             */
-/*   Updated: 2020/05/01 21:09:45 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/15 23:11:05 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 int (*pf)(int);
 
-char	*ft_grabword(char *str, int start, int upper, int lower)
+char	*ft_grabword(char *str, int start, int upper, int lower, int lownum)
 {
 	int		i;
 	char	*word;
 
 	word = NULL;
 	i = start;
+	pf = lownum ? ft_islownum : NULL;
 	pf = upper && lower ? ft_isalpha : NULL;
 	pf = upper ? ft_isalphaup : ft_isalphalow;
 	// (void)upper;

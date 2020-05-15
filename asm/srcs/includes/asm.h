@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/05/13 03:07:29 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/15 22:44:11 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void			header_fill(header_t *header, char **input, tools_t *tools);
 int				is_called_label(char *str, int write_size);
 int				is_instruc(char *word);
 int				is_legit_label(char *label, line_t *tab, int len);
+char			*string_cleaner(char *str);
 void			write_to_cor(line_t *tab, header_t *header, int len, int fd);
 
 
