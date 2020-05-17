@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/05/15 22:44:11 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/18 00:19:54 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,28 @@ typedef struct		line_s
 void			asm_header_init(header_t *header);
 void			asm_struct_tab_init(line_t *line, int len);
 void			asm_tools_init(tools_t *tools);
-void			asm_translator(int fd, char **input, tools_t *tools);
+int				asm_translator(int fd, char **input, tools_t *tools);
+int				bad_dot_line(char **input);
 void			decimal_to_hex_2scomplement(int fd, int value);
 int				empty_or_comment_line(char *str);
-void			fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools);
-void			fill_tab_sizes(line_t *tab, int len, tools_t *tools);
-unsigned int	swap_uint32(unsigned int nb); // for little to big endian conversion
+int				error_output(void);
+int				fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools);
+int				fill_tab_sizes(line_t *tab, int len, tools_t *tools);
 char			**get_file_content(char *file_name);
 int				has_coding_byte(char *word);
 int				has_label_size(char *word);
 int				has_one_param(char *word);
 int				has_two_params(char *word);
 int				has_three_params(char *word);
-void			header_fill(header_t *header, char **input, tools_t *tools);
+int				header_fill(header_t *header, char **input, tools_t *tools);
 int				is_called_label(char *str, int write_size);
 int				is_instruc(char *word);
 int				is_legit_label(char *label, line_t *tab, int len);
 char			*string_cleaner(char *str);
-void			write_to_cor(line_t *tab, header_t *header, int len, int fd);
+int				struct_tab_fill(char **input, line_t *struct_tab, header_t *header, tools_t *tools);
+unsigned int	swap_uint32(unsigned int nb); // for little to big endian conversion
+int				usage_output(void);
+int				write_to_cor(line_t *tab, header_t *header, int len, int fd);
 
 
 #endif

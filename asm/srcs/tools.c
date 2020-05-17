@@ -6,11 +6,41 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 00:12:13 by myener            #+#    #+#             */
-/*   Updated: 2020/05/15 22:50:54 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/17 23:28:26 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
+
+int		error_output(void)
+{
+	ft_printf("ERROR\n");
+	return (0);
+}
+
+int		usage_output(void)
+{
+	ft_printf("Usage: ./asm [-a] <sourcefile.s>\n");
+	return (0);
+}
+
+int		bad_dot_line(char **input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (input[i][0] == '.' && ft_strncmp(input[i], NAME_CMD_STRING, 5)
+		&& ft_strncmp(input[i], COMMENT_CMD_STRING, 8))
+		{
+			ft_printf("Lexical error at [%d:1]\n", i + 1); // "+ 1" for better readability as editors start lines at 1 & not 0
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int		empty_or_comment_line(char *str)
 {

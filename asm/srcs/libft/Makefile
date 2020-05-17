@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 17:52:34 by myener            #+#    #+#              #
-#    Updated: 2020/05/15 23:09:07 by myener           ###   ########.fr        #
+#    Updated: 2020/05/17 21:24:05 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,7 @@ SRCS	=	base_converter.c				\
 			ft_strtrim.c 					\
 			ft_strsplit.c 					\
 			ft_tablen.c 					\
+			ft_tablen_ignore_empty_lines.c	\
 			ft_toupper.c 					\
 			ft_tolower.c 					\
 			ft_strndup.c 					\

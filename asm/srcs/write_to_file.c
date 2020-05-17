@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/05/13 03:47:26 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/18 01:09:14 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	write_param(int fd, char *str, int write_size)
 	}
 }
 
-void	write_to_cor(line_t *tab, header_t *header, int len, int fd)
+int		write_to_cor(line_t *tab, header_t *header, int len, int fd)
 {
 	int i;
 	int	opcode;
@@ -204,4 +204,5 @@ void	write_to_cor(line_t *tab, header_t *header, int len, int fd)
 		// if (tab[i].called_label)
 		i++;
 	}
+	return (1);
 }

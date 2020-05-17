@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/05/15 23:41:01 by myener           ###   ########.fr       */
+/*   Updated: 2020/05/18 00:21:49 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		get_param_sz(char *param, int label_size)
 {
-	if (param[0] == 'r') // if registre
+	if (param[0] == 'r') // if register
 		return (1);
 	else if (param[0] == '%') // if direct
 		return (label_size  == 1 ? 2 : 4);
@@ -59,7 +59,7 @@ char	*get_called_label(line_t *tab, int i, int len) // in which we assume only o
 	return (NULL);
 }
 
-void	fill_tab_sizes(line_t *tab, int len, tools_t *tools)
+int		fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 {
 	int	i;
 	int nb;
@@ -91,9 +91,10 @@ void	fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 		}
 		i++;
 	}
+	return (1);
 }
 
-void	stock_instruction(line_t *struct_tab, char *line, int i)
+int		stock_instruction(line_t *struct_tab, char *line, int i)
 {
 	int		start;
 	char	*instruc_name;
@@ -103,7 +104,7 @@ void	stock_instruction(line_t *struct_tab, char *line, int i)
 	while (line[i] && ft_isblank(line[i]))
 		i++;
 	if (line[i] == '\n' || line[i] == '#')
-		return ;
+		return (1);
 	instruc_name = ft_grabword(line, i, 0, 1, 0);
 	// ft_printf("line %d, instruc_name = >%s<\n", i, instruc_name);
 	instruc_name = string_cleaner(instruc_name);
@@ -111,7 +112,7 @@ void	stock_instruction(line_t *struct_tab, char *line, int i)
 	if (!is_instruc(instruc_name))
 	{
 		// ft_printf("ERROR, instruc name '%s' on line %d isn't an actual instruction.\n", instruc_name, i);
-		exit(0) ; // ERROR OUTPUT
+		return(error_output()) ; // ERROR OUTPUT
 	}
 	struct_tab->instruc = ft_strdup(instruc_name);
 	// GRAB PARAM 1
@@ -129,7 +130,7 @@ void	stock_instruction(line_t *struct_tab, char *line, int i)
 	{
 		struct_tab->nb_param = 1;
 		free(instruc_name);
-		return ;
+		return (1);
 	}
 	// GRAB PARAM 2
 	i++;
@@ -144,7 +145,7 @@ void	stock_instruction(line_t *struct_tab, char *line, int i)
 	{
 		struct_tab->nb_param = 2;
 		free(instruc_name);
-		return ;
+		return (1);
 	}
 	// GRAB PARAM 3
 	i++;
@@ -157,6 +158,7 @@ void	stock_instruction(line_t *struct_tab, char *line, int i)
 	// ft_printf("param3 = %s\n", struct_tab->param3);
 	struct_tab->nb_param = 3;
 	free(instruc_name);
+	return (1);
 }
 
 void	stock_label(line_t *struct_tab, char *line)
@@ -175,11 +177,12 @@ void	stock_label(line_t *struct_tab, char *line)
 	stock_instruction(struct_tab, line, i + 1); // otherwise stock the rest of the line.
 }
 
-void	fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools)
+int		fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools)
 {
 	int		i;
 	int		j;
 	int		k;
+	int		len;
 	int		start;
 	char	*stock;
 
@@ -189,66 +192,56 @@ void	fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t 
 	i = 0;
 	j = 0;
 	k = 0;
+	len = ft_tablen(input);
 	start = 0;
 	stock = NULL;
-	while (input[i])
+	// ft_printf("tablen de input = %d\n", len);
+	while (i < len)
 	{
-		if (input[i][0] != '.')
+		// ft_printf("i = %d, len = %d\n", i, len);
+		// ft_printf("input[%d] = %s", i, input[i]);
+		// ft_printf("%s", input[i]);
+		if (input[i][0] != '.' && input[i][0] != '#')
 		{
 			k = 0;
 			while (input[i][k] && ft_isblank(input[i][k])) // skip the eventual spaces in the beginning
 				k++;
-			if (ft_islownum(input[i][k])) // if the first real thing on the line (i.e. not spaces) is lowercases or a digit
+			// if (ft_islownum(input[i][k])) // if the first real thing on the line (i.e. not spaces) is lowercases or a digit
 				start = k; // then we mark when it starts
-			while (input[i][k] && ft_islownum(input[i][k])) // go through until you meet a space or the line ends (that one's unlikely)
+			while (input[i][k] && !ft_isblank(input[i][k])) // go through until you meet a space or the line ends (that one's unlikely)
 				k++;
 			stock = ft_strsub(input[i], start, k - start + 1);
 			stock = string_cleaner(stock);
 			// ft_printf("stock = >%s<\n", stock);
 			if (stock[ft_strlen(stock) - 1] == ':')
 			{
+				// ft_printf("label input[%d] = %s\n", i, input[i]);
 				stock_label(&struct_tab[j], input[i]);//stock label line in struct_tab[j]
 				j++;
 			}
 			else if (is_instruc(stock))
 			{
+				// ft_printf("instruction input[%d] = %s\n", i, input[i]);
 				stock_instruction(&struct_tab[j], input[i], 0);//stock instruction line in struct_tab[j]
 				j++;
 			}
 			else
+			{
+				ft_printf("situation non gérée !\n");
 				break ; // temporary "if none matches then it's bullshit so ignore" instruction
+			}
 			// is_instruc(stock) ? stock
 		}
 		i++;
 	}
+	return (1);
 }
 
-// void	fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t *tools)
-// {
-// 	int			i;
-// 	int			j;
-
-// 	(void)header; // TEST
-// 	(void)tools; // TEST
-// 	i = 0;
-// 	j = 0;
-// 	while (input[i])
-// 	{
-// 		// if (input[i][0] == '.') // if line starts with '.'
-// 			// name_comment_stock(header, input[i], tools);//stock name or comment from that line to header (if it's on this line) in the header. otherwise do nothing
-// 		ft_printf("line %d = %s\n", i, input[i]);
-// 		if ((input[i][0] == '\t' || input[i][0] == ' ')) // if line starts with '\t' or ' '
-// 		{
-// 			ft_printf("is instruct, line %d = %s\n", i, input[i]);
-// 			stock_instruction(&struct_tab[j], input[i], 0);//stock instruction line in struct_tab[j]
-// 		}
-// 		else if (ft_isalnum(input[i][0])) // if line starts with a number or character
-// 		{
-// 			ft_printf("is label, line %d = %s\n", i, input[i]);
-// 			stock_label(&struct_tab[j], input[i]);//stock label line in struct_tab[j]
-// 		}
-// 		i++;
-// 		j++;
-// 	}
-
-// }
+int		struct_tab_fill(char **input, line_t *struct_tab, header_t *header, tools_t *tools)
+{
+	if (!fill_tab_input(input, struct_tab, header, tools))
+		return (0);
+	if (!fill_tab_sizes(struct_tab, ft_tablen(input), tools))
+		return (0);
+	return (1);
+}
