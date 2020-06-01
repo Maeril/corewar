@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/05/18 01:22:20 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/01 22:03:57 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,21 @@ void	print_struct_tab(line_t *struct_tab, int len) // DEBUG ONLY
 	// len = 5; // TEST
 	while (i < len)
 	{
-		struct_tab[i].label ? ft_printf("label = %s \n", struct_tab[i].label) : 0;
-		struct_tab[i].instruc ? ft_printf("instruc = %s \n", struct_tab[i].instruc) : 0;
-		ft_printf("param1 = %s \n", struct_tab[i].param1);
-		struct_tab[i].param2 ? ft_printf("param2 = %s \n", struct_tab[i].param2) : 0;
-		struct_tab[i].param3 ? ft_printf("param3 = %s \n", struct_tab[i].param3) : 0;
-		// ft_printf("nb_params = %d \n", struct_tab[i].nb_param);
-		// ft_printf("param1_sz = %d \n", struct_tab[i].param1_sz);
-		// ft_printf("param2_sz = %d \n", struct_tab[i].param2_sz);
-		// ft_printf("param3_sz = %d \n", struct_tab[i].param3_sz);
-		// ft_printf("line_cor_length = %d \n", struct_tab[i].line_cor_ln);
-		// ft_printf("called_label = %s \n", struct_tab[i].called_label);
-		// ft_printf("relative cor address = %d \n", struct_tab[i].relative_cor_addr);
-		ft_putstr("_________\n");
+		struct_tab[i].instruc || struct_tab[i].label ? ft_printf("\033[1;36mLINE %d:\033[0m\n", i) : 0;
+		struct_tab[i].label ? ft_printf("\033[1;31mlabel =\033[0m \"%s\"\n", struct_tab[i].label) : 0;
+		struct_tab[i].instruc ? ft_printf("instruc = \"%s\"\n", struct_tab[i].instruc) : 0;
+		ft_printf("\033[1;35mparam1 =\033[0m \"%s\"\n", struct_tab[i].param1);
+		// struct_tab[i].param1 ? ft_printf("\033[1;35mparam1 =\033[0m \"%s\"\n", struct_tab[i].param1) : 0;
+		struct_tab[i].param2 ? ft_printf("\033[1;35mparam2 =\033[0m \"%s\"\n", struct_tab[i].param2) : 0;
+		struct_tab[i].param3 ? ft_printf("\033[1;35mparam3 =\033[0m \"%s\"\n", struct_tab[i].param3) : 0;
+		struct_tab[i].param1 ? ft_printf("nb_params = [%d]\n", struct_tab[i].nb_param) : 0;
+		struct_tab[i].param1 ? ft_printf("\033[1;32mparam1_sz =\033[0m [%d]\n", struct_tab[i].param1_sz) : 0;
+		struct_tab[i].param2 ? ft_printf("\033[1;32mparam2_sz =\033[0m [%d]\n", struct_tab[i].param2_sz) : 0;
+		struct_tab[i].param3 ?ft_printf("\033[1;32mparam3_sz =\033[0m [%d]\n", struct_tab[i].param3_sz) : 0;
+		struct_tab[i].instruc ?ft_printf("\033[1;34mline_cor_length =\033[0m [%d]\n", struct_tab[i].line_cor_ln) : 0;
+		struct_tab[i].called_label ? ft_printf("\033[1;31mcalled_label =\033[0m \"%s\"\n", struct_tab[i].called_label) : 0;
+		ft_printf("\033[1;33mrelative cor address =\033[0m [%d]\n", struct_tab[i].relative_cor_addr);
+		ft_putchar('\n');
 		i++;
 	}
 }
@@ -125,13 +127,22 @@ int		main(int ac, char **av)
 		&& av[1][ft_strlen(av[1]) - 2] == '.'))))
 		return (usage_output()); // temporary error output
 	if (!(in_file_content = get_file_content(in_file_name = ft_strdup(av[1])))) // seems to be working
+	{
+		ft_printf("erreur get file content\n");
 		return (error_output());
+	}
 	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1); //copies input file name except "s"; "file.s" becomes "file."
 	out_file_name = ft_free_join(out_file_name, "cor"); // adds "cor" extension to file name; "file." becomes "file.cor"
 	if ((fd = open(out_file_name, O_WRONLY | O_CREAT)) < 0)
+	{
+		ft_printf("erreur open\n");
 		return (error_output());
+	}
 	if (!asm_translator(fd, in_file_content, &tools)) // writes the content of in_file in out_file, translated in machinelang.
+	{
+		ft_printf("erreur asm translator\n");
 		return (error_output());
+	}
 	close(fd);
 	in_file_name ? free(in_file_name) : 0;
 	out_file_name ? free(out_file_name) : 0;

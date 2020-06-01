@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/05/18 00:21:49 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/01 21:49:54 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,20 @@ char	*get_called_label(line_t *tab, int i, int len) // in which we assume only o
 	return (NULL);
 }
 
+int		get_correct_cor_ln(line_t *tab, int i)
+{
+	int j;
+
+	j = i;
+	if (i > 0)
+	{
+		while (j > 0 && tab[j].line_cor_ln == 0)
+			j--;
+		return (tab[j].line_cor_ln);
+	}
+	return (0);
+}
+
 int		fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 {
 	int	i;
@@ -74,17 +88,24 @@ int		fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 		{
 			l = has_label_size(tab[i].instruc);
 			nb = tab[i].nb_param;
-			tools->cor_line_counter += (i > 1 ? tab[i - 1].line_cor_ln : 0); // needs vetting
+			tools->cor_line_counter += get_correct_cor_ln(tab, i); // needs vetting. 27052020 update: yes the fuck it does. 01062020 update: calm down guys, ive edited the ternary.
+			// ft_printf("counter = %d\n", tools->cor_line_counter);
 			tab[i].param1_sz = get_param_sz(tab[i].param1, l);
+			// ft_printf("param1 size = %d\n", tab[i].param1_sz);
 			tab[i].param2_sz = nb == 1 ? 0 : get_param_sz(tab[i].param2, l);
+			// ft_printf("param2 size = %d\n", tab[i].param2_sz);
 			tab[i].param3_sz = nb == 3 ? get_param_sz(tab[i].param3, l) : 0;
-			tab[i].line_cor_ln = tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz + 2; // +2 for the opcode and coding byte (each have a size of 1)
+			// ft_printf("param3 size = %d\n", tab[i].param3_sz);
+			tab[i].line_cor_ln = tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz + 1; // +1 for the opcode (size of 1)
+			tab[i].line_cor_ln += has_coding_byte(tab[i].instruc) ? 1 : 0; // one more +1 if there's a coding byte (only 4 instrucs have one)
 			tab[i].relative_cor_addr = tools->cor_line_counter;
+			// ft_printf("relative cor addr = %d\n", tab[i].relative_cor_addr);
 			// ft_printf("tab[%d].label = %s\n", i, tab[i].label);
 			// ft_printf("tab[%d].param1 = >%s<\n", i, tab[i].param1);
 			tab[i].called_label = get_called_label(tab, i, len);
 			// ft_printf("tab[%d].called_label = %s\n", i, tab[i].called_label);
 			// ft_printf("label = %s && called label = %s\n", tab[i].label, tab[i].called_label);
+			// ft_printf("line_cor_ln = %d\n\n", tab[i].line_cor_ln);
 			tools->prog_size += 1; // 1 for the opcode (1 byte)
 			tools->prog_size += has_coding_byte(tab[i].instruc) ? 1 : 0; // for the optional coding byte (1 byte too)
 			tools->prog_size += tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz; // additions up all sizes to get prog size;
@@ -122,9 +143,9 @@ int		stock_instruction(line_t *struct_tab, char *line, int i)
 		i++;
 	// ft_printf("i = %d\n", i);
 	start = i;
-	while (line[i] && line[i] != ',')
+	while (line[i] && (has_one_param(instruc_name) ? !ft_isblank(line[i]) && line[i] != '\n' : line[i] != ','))
 		i++;
-	struct_tab->param1 = ft_strsub(line, start, i - start + 1);
+	struct_tab->param1 = ft_strsub(line, start, i - start);
 	// ft_printf("param1 = %s\n", struct_tab->param1);
 	if (has_one_param(instruc_name))
 	{
@@ -137,9 +158,9 @@ int		stock_instruction(line_t *struct_tab, char *line, int i)
 	while (line[i] && ft_isblank(line[i]))
 		i++;
 	start = i;
-	while (line[i] && line[i] != ',')
+	while (line[i] && (has_two_params(instruc_name) ? !ft_isblank(line[i]) && line[i] != '\n' : line[i] != ','))
 		i++;
-	struct_tab->param2 = ft_strsub(line, start, i - start + 1);
+	struct_tab->param2 = ft_strsub(line, start, i - start);
 	// ft_printf("param2 = %s\n", struct_tab->param2);
 	if (has_two_params(instruc_name))
 	{
@@ -152,9 +173,9 @@ int		stock_instruction(line_t *struct_tab, char *line, int i)
 	while (line[i] && ft_isblank(line[i]))
 		i++;
 	start = i;
-	while (line[i] && line[i] != ',')
+	while (line[i] && !ft_isblank(line[i]))
 		i++;
-	struct_tab->param3 = ft_strsub(line, start, i - start + 1);
+	struct_tab->param3 = ft_strsub(line, start, i - start);
 	// ft_printf("param3 = %s\n", struct_tab->param3);
 	struct_tab->nb_param = 3;
 	free(instruc_name);
@@ -212,7 +233,6 @@ int		fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t 
 				k++;
 			stock = ft_strsub(input[i], start, k - start + 1);
 			stock = string_cleaner(stock);
-			// ft_printf("stock = >%s<\n", stock);
 			if (stock[ft_strlen(stock) - 1] == ':')
 			{
 				// ft_printf("label input[%d] = %s\n", i, input[i]);
@@ -225,12 +245,33 @@ int		fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t 
 				stock_instruction(&struct_tab[j], input[i], 0);//stock instruction line in struct_tab[j]
 				j++;
 			}
-			else
-			{
-				ft_printf("situation non gérée !\n");
-				break ; // temporary "if none matches then it's bullshit so ignore" instruction
-			}
+			// else
+			// {
+				// ft_printf("situation non gérée !\n");
+				// break ; // temporary "if none matches then it's bullshit so ignore" instruction
+			// }
 			// is_instruc(stock) ? stock
+		}
+		i++;
+	}
+	return (1);
+}
+
+int		fill_tab_label_cor_addr(line_t *tab, int len)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < len)
+	{
+		if (tab[i].label && !tab[i].relative_cor_addr)
+		{
+			j = i;
+			while (!tab[j].relative_cor_addr)
+				j++;
+			tab[i].relative_cor_addr = tab[j].relative_cor_addr;
 		}
 		i++;
 	}
@@ -242,6 +283,8 @@ int		struct_tab_fill(char **input, line_t *struct_tab, header_t *header, tools_t
 	if (!fill_tab_input(input, struct_tab, header, tools))
 		return (0);
 	if (!fill_tab_sizes(struct_tab, ft_tablen(input), tools))
+		return (0);
+	if (!fill_tab_label_cor_addr(struct_tab, ft_tablen(input)))
 		return (0);
 	return (1);
 }
