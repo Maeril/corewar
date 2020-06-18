@@ -6,13 +6,13 @@
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/16 20:26:23 by hben-yah          #+#    #+#              #
-#    Updated: 2020/04/16 20:26:23 by hben-yah         ###   ########.fr        #
+#    Updated: 2020/06/18 08:05:23 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	libft.a
 
-COMP			=	clang
+COMP			=	gcc
 FLAG			=	-Wall -Wextra -Werror
 FLAGDEV         =   -g3
 

@@ -6,13 +6,13 @@
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/16 20:26:22 by hben-yah          #+#    #+#              #
-#    Updated: 2020/04/16 20:26:22 by hben-yah         ###   ########.fr        #
+#    Updated: 2020/06/18 08:05:11 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	corewar
 
-COMP			=	clang
+COMP			=	gcc
 FLAG			=	-Wall -Wextra -Werror
 FLAGDEV         =   -g3
 
