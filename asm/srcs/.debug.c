@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 21:14:56 by myener            #+#    #+#             */
-/*   Updated: 2020/05/18 01:10:14 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/19 19:07:28 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,3 +117,14 @@ void	decimal_to_hex_2scomplement(int fd, int value)
 	// ft_printf("apres2: %s\n\n", bin);
 }
 
+void	check_cor_addr(line_t *tab, int len) // DEBUG
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (tab[i].instruc)
+			ft_print("instruc = %s, cor addr = %d", tab[i].instruc, tab[i].relative_cor_addr);
+	}
+}

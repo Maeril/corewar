@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/06/01 21:49:54 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/19 19:47:15 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int		get_param_sz(char *param, int label_size)
 	if (param[0] == 'r') // if register
 		return (1);
 	else if (param[0] == '%') // if direct
-		return (label_size  == 1 ? 2 : 4);
+	{
+		return (label_size == 1 ? 2 : 4);
+	}
 	else if (param[0] == ':' || ft_isdigit(param[0])) // if indirect
 		return (2);
 	return (0);
@@ -73,6 +75,18 @@ int		get_correct_cor_ln(line_t *tab, int i)
 	return (0);
 }
 
+void	check_cor_addr(line_t *tab, int len) // DEBUG
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_printf("label = %s, instruc = %s, cor addr = %d\n", tab[i].label, tab[i].instruc, tab[i].relative_cor_addr);
+		i++;
+	}
+}
+
 int		fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 {
 	int	i;
@@ -88,18 +102,18 @@ int		fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 		{
 			l = has_label_size(tab[i].instruc);
 			nb = tab[i].nb_param;
-			tools->cor_line_counter += get_correct_cor_ln(tab, i); // needs vetting. 27052020 update: yes the fuck it does. 01062020 update: calm down guys, ive edited the ternary.
-			// ft_printf("counter = %d\n", tools->cor_line_counter);
+			tools->cor_line_counter += get_correct_cor_ln(tab, i); // needs vetting. 27052020 update: yes the fuck it does. 01062020 update: calm down guys, ive edited the ternary. 19062020 update: well you fucked up somewhere because it's STILL NOT WORKING
+			// ft_printf("counter for instruc %s = %d\n", tab[i].instruc, tools->cor_line_counter);
 			tab[i].param1_sz = get_param_sz(tab[i].param1, l);
-			// ft_printf("param1 size = %d\n", tab[i].param1_sz);
+			// ft_printf("param1 = %s, param1 size = %d\n", tab[i].param1, tab[i].param1_sz);
 			tab[i].param2_sz = nb == 1 ? 0 : get_param_sz(tab[i].param2, l);
-			// ft_printf("param2 size = %d\n", tab[i].param2_sz);
+			// ft_printf("param2 = %s, param2 size = %d\n", tab[i].param2, tab[i].param2_sz);
 			tab[i].param3_sz = nb == 3 ? get_param_sz(tab[i].param3, l) : 0;
-			// ft_printf("param3 size = %d\n", tab[i].param3_sz);
+			// ft_printf("param3 = %s, param3 size = %d\n", tab[i].param3, tab[i].param3_sz);
 			tab[i].line_cor_ln = tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz + 1; // +1 for the opcode (size of 1)
 			tab[i].line_cor_ln += has_coding_byte(tab[i].instruc) ? 1 : 0; // one more +1 if there's a coding byte (only 4 instrucs have one)
 			tab[i].relative_cor_addr = tools->cor_line_counter;
-			// ft_printf("relative cor addr = %d\n", tab[i].relative_cor_addr);
+			// ft_printf("relative cor addr = %d (all precedent params sizes + opcode, coding byte = %d)\n\n", tab[i].relative_cor_addr, has_coding_byte(tab[i].instruc));
 			// ft_printf("tab[%d].label = %s\n", i, tab[i].label);
 			// ft_printf("tab[%d].param1 = >%s<\n", i, tab[i].param1);
 			tab[i].called_label = get_called_label(tab, i, len);
@@ -257,7 +271,7 @@ int		fill_tab_input(char **input, line_t *struct_tab, header_t *header, tools_t 
 	return (1);
 }
 
-int		fill_tab_label_cor_addr(line_t *tab, int len)
+int		fill_lonely_labels(line_t *tab, int len)
 {
 	int i;
 	int	j;
@@ -269,8 +283,8 @@ int		fill_tab_label_cor_addr(line_t *tab, int len)
 		if (tab[i].label && !tab[i].relative_cor_addr)
 		{
 			j = i;
-			while (!tab[j].relative_cor_addr)
-				j++;
+			while (j > 0 && !tab[j].relative_cor_addr)
+				j--;
 			tab[i].relative_cor_addr = tab[j].relative_cor_addr;
 		}
 		i++;
@@ -284,7 +298,8 @@ int		struct_tab_fill(char **input, line_t *struct_tab, header_t *header, tools_t
 		return (0);
 	if (!fill_tab_sizes(struct_tab, ft_tablen(input), tools))
 		return (0);
-	if (!fill_tab_label_cor_addr(struct_tab, ft_tablen(input)))
+	if (!fill_lonely_labels(struct_tab, ft_tablen(input)))
 		return (0);
+	check_cor_addr(struct_tab, ft_tablen(input));
 	return (1);
 }

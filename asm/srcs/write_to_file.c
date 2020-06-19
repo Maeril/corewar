@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/01 20:38:58 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/19 19:40:24 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	write_called_label(int fd, int j, int len, line_t *tab, int write_size) // 
 	// find corresponding label in struct_tab
 	while (i < len)
 	{
+		if (tab[i].instruc)
+			// ft_printf("instruc = %s && cor addr = %d\n\n", tab[i].instruc, tab[i].relative_cor_addr);
 		if (tab[i].label && tab[j].called_label
 			&& !(ft_strcmp(tab[i].label, tab[j].called_label)))
 			break;
@@ -107,7 +109,7 @@ void	write_called_label(int fd, int j, int len, line_t *tab, int write_size) // 
 	}
 	// ft_printf("i = %d\n", i);
 	// calculate target relative address - current relative address
-	// ft_printf("target relative address = %d\ncurrent relative address = %d\n", tab[i].relative_cor_addr, tab[j].relative_cor_addr);
+	// ft_printf("target name = %s, relative address = %d\ncurrent name = %s, relative address = %d\n", tab[i].instruc , tab[i].relative_cor_addr, tab[j].instruc, tab[j].relative_cor_addr);
 	value = tab[i].relative_cor_addr - tab[j].relative_cor_addr;
 	// ft_printf("value = %d\n\n", value);
 	if (write_size > 1)

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/06/01 22:03:57 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/19 19:43:23 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int		main(int ac, char **av)
 	}
 	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1); //copies input file name except "s"; "file.s" becomes "file."
 	out_file_name = ft_free_join(out_file_name, "cor"); // adds "cor" extension to file name; "file." becomes "file.cor"
-	if ((fd = open(out_file_name, O_WRONLY | O_CREAT)) < 0)
+	if ((fd = open(out_file_name, O_RDWR | O_CREAT)) < 0)
 	{
 		ft_printf("erreur open\n");
 		return (error_output());
