@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/05/18 01:20:43 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 00:36:15 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			header_fill(header_t *header, char **input, tools_t *tools)
 	i = 0;
 	j = 0;
 	if (bad_dot_line(input))
-		return (0); // temporary
+		return (0);
 	while (input[i])
 	{
 		if (!ft_strncmp(input[i], NAME_CMD_STRING, 5) && tools->name_filled == 0)
@@ -34,13 +34,12 @@ int			header_fill(header_t *header, char **input, tools_t *tools)
 			while (input[i][j] && input[i][j] != '"')
 				j++;
 			j++;
-			beg = j++; // and not 0 to jump over the ", and also increment i in one line (hopefully);
+			beg = j++;
 			while (input[i][j] && input[i][j] != '"')
 				j++;
 			if (j - beg > PROG_NAME_LENGTH)
-				return(error_output()) ; // OUTPUT ERROR AND EXIT
+				return(error_output()) ;
 			str = ft_strsub(input[i], beg, j - beg);
-			// ft_printf("prog name = %s\n", str);
 			ft_strcpy(header->prog_name, str);
 			tools->name_filled = 1;
 		}

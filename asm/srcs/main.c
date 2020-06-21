@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/06/19 19:43:23 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 00:38:27 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,41 +30,6 @@ static char	**append_return(char **in)
 	return (in);
 }
 
-void	print_struct_tab(line_t *struct_tab, int len) // DEBUG ONLY
-{
-	int	i;
-
-	i = 0;
-	// len = 5; // TEST
-	while (i < len)
-	{
-		struct_tab[i].instruc || struct_tab[i].label ? ft_printf("\033[1;36mLINE %d:\033[0m\n", i) : 0;
-		struct_tab[i].label ? ft_printf("\033[1;31mlabel =\033[0m \"%s\"\n", struct_tab[i].label) : 0;
-		struct_tab[i].instruc ? ft_printf("instruc = \"%s\"\n", struct_tab[i].instruc) : 0;
-		ft_printf("\033[1;35mparam1 =\033[0m \"%s\"\n", struct_tab[i].param1);
-		// struct_tab[i].param1 ? ft_printf("\033[1;35mparam1 =\033[0m \"%s\"\n", struct_tab[i].param1) : 0;
-		struct_tab[i].param2 ? ft_printf("\033[1;35mparam2 =\033[0m \"%s\"\n", struct_tab[i].param2) : 0;
-		struct_tab[i].param3 ? ft_printf("\033[1;35mparam3 =\033[0m \"%s\"\n", struct_tab[i].param3) : 0;
-		struct_tab[i].param1 ? ft_printf("nb_params = [%d]\n", struct_tab[i].nb_param) : 0;
-		struct_tab[i].param1 ? ft_printf("\033[1;32mparam1_sz =\033[0m [%d]\n", struct_tab[i].param1_sz) : 0;
-		struct_tab[i].param2 ? ft_printf("\033[1;32mparam2_sz =\033[0m [%d]\n", struct_tab[i].param2_sz) : 0;
-		struct_tab[i].param3 ?ft_printf("\033[1;32mparam3_sz =\033[0m [%d]\n", struct_tab[i].param3_sz) : 0;
-		struct_tab[i].instruc ?ft_printf("\033[1;34mline_cor_length =\033[0m [%d]\n", struct_tab[i].line_cor_ln) : 0;
-		struct_tab[i].called_label ? ft_printf("\033[1;31mcalled_label =\033[0m \"%s\"\n", struct_tab[i].called_label) : 0;
-		ft_printf("\033[1;33mrelative cor address =\033[0m [%d]\n", struct_tab[i].relative_cor_addr);
-		ft_putchar('\n');
-		i++;
-	}
-}
-
-void	header_printer_debug(header_t *header) // DEBUG ONLY
-{
-	ft_printf("comment = %s\n", header->comment);
-	ft_printf("magic = %x\n", header->magic);
-	ft_printf("prog name = %s\n", header->prog_name);
-	ft_printf("prog size = %x\n", header->prog_size);
-}
-
 int		asm_translator(int fd, char **input, tools_t *tools) // fd = fd du .cor
 {
 	header_t	*header;
@@ -74,7 +39,8 @@ int		asm_translator(int fd, char **input, tools_t *tools) // fd = fd du .cor
 		return (0);
 	if (!(struct_tab = malloc(sizeof(line_t) * ft_tablen(input))))
 		return (0);
-	asm_header_init(header);
+	// asm_header_init(header);
+	ft_bzero(header, sizeof(header_t));
 	asm_struct_tab_init(struct_tab, ft_tablen(input));
 	if (!struct_tab_fill(input, struct_tab, header, tools))
 		return (0);
@@ -128,19 +94,19 @@ int		main(int ac, char **av)
 		return (usage_output()); // temporary error output
 	if (!(in_file_content = get_file_content(in_file_name = ft_strdup(av[1])))) // seems to be working
 	{
-		ft_printf("erreur get file content\n");
+		// ft_printf("erreur get file content\n");
 		return (error_output());
 	}
 	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1); //copies input file name except "s"; "file.s" becomes "file."
 	out_file_name = ft_free_join(out_file_name, "cor"); // adds "cor" extension to file name; "file." becomes "file.cor"
-	if ((fd = open(out_file_name, O_RDWR | O_CREAT)) < 0)
+	if ((fd = open(out_file_name, O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH)) < 0)
 	{
-		ft_printf("erreur open\n");
+		// ft_printf("erreur open\n");
 		return (error_output());
 	}
 	if (!asm_translator(fd, in_file_content, &tools)) // writes the content of in_file in out_file, translated in machinelang.
 	{
-		ft_printf("erreur asm translator\n");
+		// ft_printf("erreur asm translator\n");
 		return (error_output());
 	}
 	close(fd);

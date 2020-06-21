@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 21:14:56 by myener            #+#    #+#             */
-/*   Updated: 2020/06/19 19:07:28 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 00:34:40 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,33 @@
 
 /*trucs probablements inutiles datant de quand je pensais qu'il fallait écrire
 tout en hexa version texte ptdr quelle conne*/
+
+void	print_struct_tab(line_t *struct_tab, int len) // DEBUG ONLY
+{
+	int	i;
+
+	i = 0;
+	// len = 5; // TEST
+	while (i < len)
+	{
+		struct_tab[i].instruc || struct_tab[i].label ? ft_printf("\033[1;36mLINE %d:\033[0m\n", i) : 0;
+		struct_tab[i].label ? ft_printf("\033[1;31mlabel =\033[0m \"%s\"\n", struct_tab[i].label) : 0;
+		struct_tab[i].instruc ? ft_printf("instruc = \"%s\"\n", struct_tab[i].instruc) : 0;
+		ft_printf("\033[1;35mparam1 =\033[0m \"%s\"\n", struct_tab[i].param1);
+		// struct_tab[i].param1 ? ft_printf("\033[1;35mparam1 =\033[0m \"%s\"\n", struct_tab[i].param1) : 0;
+		struct_tab[i].param2 ? ft_printf("\033[1;35mparam2 =\033[0m \"%s\"\n", struct_tab[i].param2) : 0;
+		struct_tab[i].param3 ? ft_printf("\033[1;35mparam3 =\033[0m \"%s\"\n", struct_tab[i].param3) : 0;
+		struct_tab[i].param1 ? ft_printf("nb_params = [%d]\n", struct_tab[i].nb_param) : 0;
+		struct_tab[i].param1 ? ft_printf("\033[1;32mparam1_sz =\033[0m [%d]\n", struct_tab[i].param1_sz) : 0;
+		struct_tab[i].param2 ? ft_printf("\033[1;32mparam2_sz =\033[0m [%d]\n", struct_tab[i].param2_sz) : 0;
+		struct_tab[i].param3 ?ft_printf("\033[1;32mparam3_sz =\033[0m [%d]\n", struct_tab[i].param3_sz) : 0;
+		struct_tab[i].instruc ?ft_printf("\033[1;34mline_cor_length =\033[0m [%d]\n", struct_tab[i].line_cor_ln) : 0;
+		struct_tab[i].called_label ? ft_printf("\033[1;31mcalled_label =\033[0m \"%s\"\n", struct_tab[i].called_label) : 0;
+		ft_printf("\033[1;33mrelative cor address =\033[0m [%d]\n", struct_tab[i].relative_cor_addr);
+		ft_putchar('\n');
+		i++;
+	}
+}
 
 char	*generate_binary(int value)
 {

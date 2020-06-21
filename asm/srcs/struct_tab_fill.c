@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/06/19 19:47:15 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/21 05:27:04 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		get_param_sz(char *param, int label_size)
 	{
 		return (label_size == 1 ? 2 : 4);
 	}
-	else if (param[0] == ':' || ft_isdigit(param[0])) // if indirect
+	else if (param[0] == ':' || (ft_atoi(param) >= INT_MIN && ft_atoi(param) <= INT_MAX)) // if indirect
 		return (2);
 	return (0);
 }
@@ -109,7 +109,7 @@ int		fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 			tab[i].param2_sz = nb == 1 ? 0 : get_param_sz(tab[i].param2, l);
 			// ft_printf("param2 = %s, param2 size = %d\n", tab[i].param2, tab[i].param2_sz);
 			tab[i].param3_sz = nb == 3 ? get_param_sz(tab[i].param3, l) : 0;
-			// ft_printf("param3 = %s, param3 size = %d\n", tab[i].param3, tab[i].param3_sz);
+			// ft_printf("param3 = %s, param3 size = %d\n\n", tab[i].param3, tab[i].param3_sz);
 			tab[i].line_cor_ln = tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz + 1; // +1 for the opcode (size of 1)
 			tab[i].line_cor_ln += has_coding_byte(tab[i].instruc) ? 1 : 0; // one more +1 if there's a coding byte (only 4 instrucs have one)
 			tab[i].relative_cor_addr = tools->cor_line_counter;
@@ -126,6 +126,7 @@ int		fill_tab_sizes(line_t *tab, int len, tools_t *tools)
 		}
 		i++;
 	}
+	// ft_printf("progsize = %d\n", tools->prog_size);
 	return (1);
 }
 
@@ -276,18 +277,27 @@ int		fill_lonely_labels(line_t *tab, int len)
 	int i;
 	int	j;
 
-	i = 0;
+	i = 1; // and not 0 to jump over the first line of tab, whose relative addr will always be 0.
 	j = 0;
 	while (i < len)
 	{
 		if (tab[i].label && !tab[i].relative_cor_addr)
 		{
 			j = i;
-			while (j > 0 && !tab[j].relative_cor_addr)
-				j--;
+			while (j < len && !tab[j].relative_cor_addr)
+				j++;
 			tab[i].relative_cor_addr = tab[j].relative_cor_addr;
 		}
 		i++;
+	}
+	while (i > 0 && !tab[i].label && !tab[i].instruc)
+		i--;
+	if (tab[i].label && !tab[i].instruc)
+	{
+		j = i;
+		while (j > 0 && !tab[j].instruc)
+			j--;
+		tab[i].relative_cor_addr = tab[j].relative_cor_addr + tab[j].param1_sz + tab[j].param2_sz + tab[j].param3_sz + has_coding_byte(tab[j].instruc) + 1;
 	}
 	return (1);
 }
@@ -300,6 +310,6 @@ int		struct_tab_fill(char **input, line_t *struct_tab, header_t *header, tools_t
 		return (0);
 	if (!fill_lonely_labels(struct_tab, ft_tablen(input)))
 		return (0);
-	check_cor_addr(struct_tab, ft_tablen(input));
+	// check_cor_addr(struct_tab, ft_tablen(input));
 	return (1);
 }

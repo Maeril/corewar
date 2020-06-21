@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/19 19:40:24 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 00:35:41 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,27 +91,25 @@ int		get_coding_byte(line_t *tab, int i)
 	return (ft_atoi(base_converter(byte, BIN, DECI))); // probably not right
 }
 
-void	write_called_label(int fd, int j, int len, line_t *tab, int write_size) // here we assume param's been confirmed legit, and there's only one per instruction
+void	write_called_label(int fd, int i, int len, line_t *tab, int write_size) // here we assume param's been confirmed legit, and there's only one per instruction
 {
-	int					i;
+	int					j;
 	int					value;
 
-	i = 0;
+	j = 0;
 	// find corresponding label in struct_tab
-	while (i < len)
+	while (j < len)
 	{
-		if (tab[i].instruc)
+		// if (tab[j].instruc)
 			// ft_printf("instruc = %s && cor addr = %d\n\n", tab[i].instruc, tab[i].relative_cor_addr);
-		if (tab[i].label && tab[j].called_label
-			&& !(ft_strcmp(tab[i].label, tab[j].called_label)))
+		if (tab[j].label && !(ft_strcmp(tab[j].label, tab[i].called_label)))
 			break;
-		i++;
+		j++;
 	}
-	// ft_printf("i = %d\n", i);
+	// ft_printf("called label was %s and its addr is %d, found label is %s and its addr is %d\n", tab[i].called_label, tab[i].relative_cor_addr, tab[j].label, tab[j].relative_cor_addr);
 	// calculate target relative address - current relative address
-	// ft_printf("target name = %s, relative address = %d\ncurrent name = %s, relative address = %d\n", tab[i].instruc , tab[i].relative_cor_addr, tab[j].instruc, tab[j].relative_cor_addr);
-	value = tab[i].relative_cor_addr - tab[j].relative_cor_addr;
-	// ft_printf("value = %d\n\n", value);
+	value = tab[j].relative_cor_addr - tab[i].relative_cor_addr;
+	// ft_printf("so value is %d.\n\n", value);
 	if (write_size > 1)
 	{
 		value = swap_uint32(value);
@@ -138,23 +136,28 @@ void	write_param(int fd, char *str, int write_size)
 			dec = write_size == 2 ? (dec << 16) | (dec >> 16) : dec;
 		}
 		write(fd, &dec, write_size);
-		// ft_putnbr_base_fd(fd, dec, HEXL);
 	}
 	else // else it's a direct or indirect, so write it accordingly w/o the prefixed special characters
 	{
+		// ft_printf("str = %s with a write size of %d\n", str, write_size);
 		tmp = str[0] == '%' ? ft_strsub(str, 1, ft_strlen(str) - 1) : NULL;
 		dec = str[0] == '%' ? ft_atoi(tmp) : ft_atoi(str);
-		// write_size == 2 ? write(fd, "00", 2) : write(fd, "000000", 6); // write the correct amount of leading zeros
-		// dec <= 16 && dec >= 0 ? write(fd, "0", 1): 0; // for leading zeros
 		if (write_size > 1)
 		{
 			dec = swap_uint32(dec);
 			dec = write_size == 2 ? (dec << 16) | (dec >> 16) : dec;
 		}
 		write(fd, &dec, write_size);
-		// ft_putnbr_base_fd(fd, dec, HEXL);
 	}
 }
+
+// void	header_printer_debug(header_t *header) // DEBUG ONLY
+// {
+// 	ft_printf("comment = %s\n", header->comment);
+// 	ft_printf("magic = %x\n", header->magic);
+// 	ft_printf("prog name = %s\n", header->prog_name);
+// 	ft_printf("prog size = %x\n", header->prog_size);
+// }
 
 int		write_to_cor(line_t *tab, header_t *header, int len, int fd)
 {
@@ -165,7 +168,6 @@ int		write_to_cor(line_t *tab, header_t *header, int len, int fd)
 	i = 0;
 	coding_byte = 0;
 	opcode = 0;
-	(void)header;
 	write(fd, header, sizeof(header_t));
 	while (i < len)
 	{
@@ -184,7 +186,7 @@ int		write_to_cor(line_t *tab, header_t *header, int len, int fd)
 			}
 			if (tab[i].param1)
 			{
-				// ft_printf("for param %s:\n", tab[i].param1);
+				// ft_printf("param 1: %s, called label: %d\n", tab[i].param1, is_called_label(tab[i].param1, tab[i].param1_sz));
 				is_called_label(tab[i].param1, tab[i].param1_sz) ?
 				write_called_label(fd, i, len, tab, tab[i].param1_sz) :
 				write_param(fd, tab[i].param1, tab[i].param1_sz);
@@ -192,7 +194,7 @@ int		write_to_cor(line_t *tab, header_t *header, int len, int fd)
 			}
 			if (tab[i].param2)
 			{
-				// ft_printf("for param %s:\n", tab[i].param2);
+				// ft_printf("param 2: %s, called label: %d\n", tab[i].param2, is_called_label(tab[i].param2, tab[i].param2_sz));
 				is_called_label(tab[i].param2, tab[i].param2_sz) ?
 				write_called_label(fd, i, len, tab, tab[i].param2_sz) :
 				write_param(fd, tab[i].param2, tab[i].param2_sz);
@@ -200,7 +202,7 @@ int		write_to_cor(line_t *tab, header_t *header, int len, int fd)
 			}
 			if (tab[i].param3)
 			{
-				// ft_printf("for param %s:\n", tab[i].param3);
+				// ft_printf("param 3: %s, called label: %d\n", tab[i].param3, is_called_label(tab[i].param3, tab[i].param3_sz));
 				is_called_label(tab[i].param3, tab[i].param3_sz) ?
 				write_called_label(fd, i, len, tab, tab[i].param2_sz) :
 				write_param(fd, tab[i].param3, tab[i].param3_sz);
