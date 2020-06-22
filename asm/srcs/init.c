@@ -6,13 +6,13 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 19:08:29 by myener            #+#    #+#             */
-/*   Updated: 2020/06/21 04:12:32 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 01:48:20 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-void		asm_struct_tab_init(line_t *line, int len)
+void		asm_struct_tab_init(t_line *line, int len)
 {
 	int i;
 
@@ -35,7 +35,7 @@ void		asm_struct_tab_init(line_t *line, int len)
 	}
 }
 
-void	asm_tools_init(tools_t *tools)
+void		asm_tools_init(t_tools *tools)
 {
 	tools->name_filled = 0;
 	tools->com_filled = 0;

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 00:38:27 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 02:04:23 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,26 @@ static char	**append_return(char **in)
 	return (in);
 }
 
-int		asm_translator(int fd, char **input, tools_t *tools) // fd = fd du .cor
+int			asm_translator(int fd, char **input, t_tools *tools)
 {
-	header_t	*header;
-	line_t		*struct_tab;
+	t_header	*header;
+	t_line		*struct_tab;
 
-	if (!(header = malloc(sizeof(header_t) * 1)))
+	if (!(header = malloc(sizeof(t_header) * 1)))
 		return (0);
-	if (!(struct_tab = malloc(sizeof(line_t) * ft_tablen(input))))
+	if (!(struct_tab = malloc(sizeof(t_line) * ft_tablen(input))))
 		return (0);
-	// asm_header_init(header);
-	ft_bzero(header, sizeof(header_t));
+	ft_bzero(header, sizeof(t_header));
 	asm_struct_tab_init(struct_tab, ft_tablen(input));
 	if (!struct_tab_fill(input, struct_tab, header, tools))
 		return (0);
 	header_fill(header, input, tools);
-	// header_printer_debug(header); // DEBUG
-	// print_struct_tab(struct_tab, ft_tablen(input)); // DEBUG
 	if (!write_to_cor(struct_tab, header, ft_tablen(input), fd))
 		return (0);
 	return (1);
 }
 
-char	**get_file_content(char *file_name)
+char		**get_file_content(char *file_name)
 {
 	int		i;
 	int		fd;
@@ -80,10 +77,10 @@ char	**get_file_content(char *file_name)
 	return (content);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	int		fd;
-	tools_t	tools;
+	t_tools	tools;
 	char	*in_file_name;
 	char	*out_file_name;
 	char	**in_file_content;
@@ -91,27 +88,19 @@ int		main(int ac, char **av)
 	asm_tools_init(&tools);
 	if (ac < 2 || (av[1] && (!(av[1][ft_strlen(av[1]) - 1] == 's'
 		&& av[1][ft_strlen(av[1]) - 2] == '.'))))
-		return (usage_output()); // temporary error output
-	if (!(in_file_content = get_file_content(in_file_name = ft_strdup(av[1])))) // seems to be working
-	{
-		// ft_printf("erreur get file content\n");
+		return (usage_output());
+	in_file_name = ft_strdup(av[1]);
+	if (!(in_file_content = get_file_content(in_file_name)))
 		return (error_output());
-	}
-	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1); //copies input file name except "s"; "file.s" becomes "file."
-	out_file_name = ft_free_join(out_file_name, "cor"); // adds "cor" extension to file name; "file." becomes "file.cor"
+	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1);
+	out_file_name = ft_free_join(out_file_name, "cor");
 	if ((fd = open(out_file_name, O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH)) < 0)
-	{
-		// ft_printf("erreur open\n");
 		return (error_output());
-	}
-	if (!asm_translator(fd, in_file_content, &tools)) // writes the content of in_file in out_file, translated in machinelang.
-	{
-		// ft_printf("erreur asm translator\n");
+	if (!asm_translator(fd, in_file_content, &tools))
 		return (error_output());
-	}
 	close(fd);
 	in_file_name ? free(in_file_name) : 0;
 	out_file_name ? free(out_file_name) : 0;
-	in_file_content? tab_free(in_file_content) : 0;
+	in_file_content ? tab_free(in_file_content) : 0;
 	return (0);
 }

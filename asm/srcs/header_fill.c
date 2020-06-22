@@ -6,13 +6,13 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 00:36:15 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 02:06:00 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-int			header_fill(header_t *header, char **input, tools_t *tools)
+int			header_fill(t_header *header, char **input, t_tools *tools)
 {
 	int		i;
 	int		j;
@@ -38,7 +38,7 @@ int			header_fill(header_t *header, char **input, tools_t *tools)
 			while (input[i][j] && input[i][j] != '"')
 				j++;
 			if (j - beg > PROG_NAME_LENGTH)
-				return(error_output()) ;
+				return (0);
 			str = ft_strsub(input[i], beg, j - beg);
 			ft_strcpy(header->prog_name, str);
 			tools->name_filled = 1;
@@ -50,13 +50,12 @@ int			header_fill(header_t *header, char **input, tools_t *tools)
 			while (input[i][j] && input[i][j] != '"')
 				j++;
 			j++;
-			beg = j++; // and not 0 to jump over the ", and also increment i in one line (hopefully);
+			beg = j++;
 			while (input[i][j] && input[i][j] != '"')
 				j++;
 			if ((j - beg) > COMMENT_LENGTH)
-				return (0); // OUTPUT ERROR AND EXIT
+				return (0);
 			str = ft_strsub(input[i], beg, j - beg);
-			// ft_printf("comment = %s\n", str);
 			ft_strcpy(header->comment, str);
 			tools->com_filled = 1;
 		}
@@ -64,6 +63,5 @@ int			header_fill(header_t *header, char **input, tools_t *tools)
 	}
 	header->prog_size = tools->prog_size;
 	header->prog_size = swap_uint32(header->prog_size);
-	//else, do nothing. gotta check whether encountering >1 name or comment = error.
 	return (1);
 }

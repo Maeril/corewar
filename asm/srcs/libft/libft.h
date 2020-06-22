@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/14 13:57:15 by myener            #+#    #+#             */
-/*   Updated: 2020/06/20 21:39:33 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 01:39:27 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ char			*ft_free_join(const char *s1, const char *s2);
 int				ft_intlen(long long int n);
 int				ft_uintlen(unsigned long long int n);
 int				ft_octlen(unsigned long long int n);
-char			*ft_grabword(char *str, int start, int upper, int lower,
-							int lownum);
+char			*ft_grabword(char *str, int start, int upper, int lower);
 int				ft_hexlen(unsigned long long int n);
 float			ft_floatmod(float x, float y);
 int				ft_isalnum(int c);

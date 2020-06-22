@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 00:35:41 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 01:59:02 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,36 +49,35 @@ int		get_opcode(char *instruc)
 	return (0);
 }
 
-int		get_coding_byte(line_t *tab, int i)
+int		get_coding_byte(t_line *tab, int i)
 {
 	int		j;
 	int		counter;
 	char	*byte;
 
-	// 1: build coding byte binary from data in struc
 	counter = 0;
 	byte = ft_strnew(1);
 	if (tab[i].param1 > 0)
 	{
-		if (tab[i].param1[0] == '%') // if yes then it's a direct
+		if (tab[i].param1[0] == '%')
 			byte = ft_free_join(byte, "10");
-		else // else it's: a register if sz = 1, an indirect otherwise.
+		else
 			byte = ft_free_join(byte, tab[i].param1_sz == 1 ? "01" : "11");
 		counter += 2;
 	}
 	if (tab[i].param2 > 0)
 	{
-		if (tab[i].param2[0] == '%') // if yes then it's a direct
+		if (tab[i].param2[0] == '%')
 			byte = ft_free_join(byte, "10");
-		else // else it's: a register if sz = 1, an indirect otherwise.
+		else
 			byte = ft_free_join(byte, tab[i].param2_sz == 1 ? "01" : "11");
 		counter += 2;
 	}
 	if (tab[i].param3 > 0)
 	{
-		if (tab[i].param3[0] == '%') // if yes then it's a direct
+		if (tab[i].param3[0] == '%')
 			byte = ft_free_join(byte, "10");
-		else // else it's: a register if sz = 1, an indirect otherwise.
+		else
 			byte = ft_free_join(byte, tab[i].param3_sz == 1 ? "01" : "11");
 		counter += 2;
 	}
@@ -88,28 +87,22 @@ int		get_coding_byte(line_t *tab, int i)
 		byte = ft_free_join(byte, "0");
 		j++;
 	}
-	return (ft_atoi(base_converter(byte, BIN, DECI))); // probably not right
+	return (ft_atoi(base_converter(byte, BIN, DECI)));
 }
 
-void	write_called_label(int fd, int i, int len, line_t *tab, int write_size) // here we assume param's been confirmed legit, and there's only one per instruction
+void	write_called_label(int fd, int i, int len, t_line *tab, int write_size)
 {
 	int					j;
 	int					value;
 
 	j = 0;
-	// find corresponding label in struct_tab
 	while (j < len)
 	{
-		// if (tab[j].instruc)
-			// ft_printf("instruc = %s && cor addr = %d\n\n", tab[i].instruc, tab[i].relative_cor_addr);
 		if (tab[j].label && !(ft_strcmp(tab[j].label, tab[i].called_label)))
-			break;
+			break ;
 		j++;
 	}
-	// ft_printf("called label was %s and its addr is %d, found label is %s and its addr is %d\n", tab[i].called_label, tab[i].relative_cor_addr, tab[j].label, tab[j].relative_cor_addr);
-	// calculate target relative address - current relative address
 	value = tab[j].relative_cor_addr - tab[i].relative_cor_addr;
-	// ft_printf("so value is %d.\n\n", value);
 	if (write_size > 1)
 	{
 		value = swap_uint32(value);
@@ -124,12 +117,11 @@ void	write_param(int fd, char *str, int write_size)
 	char	*tmp;
 
 	tmp = NULL;
-	if (write_size == 1) // if it's a register
+	if (write_size == 1)
 	{
-		tmp = ft_strsub(str, 1, ft_strlen(str) - 1); // start is at 1 to jump over the 'r'
+		tmp = ft_strsub(str, 1, ft_strlen(str) - 1);
 		dec = ft_atoi(tmp);
-		// free(tmp);
-		// dec <= 16 && dec >= 0 ? write(fd, "0", 1): 0; // for leading zeros
+		tmp ? free(tmp) : 0;
 		if (write_size > 1)
 		{
 			dec = swap_uint32(dec);
@@ -137,9 +129,8 @@ void	write_param(int fd, char *str, int write_size)
 		}
 		write(fd, &dec, write_size);
 	}
-	else // else it's a direct or indirect, so write it accordingly w/o the prefixed special characters
+	else
 	{
-		// ft_printf("str = %s with a write size of %d\n", str, write_size);
 		tmp = str[0] == '%' ? ft_strsub(str, 1, ft_strlen(str) - 1) : NULL;
 		dec = str[0] == '%' ? ft_atoi(tmp) : ft_atoi(str);
 		if (write_size > 1)
@@ -151,15 +142,7 @@ void	write_param(int fd, char *str, int write_size)
 	}
 }
 
-// void	header_printer_debug(header_t *header) // DEBUG ONLY
-// {
-// 	ft_printf("comment = %s\n", header->comment);
-// 	ft_printf("magic = %x\n", header->magic);
-// 	ft_printf("prog name = %s\n", header->prog_name);
-// 	ft_printf("prog size = %x\n", header->prog_size);
-// }
-
-int		write_to_cor(line_t *tab, header_t *header, int len, int fd)
+int		write_to_cor(t_line *tab, t_header *header, int ln, int fd)
 {
 	int i;
 	int	opcode;
@@ -168,48 +151,37 @@ int		write_to_cor(line_t *tab, header_t *header, int len, int fd)
 	i = 0;
 	coding_byte = 0;
 	opcode = 0;
-	write(fd, header, sizeof(header_t));
-	while (i < len)
+	write(fd, header, sizeof(t_header));
+	while (i < ln)
 	{
 		if (tab[i].instruc)
 		{
-			// ft_printf("instruc = %s\n", tab[i].instruc);
 			opcode = get_opcode(tab[i].instruc);
-			// ft_printf("opcode = %d\n", opcode);
 			write(fd, &opcode, 1);
-			// ft_putchar_fd(' ', fd); // DEBUG
 			if (has_coding_byte(tab[i].instruc))
 			{
 				coding_byte = get_coding_byte(tab, i);
 				write(fd, &coding_byte, 1);
-				// ft_putchar_fd(' ', fd); // DEBUG
 			}
 			if (tab[i].param1)
 			{
-				// ft_printf("param 1: %s, called label: %d\n", tab[i].param1, is_called_label(tab[i].param1, tab[i].param1_sz));
 				is_called_label(tab[i].param1, tab[i].param1_sz) ?
-				write_called_label(fd, i, len, tab, tab[i].param1_sz) :
+				write_called_label(fd, i, ln, tab, tab[i].param1_sz) :
 				write_param(fd, tab[i].param1, tab[i].param1_sz);
-				// ft_putchar_fd(' ', fd); // DEBUG
 			}
 			if (tab[i].param2)
 			{
-				// ft_printf("param 2: %s, called label: %d\n", tab[i].param2, is_called_label(tab[i].param2, tab[i].param2_sz));
 				is_called_label(tab[i].param2, tab[i].param2_sz) ?
-				write_called_label(fd, i, len, tab, tab[i].param2_sz) :
+				write_called_label(fd, i, ln, tab, tab[i].param2_sz) :
 				write_param(fd, tab[i].param2, tab[i].param2_sz);
-				// ft_putchar_fd(' ', fd); // DEBUG
 			}
 			if (tab[i].param3)
 			{
-				// ft_printf("param 3: %s, called label: %d\n", tab[i].param3, is_called_label(tab[i].param3, tab[i].param3_sz));
 				is_called_label(tab[i].param3, tab[i].param3_sz) ?
-				write_called_label(fd, i, len, tab, tab[i].param2_sz) :
+				write_called_label(fd, i, ln, tab, tab[i].param2_sz) :
 				write_param(fd, tab[i].param3, tab[i].param3_sz);
-				// ft_putchar_fd(' ', fd); // DEBUG
 			}
 		}
-		// if (tab[i].called_label)
 		i++;
 	}
 	return (1);

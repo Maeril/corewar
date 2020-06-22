@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 21:14:56 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 00:34:40 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 00:53:36 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,27 @@ void	binary_add1(char *str)
 	}
 	else if (str[i] == '0')
 		str[i] = '1';
+}
+
+void	header_printer_debug(header_t *header) // DEBUG ONLY
+{
+	ft_printf("comment = %s\n", header->comment);
+	ft_printf("magic = %x\n", header->magic);
+	ft_printf("prog name = %s\n", header->prog_name);
+	ft_printf("prog size = %x\n", header->prog_size);
+}
+
+
+void	check_cor_addr(line_t *tab, int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_printf("label = %s, instruc = %s, cor addr = %d\n", tab[i].label, tab[i].instruc, tab[i].relative_cor_addr);
+		i++;
+	}
 }
 
 void	*bin_to_hex(int fd, char *bin)
