@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 02:04:23 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 02:52:09 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,21 @@ int			asm_translator(int fd, char **input, t_tools *tools)
 	if (!struct_tab_fill(input, struct_tab, header, tools))
 		return (0);
 	header_fill(header, input, tools);
-	if (!write_to_cor(struct_tab, header, ft_tablen(input), fd))
+	tools->tablen = ft_tablen(input);
+	tools->fd = fd;
+	if (!write_to_cor(struct_tab, header, tools))
 		return (0);
 	return (1);
 }
 
 char		**get_file_content(char *file_name)
 {
-	int		i;
 	int		fd;
 	char	*tmp;
 	char	*line;
 	char	*stock;
 	char	**content;
 
-	i = 0;
 	stock = ft_strnew(1);
 	if ((fd = open(file_name, O_RDONLY)) < 0)
 		return (NULL);
@@ -67,13 +67,12 @@ char		**get_file_content(char *file_name)
 		tmp = line;
 		stock = ft_free_join(stock, line);
 		stock = ft_free_join(stock, "\n");
-		free(tmp);
-		i++;
+		tmp ? free(tmp) : 0;
 	}
 	close(fd);
 	content = ft_strsplit(stock, '\n');
 	content = append_return(content);
-	ft_strdel(&stock);
+	stock ? ft_strdel(&stock) : 0;
 	return (content);
 }
 
@@ -94,7 +93,8 @@ int			main(int ac, char **av)
 		return (error_output());
 	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1);
 	out_file_name = ft_free_join(out_file_name, "cor");
-	if ((fd = open(out_file_name, O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH)) < 0)
+	fd = open(out_file_name, O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH);
+	if (fd < 0)
 		return (error_output());
 	if (!asm_translator(fd, in_file_content, &tools))
 		return (error_output());

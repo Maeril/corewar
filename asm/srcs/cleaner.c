@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:08:34 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 02:05:10 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 02:46:33 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ char	*string_cleaner(char *str)
 	tmp = NULL;
 	str = ft_strtrim(str);
 	if (str[0] == ',')
-	{
 		out = ft_strsub(str, 1, ft_strlen(str) - 1);
-	}
 	if (str[ft_strlen(str) - 1] == ',')
 	{
 		if (out)
@@ -31,16 +29,11 @@ char	*string_cleaner(char *str)
 		else
 			out = ft_strsub(str, 0, ft_strlen(str) - 1);
 	}
-	if (tmp)
+	if (tmp || (!tmp && out))
 	{
 		str ? free(str) : 0;
 		out ? free(out) : 0;
-		return (tmp);
-	}
-	else if (!tmp && out)
-	{
-		str ? free(str) : 0;
-		return (out);
+		return (tmp ? tmp : out);
 	}
 	return (str);
 }

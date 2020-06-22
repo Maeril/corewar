@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 01:59:11 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/22 02:52:03 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef	struct		s_tools
 	bool			com_filled;
 	int				cor_line_counter;
 	int				prog_size;
+	int				tablen;
+	int				fd;
 }					t_tools;
 
 typedef struct		s_line
@@ -69,6 +71,6 @@ int					struct_tab_fill(char **input, t_line *struct_tab,
 					t_header *header, t_tools *tools);
 unsigned int		swap_uint32(unsigned int nb);
 int					usage_output(void);
-int					write_to_cor(t_line *tab, t_header *header, int ln, int fd);
+int					write_to_cor(t_line *tab, t_header *header, t_tools *tools);
 
 #endif
