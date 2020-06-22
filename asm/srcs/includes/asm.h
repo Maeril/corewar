@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 02:52:03 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 01:51:11 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ typedef	struct		s_tools
 	int				prog_size;
 	int				tablen;
 	int				fd;
+	int				coding_byte;
+	int				opcode;
+	int				j;
+	int				k;
 }					t_tools;
 
 typedef struct		s_line
@@ -57,7 +61,8 @@ int					fill_tab_input(char **input, t_line *struct_tab,
 					t_header *header, t_tools *tools);
 int					fill_tab_sizes(t_line *tab, int len, t_tools *tools);
 char				**get_file_content(char *file_name);
-int					has_coding_byte(char *word);
+char				*get_coding_byte_helper(char *byte, char c, int sz);
+int					has_cb(char *word);
 int					has_label_size(char *word);
 int					has_one_param(char *word);
 int					has_two_params(char *word);

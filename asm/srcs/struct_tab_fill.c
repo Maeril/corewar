@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 02:02:23 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 01:53:50 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ int		fill_tab_sizes(t_line *tab, int len, t_tools *tools)
 			tab[i].param2_sz = nb == 1 ? 0 : get_param_sz(tab[i].param2, l);
 			tab[i].param3_sz = nb == 3 ? get_param_sz(tab[i].param3, l) : 0;
 			tab[i].line_cor_ln = tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz + 1;
-			tab[i].line_cor_ln += has_coding_byte(tab[i].instruc) ? 1 : 0;
+			tab[i].line_cor_ln += has_cb(tab[i].instruc) ? 1 : 0;
 			tab[i].relative_cor_addr = tools->cor_line_counter;
 			tab[i].called_label = get_called_label(tab, i, len);
 			tools->prog_size += 1;
-			tools->prog_size += has_coding_byte(tab[i].instruc) ? 1 : 0;
+			tools->prog_size += has_cb(tab[i].instruc) ? 1 : 0;
 			tools->prog_size += tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz;
 		}
 		i++;
@@ -245,7 +245,7 @@ int		fill_lonely_labels(t_line *tab, int len)
 		j = i;
 		while (j > 0 && !tab[j].instruc)
 			j--;
-		tab[i].relative_cor_addr = tab[j].relative_cor_addr + tab[j].param1_sz + tab[j].param2_sz + tab[j].param3_sz + has_coding_byte(tab[j].instruc) + 1;
+		tab[i].relative_cor_addr = tab[j].relative_cor_addr + tab[j].param1_sz + tab[j].param2_sz + tab[j].param3_sz + has_cb(tab[j].instruc) + 1;
 	}
 	return (1);
 }

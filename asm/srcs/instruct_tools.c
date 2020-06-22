@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:03:42 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 01:04:45 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 01:51:33 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		has_label_size(char *word)
 	return (0);
 }
 
-int		has_coding_byte(char *word)
+int		has_cb(char *word)
 {
 	if (ft_strcmp(word, "live") && ft_strcmp(word, "zjmp")
 	&& ft_strcmp(word, "fork") && ft_strcmp(word, "lfork"))

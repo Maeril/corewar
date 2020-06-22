@@ -6,11 +6,20 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:08:34 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 02:46:33 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 00:49:28 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
+
+char	*get_coding_byte_helper(char *byte, char c, int sz)
+{
+	if (c == '%')
+		byte = ft_strjoin(byte, "10");
+	else
+		byte = ft_strjoin(byte, sz == 1 ? "01" : "11");
+	return (byte);
+}
 
 char	*string_cleaner(char *str)
 {
