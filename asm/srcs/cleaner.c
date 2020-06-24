@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:08:34 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 00:49:28 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 21:25:58 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ char	*string_cleaner(char *str)
 		out ? free(out) : 0;
 		return (tmp ? tmp : out);
 	}
+	// str ? free(str) : 0;
+	// out ? free(out) : 0;
 	return (str);
 }

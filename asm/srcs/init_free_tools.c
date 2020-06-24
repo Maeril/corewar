@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_free_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 19:08:29 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 01:28:54 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 21:28:00 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,36 @@ void		asm_struct_tab_init(t_line *line, int len)
 	{
 		line[i].label = NULL;
 		line[i].instruc = NULL;
-		line[i].param1 = NULL;
-		line[i].param2 = NULL;
-		line[i].param3 = NULL;
+		line[i].p1 = NULL;
+		line[i].p2 = NULL;
+		line[i].p3 = NULL;
 		line[i].nb_param = 0;
-		line[i].param1_sz = 0;
-		line[i].param2_sz = 0;
-		line[i].param3_sz = 0;
+		line[i].p1_sz = 0;
+		line[i].p2_sz = 0;
+		line[i].p3_sz = 0;
 		line[i].line_cor_ln = 0;
 		line[i].called_label = NULL;
 		line[i].relative_cor_addr = 0;
 		i++;
 	}
+}
+
+void		asm_struct_tab_free(t_line *line, int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len)
+	{
+		line[i].label ? free (line[i].label) : 0;
+		line[i].instruc ? free (line[i].instruc) : 0;
+		line[i].p1 ? free (line[i].p1) : 0;
+		line[i].p2 ? free (line[i].p2) : 0;
+		line[i].p3 ? free (line[i].p3) : 0;
+		line[i].called_label ? free (line[i].called_label) : 0;
+		i++;
+	}
+	line ? free(line) : 0;
 }
 
 void		asm_tools_init(t_tools *tools)

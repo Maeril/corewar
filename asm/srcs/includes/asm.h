@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 01:51:11 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 21:27:50 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ typedef struct		s_line
 {
 	char			*label;
 	char			*instruc;
-	char			*param1;
-	char			*param2;
-	char			*param3;
+	char			*p1;
+	char			*p2;
+	char			*p3;
 	int				nb_param;
-	int				param1_sz;
-	int				param2_sz;
-	int				param3_sz;
+	int				p1_sz;
+	int				p2_sz;
+	int				p3_sz;
 	int				line_cor_ln;
 	char			*called_label;
 	int				relative_cor_addr;
@@ -51,6 +51,7 @@ typedef struct		s_line
 
 void				asm_header_init(t_header *header);
 void				asm_struct_tab_init(t_line *line, int len);
+void				asm_struct_tab_free(t_line *line, int len);
 void				asm_tools_init(t_tools *tools);
 int					asm_translator(int fd, char **input, t_tools *tools);
 int					bad_dot_line(char **input);
@@ -58,7 +59,7 @@ void				decimal_to_hex_2scomplement(int fd, int value);
 int					empty_or_comment_line(char *str);
 int					error_output(void);
 int					fill_tab_input(char **input, t_line *struct_tab,
-					t_header *header, t_tools *tools);
+					t_tools *tools);
 int					fill_tab_sizes(t_line *tab, int len, t_tools *tools);
 char				**get_file_content(char *file_name);
 char				*get_coding_byte_helper(char *byte, char c, int sz);
@@ -73,7 +74,7 @@ int					is_instruc(char *word);
 int					is_legit_label(char *label, t_line *tab, int len);
 char				*string_cleaner(char *str);
 int					struct_tab_fill(char **input, t_line *struct_tab,
-					t_header *header, t_tools *tools);
+					t_tools *tools);
 unsigned int		swap_uint32(unsigned int nb);
 int					usage_output(void);
 int					write_to_cor(t_line *tab, t_header *header, t_tools *tools);

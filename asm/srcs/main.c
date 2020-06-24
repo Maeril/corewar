@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/06/22 02:52:09 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 21:37:09 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,23 @@ int			asm_translator(int fd, char **input, t_tools *tools)
 		return (0);
 	ft_bzero(header, sizeof(t_header));
 	asm_struct_tab_init(struct_tab, ft_tablen(input));
-	if (!struct_tab_fill(input, struct_tab, header, tools))
+	if (!struct_tab_fill(input, struct_tab, tools))
+	{
+		header ? free(header) : 0;
+		asm_struct_tab_free(struct_tab, ft_tablen(input));
 		return (0);
+	}
 	header_fill(header, input, tools);
 	tools->tablen = ft_tablen(input);
 	tools->fd = fd;
 	if (!write_to_cor(struct_tab, header, tools))
+	{
+		header ? free(header) : 0;
+		asm_struct_tab_free(struct_tab, ft_tablen(input));
 		return (0);
+	}
+	header ? free(header) : 0;
+	asm_struct_tab_free(struct_tab, ft_tablen(input));
 	return (1);
 }
 
@@ -90,14 +100,28 @@ int			main(int ac, char **av)
 		return (usage_output());
 	in_file_name = ft_strdup(av[1]);
 	if (!(in_file_content = get_file_content(in_file_name)))
+	{
+		in_file_name ? free(in_file_name) : 0;
+		in_file_content ? tab_free(in_file_content) : 0;
 		return (error_output());
+	}
 	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1);
 	out_file_name = ft_free_join(out_file_name, "cor");
 	fd = open(out_file_name, O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
+	{
+		in_file_name ? free(in_file_name) : 0;
+		out_file_name ? free(out_file_name) : 0;
+		in_file_content ? tab_free(in_file_content) : 0;
 		return (error_output());
+	}
 	if (!asm_translator(fd, in_file_content, &tools))
+	{
+		in_file_name ? free(in_file_name) : 0;
+		out_file_name ? free(out_file_name) : 0;
+		in_file_content ? tab_free(in_file_content) : 0;
 		return (error_output());
+	}
 	close(fd);
 	in_file_name ? free(in_file_name) : 0;
 	out_file_name ? free(out_file_name) : 0;

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 01:01:58 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 20:37:01 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,19 @@ int		get_cb(t_line *tab, int i)
 
 	counter = 0;
 	byte = ft_strnew(1);
-	if (tab[i].param1 > 0)
+	if (tab[i].p1 > 0)
 	{
-		byte = get_coding_byte_helper(byte, tab[i].param1[0], tab[i].param1_sz);
+		byte = get_coding_byte_helper(byte, tab[i].p1[0], tab[i].p1_sz);
 		counter += 2;
 	}
-	if (tab[i].param2 > 0)
+	if (tab[i].p2 > 0)
 	{
-		byte = get_coding_byte_helper(byte, tab[i].param2[0], tab[i].param2_sz);
+		byte = get_coding_byte_helper(byte, tab[i].p2[0], tab[i].p2_sz);
 		counter += 2;
 	}
-	if (tab[i].param3 > 0)
+	if (tab[i].p3 > 0)
 	{
-		byte = get_coding_byte_helper(byte, tab[i].param3[0], tab[i].param3_sz);
+		byte = get_coding_byte_helper(byte, tab[i].p3[0], tab[i].p3_sz);
 		counter += 2;
 	}
 	j = -1;
@@ -121,18 +121,18 @@ int		write_to_cor(t_line *tab, t_header *header, t_tools *tools)
 			write(tools->fd, &tools->opcode, 1);
 			tools->coding_byte = (has_cb(tab[i].instruc)) ? get_cb(tab, i) : 0;
 			tools->coding_byte ? write(tools->fd, &tools->coding_byte, 1) : 0;
-			if (tab[i].param1)
-				is_called_label(tab[i].param1, tab[i].param1_sz) ?
-				write_called_label(tools, i, tab, tab[i].param1_sz) :
-				write_param(tools->fd, tab[i].param1, tab[i].param1_sz);
-			if (tab[i].param2)
-				is_called_label(tab[i].param2, tab[i].param2_sz) ?
-				write_called_label(tools, i, tab, tab[i].param2_sz) :
-				write_param(tools->fd, tab[i].param2, tab[i].param2_sz);
-			if (tab[i].param3)
-				is_called_label(tab[i].param3, tab[i].param3_sz) ?
-				write_called_label(tools, i, tab, tab[i].param2_sz) :
-				write_param(tools->fd, tab[i].param3, tab[i].param3_sz);
+			if (tab[i].p1)
+				is_called_label(tab[i].p1, tab[i].p1_sz) ?
+				write_called_label(tools, i, tab, tab[i].p1_sz) :
+				write_param(tools->fd, tab[i].p1, tab[i].p1_sz);
+			if (tab[i].p2)
+				is_called_label(tab[i].p2, tab[i].p2_sz) ?
+				write_called_label(tools, i, tab, tab[i].p2_sz) :
+				write_param(tools->fd, tab[i].p2, tab[i].p2_sz);
+			if (tab[i].p3)
+				is_called_label(tab[i].p3, tab[i].p3_sz) ?
+				write_called_label(tools, i, tab, tab[i].p2_sz) :
+				write_param(tools->fd, tab[i].p3, tab[i].p3_sz);
 		}
 	return (1);
 }

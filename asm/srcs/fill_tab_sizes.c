@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:09:22 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 01:43:02 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/23 20:44:21 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,24 @@ static int		get_param_sz(char *param, int label_size)
 	if (param[0] == 'r')
 		return (1);
 	else if (param[0] == '%')
-	{
 		return (label_size == 1 ? 2 : 4);
-	}
-	else if (param[0] == ':' || (ft_atoi(param) >= INT_MIN && ft_atoi(param) <= INT_MAX))
+	else if (param[0] == ':' || (ft_atoi(param) >= INT_MIN
+		&& ft_atoi(param) <= INT_MAX))
 		return (2);
 	return (0);
+}
+
+static char		*get_param(t_line *tab, int i, char *param)
+{
+	if (tab[i].p1 && tab[i].p1_sz > 1)
+		param = ft_strdup(tab[i].p1);
+	else if (tab[i].p2 && tab[i].p2_sz > 1)
+		param = ft_strdup(tab[i].p2);
+	else if (tab[i].p3 && tab[i].p3_sz > 1)
+		param = ft_strdup(tab[i].p3);
+	else
+		return (NULL);
+	return (param);
 }
 
 static char		*get_called_label(t_line *tab, int i, int len)
@@ -33,30 +45,22 @@ static char		*get_called_label(t_line *tab, int i, int len)
 	char	*param;
 
 	param = NULL;
-	if (tab[i].param1 && tab[i].param1_sz > 1)
-		param = ft_strdup(tab[i].param1);
-	else if (tab[i].param2 && tab[i].param2_sz > 1)
-		param = ft_strdup(tab[i].param2);
-	else if (tab[i].param3 && tab[i].param3_sz > 1)
-		param = ft_strdup(tab[i].param3);
-	else
+	if (!(param = get_param(tab, i, param)))
 		return (NULL);
-	j = 0;
+	j = -1;
 	start = 0;
 	label = NULL;
-	while (param[j])
-	{
+	while (param[++j])
 		if (ft_isalphalow(param[j]) || ft_isdigit(param[j]) || param[j] == '_')
 		{
 			start = j;
-			while (param[j] && (ft_isalphalow(param[j]) || ft_isdigit(param[j]) || param[j] == '_'))
+			while (param[j] && (ft_isalphalow(param[j])
+				|| ft_isdigit(param[j]) || param[j] == '_'))
 				j++;
 			label = ft_strsub(param, start, j - start);
-			free(param);
+			param ? free(param) : 0;
 			return (is_legit_label(label, tab, len) ? label : NULL);
 		}
-		j++;
-	}
 	param ? free(param) : 0;
 	return (NULL);
 }
@@ -81,28 +85,25 @@ int				fill_tab_sizes(t_line *tab, int len, t_tools *tools)
 	int nb;
 	int	l;
 
-	i = 0;
+	i = -1;
 	nb = 0;
 	l = 0;
-	while (i < len)
-	{
+	while (++i < len)
 		if (tab[i].instruc)
 		{
 			l = has_label_size(tab[i].instruc);
 			nb = tab[i].nb_param;
 			tools->cor_line_counter += get_correct_cor_ln(tab, i);
-			tab[i].param1_sz = get_param_sz(tab[i].param1, l);
-			tab[i].param2_sz = nb == 1 ? 0 : get_param_sz(tab[i].param2, l);
-			tab[i].param3_sz = nb == 3 ? get_param_sz(tab[i].param3, l) : 0;
-			tab[i].line_cor_ln = tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz + 1;
+			tab[i].p1_sz = get_param_sz(tab[i].p1, l);
+			tab[i].p2_sz = nb == 1 ? 0 : get_param_sz(tab[i].p2, l);
+			tab[i].p3_sz = nb == 3 ? get_param_sz(tab[i].p3, l) : 0;
+			tab[i].line_cor_ln = tab[i].p1_sz + tab[i].p2_sz + tab[i].p3_sz + 1;
 			tab[i].line_cor_ln += has_cb(tab[i].instruc) ? 1 : 0;
 			tab[i].relative_cor_addr = tools->cor_line_counter;
 			tab[i].called_label = get_called_label(tab, i, len);
 			tools->prog_size += 1;
 			tools->prog_size += has_cb(tab[i].instruc) ? 1 : 0;
-			tools->prog_size += tab[i].param1_sz + tab[i].param2_sz + tab[i].param3_sz;
+			tools->prog_size += tab[i].p1_sz + tab[i].p2_sz + tab[i].p3_sz;
 		}
-		i++;
-	}
 	return (1);
 }
