@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 21:37:09 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/24 21:03:40 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int			asm_translator(int fd, char **input, t_tools *tools)
 	asm_struct_tab_init(struct_tab, ft_tablen(input));
 	if (!struct_tab_fill(input, struct_tab, tools))
 	{
-		header ? free(header) : 0;
-		asm_struct_tab_free(struct_tab, ft_tablen(input));
+		asm_struct_tab_free(struct_tab, ft_tablen(input), header);
 		return (0);
 	}
 	header_fill(header, input, tools);
@@ -52,16 +51,14 @@ int			asm_translator(int fd, char **input, t_tools *tools)
 	tools->fd = fd;
 	if (!write_to_cor(struct_tab, header, tools))
 	{
-		header ? free(header) : 0;
-		asm_struct_tab_free(struct_tab, ft_tablen(input));
+		asm_struct_tab_free(struct_tab, ft_tablen(input), header);
 		return (0);
 	}
-	header ? free(header) : 0;
-	asm_struct_tab_free(struct_tab, ft_tablen(input));
+	asm_struct_tab_free(struct_tab, ft_tablen(input), header);
 	return (1);
 }
 
-char		**get_file_content(char *file_name)
+char		**get_fc(char *file_name)
 {
 	int		fd;
 	char	*tmp;
@@ -89,42 +86,28 @@ char		**get_file_content(char *file_name)
 int			main(int ac, char **av)
 {
 	int		fd;
+	char	*in_fn;
+	char	*out_fn;
+	char	**in_fc;
 	t_tools	tools;
-	char	*in_file_name;
-	char	*out_file_name;
-	char	**in_file_content;
 
 	asm_tools_init(&tools);
 	if (ac < 2 || (av[1] && (!(av[1][ft_strlen(av[1]) - 1] == 's'
 		&& av[1][ft_strlen(av[1]) - 2] == '.'))))
 		return (usage_output());
-	in_file_name = ft_strdup(av[1]);
-	if (!(in_file_content = get_file_content(in_file_name)))
-	{
-		in_file_name ? free(in_file_name) : 0;
-		in_file_content ? tab_free(in_file_content) : 0;
-		return (error_output());
-	}
-	out_file_name = ft_strsub(in_file_name, 0, ft_strlen(in_file_name) - 1);
-	out_file_name = ft_free_join(out_file_name, "cor");
-	fd = open(out_file_name, O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH);
+	in_fn = ft_strdup(av[1]);
+	if (!(in_fc = get_fc(in_fn)))
+		return (main_free_helper(in_fn, NULL, in_fc, 1));
+	if (bad_dot_line(in_fc))
+		return (main_free_helper(in_fn, NULL, in_fc, 0));
+	out_fn = ft_strsub(in_fn, 0, ft_strlen(in_fn) - 1);
+	out_fn = ft_free_join(out_fn, "cor");
+	fd = open(out_fn, O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
-	{
-		in_file_name ? free(in_file_name) : 0;
-		out_file_name ? free(out_file_name) : 0;
-		in_file_content ? tab_free(in_file_content) : 0;
-		return (error_output());
-	}
-	if (!asm_translator(fd, in_file_content, &tools))
-	{
-		in_file_name ? free(in_file_name) : 0;
-		out_file_name ? free(out_file_name) : 0;
-		in_file_content ? tab_free(in_file_content) : 0;
-		return (error_output());
-	}
+		return (main_free_helper(in_fn, out_fn, in_fc, 1));
+	if (!asm_translator(fd, in_fc, &tools))
+		return (main_free_helper(in_fn, out_fn, in_fc, 1));
 	close(fd);
-	in_file_name ? free(in_file_name) : 0;
-	out_file_name ? free(out_file_name) : 0;
-	in_file_content ? tab_free(in_file_content) : 0;
+	main_free_helper(in_fn, out_fn, in_fc, 0);
 	return (0);
 }

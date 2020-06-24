@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:09:22 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 20:44:21 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/24 20:24:38 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,13 @@ static char		*get_called_label(t_line *tab, int i, int len)
 				j++;
 			label = ft_strsub(param, start, j - start);
 			param ? free(param) : 0;
-			return (is_legit_label(label, tab, len) ? label : NULL);
+			if (is_legit_label(label, tab, len))
+				return (label);
+			else
+			{
+				label ? free(label) : 0;
+				return (NULL);
+			}
 		}
 	param ? free(param) : 0;
 	return (NULL);

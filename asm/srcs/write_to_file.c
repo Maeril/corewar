@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 20:37:01 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/24 20:44:04 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,26 @@ int		get_cb(t_line *tab, int i)
 	int		j;
 	int		counter;
 	char	*byte;
+	char	*tmp;
+	int		ret;
 
-	counter = 0;
+	counter = 2;
 	byte = ft_strnew(1);
 	if (tab[i].p1 > 0)
-	{
 		byte = get_coding_byte_helper(byte, tab[i].p1[0], tab[i].p1_sz);
-		counter += 2;
-	}
 	if (tab[i].p2 > 0)
-	{
 		byte = get_coding_byte_helper(byte, tab[i].p2[0], tab[i].p2_sz);
-		counter += 2;
-	}
 	if (tab[i].p3 > 0)
-	{
 		byte = get_coding_byte_helper(byte, tab[i].p3[0], tab[i].p3_sz);
-		counter += 2;
-	}
+	counter += (tab[i].p2 > 0) ? 2 : 0;
+	counter += (tab[i].p3 > 0) ? 2 : 0;
 	j = -1;
 	while (++j < (8 - counter))
 		byte = ft_free_join(byte, "0");
-	return (ft_atoi(base_converter(byte, BIN, DECI)));
+	tmp = base_converter(byte, BIN, DECI);
+	ret = ft_atoi(tmp);
+	tmp ? free(tmp) : 0;
+	return (ret);
 }
 
 void	write_called_label(t_tools *tools, int i, t_line *tab, int write_size)
@@ -99,6 +97,7 @@ void	write_param(int fd, char *str, int write_size)
 	{
 		tmp = str[0] == '%' ? ft_strsub(str, 1, ft_strlen(str) - 1) : NULL;
 		dec = str[0] == '%' ? ft_atoi(tmp) : ft_atoi(str);
+		tmp ? free(tmp) : 0;
 	}
 	if (write_size > 1)
 	{

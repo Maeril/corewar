@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 21:27:50 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/24 20:56:23 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct		s_line
 
 void				asm_header_init(t_header *header);
 void				asm_struct_tab_init(t_line *line, int len);
-void				asm_struct_tab_free(t_line *line, int len);
+void				asm_struct_tab_free(t_line *line, int len, t_header	*head);
 void				asm_tools_init(t_tools *tools);
 int					asm_translator(int fd, char **input, t_tools *tools);
 int					bad_dot_line(char **input);
@@ -72,6 +72,8 @@ int					header_fill(t_header *header, char **input, t_tools *tools);
 int					is_called_label(char *str, int write_size);
 int					is_instruc(char *word);
 int					is_legit_label(char *label, t_line *tab, int len);
+int					main_free_helper(char *str1, char *str2, char **tab1,
+					int err_out);
 char				*string_cleaner(char *str);
 int					struct_tab_fill(char **input, t_line *struct_tab,
 					t_tools *tools);

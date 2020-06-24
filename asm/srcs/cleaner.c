@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:08:34 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 21:25:58 by myener           ###   ########.fr       */
+/*   Updated: 2020/06/24 20:35:48 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 char	*get_coding_byte_helper(char *byte, char c, int sz)
 {
+	char	*tmp;
+
+	tmp = NULL;
 	if (c == '%')
-		byte = ft_strjoin(byte, "10");
+		tmp = ft_free_join(byte, "10");
 	else
-		byte = ft_strjoin(byte, sz == 1 ? "01" : "11");
-	return (byte);
+		tmp = ft_free_join(byte, sz == 1 ? "01" : "11");
+	return (tmp);
 }
 
 char	*string_cleaner(char *str)
@@ -41,10 +44,7 @@ char	*string_cleaner(char *str)
 	if (tmp || (!tmp && out))
 	{
 		str ? free(str) : 0;
-		out ? free(out) : 0;
 		return (tmp ? tmp : out);
 	}
-	// str ? free(str) : 0;
-	// out ? free(out) : 0;
 	return (str);
 }
