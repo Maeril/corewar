@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/06/24 21:03:40 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/01 05:17:47 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,26 @@ int			asm_translator(int fd, char **input, t_tools *tools)
 	t_header	*header;
 	t_line		*struct_tab;
 
+	tools->tablen = ft_tablen(input) - lines_to_deduce(input);
 	if (!(header = malloc(sizeof(t_header) * 1)))
 		return (0);
-	if (!(struct_tab = malloc(sizeof(t_line) * ft_tablen(input))))
+	if (!(struct_tab = malloc(sizeof(t_line) * tools->tablen)))
 		return (0);
 	ft_bzero(header, sizeof(t_header));
-	asm_struct_tab_init(struct_tab, ft_tablen(input));
+	asm_struct_tab_init(struct_tab, tools->tablen);
 	if (!struct_tab_fill(input, struct_tab, tools))
 	{
-		asm_struct_tab_free(struct_tab, ft_tablen(input), header);
+		asm_struct_tab_free(struct_tab, tools->tablen, header);
 		return (0);
 	}
 	header_fill(header, input, tools);
-	tools->tablen = ft_tablen(input);
 	tools->fd = fd;
 	if (!write_to_cor(struct_tab, header, tools))
 	{
-		asm_struct_tab_free(struct_tab, ft_tablen(input), header);
+		asm_struct_tab_free(struct_tab, tools->tablen, header);
 		return (0);
 	}
-	asm_struct_tab_free(struct_tab, ft_tablen(input), header);
+	asm_struct_tab_free(struct_tab, tools->tablen, header);
 	return (1);
 }
 

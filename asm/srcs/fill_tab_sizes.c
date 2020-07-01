@@ -6,35 +6,19 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:09:22 by myener            #+#    #+#             */
-/*   Updated: 2020/06/24 20:24:38 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/01 06:04:41 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-static int		get_param_sz(char *param, int label_size)
+static char		*get_called_label_helper(char *label, t_line *tab, int len)
 {
-	if (param[0] == 'r')
-		return (1);
-	else if (param[0] == '%')
-		return (label_size == 1 ? 2 : 4);
-	else if (param[0] == ':' || (ft_atoi(param) >= INT_MIN
-		&& ft_atoi(param) <= INT_MAX))
-		return (2);
-	return (0);
-}
-
-static char		*get_param(t_line *tab, int i, char *param)
-{
-	if (tab[i].p1 && tab[i].p1_sz > 1)
-		param = ft_strdup(tab[i].p1);
-	else if (tab[i].p2 && tab[i].p2_sz > 1)
-		param = ft_strdup(tab[i].p2);
-	else if (tab[i].p3 && tab[i].p3_sz > 1)
-		param = ft_strdup(tab[i].p3);
+	if (is_legit_label(label, tab, len))
+		return (label);
 	else
-		return (NULL);
-	return (param);
+		label ? free(label) : 0;
+	return (NULL);
 }
 
 static char		*get_called_label(t_line *tab, int i, int len)
@@ -59,13 +43,7 @@ static char		*get_called_label(t_line *tab, int i, int len)
 				j++;
 			label = ft_strsub(param, start, j - start);
 			param ? free(param) : 0;
-			if (is_legit_label(label, tab, len))
-				return (label);
-			else
-			{
-				label ? free(label) : 0;
-				return (NULL);
-			}
+			return (get_called_label_helper(label, tab, len));
 		}
 	param ? free(param) : 0;
 	return (NULL);
@@ -85,7 +63,24 @@ static int		get_correct_cor_ln(t_line *tab, int i)
 	return (0);
 }
 
-int				fill_tab_sizes(t_line *tab, int len, t_tools *tools)
+static int		fill_tab_sizes_helper(int i, t_line *tab, t_tools *tools)
+{
+	int j;
+
+	i--;
+	j = i;
+	while (j > 0 && !tab[j].p1_sz)
+		j--;
+	if (!tab[i].relative_cor_addr)
+	{
+		tab[i].relative_cor_addr = tools->cor_line_counter;
+		tab[i].relative_cor_addr += tab[j].p1_sz + tab[j].p2_sz + tab[j].p3_sz;
+		tab[i].relative_cor_addr += 1 + has_cb(tab[j].instruc) ? 1 : 0;
+	}
+	return (1);
+}
+
+int				fill_tab_sizes(t_line *tab, t_tools *tools)
 {
 	int	i;
 	int nb;
@@ -94,7 +89,7 @@ int				fill_tab_sizes(t_line *tab, int len, t_tools *tools)
 	i = -1;
 	nb = 0;
 	l = 0;
-	while (++i < len)
+	while (++i < tools->tablen)
 		if (tab[i].instruc)
 		{
 			l = has_label_size(tab[i].instruc);
@@ -106,10 +101,10 @@ int				fill_tab_sizes(t_line *tab, int len, t_tools *tools)
 			tab[i].line_cor_ln = tab[i].p1_sz + tab[i].p2_sz + tab[i].p3_sz + 1;
 			tab[i].line_cor_ln += has_cb(tab[i].instruc) ? 1 : 0;
 			tab[i].relative_cor_addr = tools->cor_line_counter;
-			tab[i].called_label = get_called_label(tab, i, len);
+			tab[i].called_label = get_called_label(tab, i, tools->tablen);
 			tools->prog_size += 1;
 			tools->prog_size += has_cb(tab[i].instruc) ? 1 : 0;
 			tools->prog_size += tab[i].p1_sz + tab[i].p2_sz + tab[i].p3_sz;
 		}
-	return (1);
+	return (fill_tab_sizes_helper(i, tab, tools));
 }

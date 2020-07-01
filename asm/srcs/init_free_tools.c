@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 19:08:29 by myener            #+#    #+#             */
-/*   Updated: 2020/06/24 21:01:33 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/01 05:49:24 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,5 @@ void		asm_tools_init(t_tools *tools)
 	tools->opcode = 0;
 	tools->j = 0;
 	tools->k = 0;
+	tools->start = 0;
 }

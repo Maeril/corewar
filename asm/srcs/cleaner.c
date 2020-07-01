@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:08:34 by myener            #+#    #+#             */
-/*   Updated: 2020/06/24 20:35:48 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/01 04:05:49 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@ char	*get_coding_byte_helper(char *byte, char c, int sz)
 	else
 		tmp = ft_free_join(byte, sz == 1 ? "01" : "11");
 	return (tmp);
+}
+
+int		lines_to_deduce(char **input)
+{
+	int		i;
+	int		nb;
+
+	i = 0;
+	nb = 0;
+	while (i < ft_tablen(input))
+	{
+		if (input[i][0] == '.' || input[i][0] == '#')
+			nb++;
+		i++;
+	}
+	return (nb);
 }
 
 char	*string_cleaner(char *str)

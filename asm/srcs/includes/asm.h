@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/24 20:56:23 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/01 06:01:18 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef	struct		s_tools
 	int				opcode;
 	int				j;
 	int				k;
+	int				start;
 }					t_tools;
 
 typedef struct		s_line
@@ -60,9 +61,11 @@ int					empty_or_comment_line(char *str);
 int					error_output(void);
 int					fill_tab_input(char **input, t_line *struct_tab,
 					t_tools *tools);
-int					fill_tab_sizes(t_line *tab, int len, t_tools *tools);
-char				**get_file_content(char *file_name);
+int					fill_tab_sizes(t_line *tab, t_tools *tools);
 char				*get_coding_byte_helper(char *byte, char c, int sz);
+char				**get_file_content(char *file_name);
+char				*get_param(t_line *tab, int i, char *param);
+int					get_param_sz(char *param, int label_size);
 int					has_cb(char *word);
 int					has_label_size(char *word);
 int					has_one_param(char *word);
@@ -72,8 +75,10 @@ int					header_fill(t_header *header, char **input, t_tools *tools);
 int					is_called_label(char *str, int write_size);
 int					is_instruc(char *word);
 int					is_legit_label(char *label, t_line *tab, int len);
+int					lines_to_deduce(char **input);
 int					main_free_helper(char *str1, char *str2, char **tab1,
 					int err_out);
+int					stock_instruct_clean_free(char *n, int ret);
 char				*string_cleaner(char *str);
 int					struct_tab_fill(char **input, t_line *struct_tab,
 					t_tools *tools);

@@ -6,11 +6,43 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 20:36:23 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/01 05:57:13 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
+
+int			stock_instruct_clean_free(char *n, int ret)
+{
+	if (n)
+		free(n);
+	return (ret);
+}
+
+int			get_param_sz(char *param, int label_size)
+{
+	if (param[0] == 'r')
+		return (1);
+	else if (param[0] == '%')
+		return (label_size == 1 ? 2 : 4);
+	else if (param[0] == ':' || (ft_atoi(param) >= INT_MIN
+		&& ft_atoi(param) <= INT_MAX))
+		return (2);
+	return (0);
+}
+
+char		*get_param(t_line *tab, int i, char *param)
+{
+	if (tab[i].p1 && tab[i].p1_sz > 1)
+		param = ft_strdup(tab[i].p1);
+	else if (tab[i].p2 && tab[i].p2_sz > 1)
+		param = ft_strdup(tab[i].p2);
+	else if (tab[i].p3 && tab[i].p3_sz > 1)
+		param = ft_strdup(tab[i].p3);
+	else
+		return (NULL);
+	return (param);
+}
 
 static int	fill_lonely_labels(t_line *tab, int len)
 {
@@ -25,18 +57,9 @@ static int	fill_lonely_labels(t_line *tab, int len)
 			j = i;
 			while (j < len && !tab[j].relative_cor_addr)
 				j++;
-			tab[i].relative_cor_addr = tab[j].relative_cor_addr;
+			if (j < len)
+				tab[i].relative_cor_addr = tab[j].relative_cor_addr;
 		}
-	while (i > 0 && !tab[i].label && !tab[i].instruc)
-		i--;
-	if (tab[i].label && !tab[i].instruc)
-	{
-		j = i;
-		while (j > 0 && !tab[j].instruc)
-			j--;
-		tab[i].relative_cor_addr = tab[j].relative_cor_addr + tab[j].p1_sz
-			+ tab[j].p2_sz + tab[j].p3_sz + has_cb(tab[j].instruc) + 1;
-	}
 	return (1);
 }
 
@@ -44,9 +67,9 @@ int			struct_tab_fill(char **input, t_line *struct_tab, t_tools *tools)
 {
 	if (!fill_tab_input(input, struct_tab, tools))
 		return (0);
-	if (!fill_tab_sizes(struct_tab, ft_tablen(input), tools))
+	if (!fill_tab_sizes(struct_tab, tools))
 		return (0);
-	if (!fill_lonely_labels(struct_tab, ft_tablen(input)))
+	if (!fill_lonely_labels(struct_tab, tools->tablen))
 		return (0);
 	return (1);
 }
