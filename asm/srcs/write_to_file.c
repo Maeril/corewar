@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/07/18 02:19:33 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/18 21:00:36 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ static void	write_called_label(t_tools *tools, int i, t_line *tab, int wr_sz)
 	j = 0;
 	while (j < tools->tablen)
 	{
-		if (tab[j].label && !(ft_strcmp(tab[j].label, tab[i].called_label)))
+		if (tab[j].label && tab[i].called_label
+			&& !(ft_strcmp(tab[j].label, tab[i].called_label)))
 			break ;
 		j++;
 	}
