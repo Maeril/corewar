@@ -6,13 +6,13 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/06/24 20:44:04 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/18 02:19:33 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-int		get_opcode(char *instruc)
+static int	get_opcode(char *instruc)
 {
 	if (!ft_strcmp(instruc, "live") || !ft_strcmp(instruc, "ld"))
 		return (!ft_strcmp(instruc, "live") ? 1 : 2);
@@ -33,7 +33,7 @@ int		get_opcode(char *instruc)
 	return (0);
 }
 
-int		get_cb(t_line *tab, int i)
+static int	get_cb(t_line *tab, int i)
 {
 	int		j;
 	int		counter;
@@ -60,7 +60,7 @@ int		get_cb(t_line *tab, int i)
 	return (ret);
 }
 
-void	write_called_label(t_tools *tools, int i, t_line *tab, int write_size)
+static void	write_called_label(t_tools *tools, int i, t_line *tab, int wr_sz)
 {
 	int					j;
 	int					value;
@@ -73,21 +73,21 @@ void	write_called_label(t_tools *tools, int i, t_line *tab, int write_size)
 		j++;
 	}
 	value = tab[j].relative_cor_addr - tab[i].relative_cor_addr;
-	if (write_size > 1)
+	if (wr_sz > 1)
 	{
 		value = swap_uint32(value);
-		value = write_size == 2 ? (value << 16) | (value >> 16) : value;
+		value = wr_sz == 2 ? (value << 16) | (value >> 16) : value;
 	}
-	write(tools->fd, &value, write_size);
+	write(tools->fd, &value, wr_sz);
 }
 
-void	write_param(int fd, char *str, int write_size)
+static void	write_param(int fd, char *str, int wr_sz)
 {
 	int		dec;
 	char	*tmp;
 
 	tmp = NULL;
-	if (write_size == 1)
+	if (wr_sz == 1)
 	{
 		tmp = ft_strsub(str, 1, ft_strlen(str) - 1);
 		dec = ft_atoi(tmp);
@@ -99,15 +99,15 @@ void	write_param(int fd, char *str, int write_size)
 		dec = str[0] == '%' ? ft_atoi(tmp) : ft_atoi(str);
 		tmp ? free(tmp) : 0;
 	}
-	if (write_size > 1)
+	if (wr_sz > 1)
 	{
 		dec = swap_uint32(dec);
-		dec = write_size == 2 ? (dec << 16) | (dec >> 16) : dec;
+		dec = wr_sz == 2 ? (dec << 16) | (dec >> 16) : dec;
 	}
-	write(fd, &dec, write_size);
+	write(fd, &dec, wr_sz);
 }
 
-int		write_to_cor(t_line *tab, t_header *header, t_tools *tools)
+int			write_to_cor(t_line *tab, t_header *header, t_tools *tools)
 {
 	int i;
 

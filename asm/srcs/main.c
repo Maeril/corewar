@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/07/01 05:17:47 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/18 02:14:19 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**append_return(char **in)
 	return (in);
 }
 
-int			asm_translator(int fd, char **input, t_tools *tools)
+static int	asm_translator(int fd, char **input, t_tools *tools)
 {
 	t_header	*header;
 	t_line		*struct_tab;
@@ -58,7 +58,7 @@ int			asm_translator(int fd, char **input, t_tools *tools)
 	return (1);
 }
 
-char		**get_fc(char *file_name)
+static char	**get_fc(char *file_name)
 {
 	int		fd;
 	char	*tmp;
@@ -83,6 +83,14 @@ char		**get_fc(char *file_name)
 	return (content);
 }
 
+static int	usage_checkup(int ac, char **av)
+{
+	if (ac < 2 || (av[1] && (!(av[1][ft_strlen(av[1]) - 1] == 's'
+		&& av[1][ft_strlen(av[1]) - 2] == '.'))))
+		return (1);
+	return (0);
+}
+
 int			main(int ac, char **av)
 {
 	int		fd;
@@ -92,8 +100,7 @@ int			main(int ac, char **av)
 	t_tools	tools;
 
 	asm_tools_init(&tools);
-	if (ac < 2 || (av[1] && (!(av[1][ft_strlen(av[1]) - 1] == 's'
-		&& av[1][ft_strlen(av[1]) - 2] == '.'))))
+	if (usage_checkup(ac, av))
 		return (usage_output());
 	in_fn = ft_strdup(av[1]);
 	if (!(in_fc = get_fc(in_fn)))
@@ -102,7 +109,8 @@ int			main(int ac, char **av)
 		return (main_free_helper(in_fn, NULL, in_fc, 0));
 	out_fn = ft_strsub(in_fn, 0, ft_strlen(in_fn) - 1);
 	out_fn = ft_free_join(out_fn, "cor");
-	fd = open(out_fn, O_RDWR | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH);
+	fd = open(out_fn, O_RDWR | O_CREAT | O_TRUNC,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (main_free_helper(in_fn, out_fn, in_fc, 1));
 	if (!asm_translator(fd, in_fc, &tools))

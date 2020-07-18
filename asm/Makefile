@@ -27,7 +27,7 @@ SRCS_NAME =		cleaner.c			\
 				tools.c				\
 				write_to_file.c		\
 
-FLAGS =	 -g3 -Wall -Wextra -Werror -I srcs/libft/includes
+FLAGS =	 -Wall -Wextra -Werror -I srcs/libft/includes
 
 OBJS	:=	$(addprefix $(OBJDIR)/,$(SRCS_NAME:.c=.o))
 SRCS	:=	$(addprefix $(SRCDIR)/,$(SRCS_NAME))

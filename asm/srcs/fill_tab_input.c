@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:06:21 by myener            #+#    #+#             */
-/*   Updated: 2020/07/01 05:57:26 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/18 02:15:07 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	stock_label(t_line *struct_tab, char *line, t_tools *t)
 	stock_instruction(struct_tab, line, i + 1, t);
 }
 
-char		*fill_tab_input_helper(int i, char **input, t_tools *t)
+static char	*fill_tab_input_helper(int i, char **input, t_tools *t)
 {
 	int		start;
 	char	*tmp;

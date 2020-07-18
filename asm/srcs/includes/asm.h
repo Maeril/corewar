@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/07/01 06:01:18 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/18 02:14:17 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void				asm_header_init(t_header *header);
 void				asm_struct_tab_init(t_line *line, int len);
 void				asm_struct_tab_free(t_line *line, int len, t_header	*head);
 void				asm_tools_init(t_tools *tools);
-int					asm_translator(int fd, char **input, t_tools *tools);
 int					bad_dot_line(char **input);
 void				decimal_to_hex_2scomplement(int fd, int value);
 int					empty_or_comment_line(char *str);
