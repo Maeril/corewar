@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 19:08:29 by myener            #+#    #+#             */
-/*   Updated: 2020/07/01 05:49:24 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/22 00:45:09 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,23 +43,24 @@ int			main_free_helper(char *str1, char *str2, char **tab1, int err_out)
 	return (err_out ? error_output() : 0);
 }
 
-void		asm_struct_tab_free(t_line *line, int len, t_header *head)
+int			asm_struct_tab_free(t_line *l, int len, t_header *h, int r)
 {
 	int i;
 
 	i = 0;
-	head ? free(head) : 0;
+	h ? free(h) : 0;
 	while (i < len)
 	{
-		line[i].label ? free(line[i].label) : 0;
-		line[i].instruc ? free(line[i].instruc) : 0;
-		line[i].p1 ? free(line[i].p1) : 0;
-		line[i].p2 ? free(line[i].p2) : 0;
-		line[i].p3 ? free(line[i].p3) : 0;
-		line[i].called_label ? free(line[i].called_label) : 0;
+		l[i].label ? free(l[i].label) : 0;
+		l[i].instruc ? free(l[i].instruc) : 0;
+		l[i].p1 ? free(l[i].p1) : 0;
+		l[i].p2 ? free(l[i].p2) : 0;
+		l[i].p3 ? free(l[i].p3) : 0;
+		l[i].called_label ? free(l[i].called_label) : 0;
 		i++;
 	}
-	line ? free(line) : 0;
+	l ? free(l) : 0;
+	return (r);
 }
 
 void		asm_tools_init(t_tools *tools)

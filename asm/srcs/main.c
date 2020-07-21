@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/07/18 02:14:19 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/22 00:46:18 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	**append_return(char **in)
 	return (in);
 }
 
-static int	asm_translator(int fd, char **input, t_tools *tools)
+static int	asm_translator(int fd, char **input, char *out, t_tools *tools)
 {
 	t_header	*header;
 	t_line		*struct_tab;
@@ -44,18 +44,17 @@ static int	asm_translator(int fd, char **input, t_tools *tools)
 	asm_struct_tab_init(struct_tab, tools->tablen);
 	if (!struct_tab_fill(input, struct_tab, tools))
 	{
-		asm_struct_tab_free(struct_tab, tools->tablen, header);
-		return (0);
+		remove(out);
+		return (asm_struct_tab_free(struct_tab, tools->tablen, header, 0));
 	}
 	header_fill(header, input, tools);
 	tools->fd = fd;
 	if (!write_to_cor(struct_tab, header, tools))
 	{
-		asm_struct_tab_free(struct_tab, tools->tablen, header);
-		return (0);
+		remove(out);
+		return (asm_struct_tab_free(struct_tab, tools->tablen, header, 0));
 	}
-	asm_struct_tab_free(struct_tab, tools->tablen, header);
-	return (1);
+	return (asm_struct_tab_free(struct_tab, tools->tablen, header, 1));
 }
 
 static char	**get_fc(char *file_name)
@@ -113,7 +112,7 @@ int			main(int ac, char **av)
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (fd < 0)
 		return (main_free_helper(in_fn, out_fn, in_fc, 1));
-	if (!asm_translator(fd, in_fc, &tools))
+	if (!asm_translator(fd, in_fc, out_fn, &tools))
 		return (main_free_helper(in_fn, out_fn, in_fc, 1));
 	close(fd);
 	main_free_helper(in_fn, out_fn, in_fc, 0);

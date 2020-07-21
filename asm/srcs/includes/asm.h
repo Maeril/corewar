@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/07/18 02:14:17 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/22 00:45:02 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 # define ASM_H
 # include <fcntl.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
 # include "../libft/libft.h"
@@ -52,7 +53,7 @@ typedef struct		s_line
 
 void				asm_header_init(t_header *header);
 void				asm_struct_tab_init(t_line *line, int len);
-void				asm_struct_tab_free(t_line *line, int len, t_header	*head);
+int					asm_struct_tab_free(t_line *l, int len, t_header *h, int r);
 void				asm_tools_init(t_tools *tools);
 int					bad_dot_line(char **input);
 void				decimal_to_hex_2scomplement(int fd, int value);
