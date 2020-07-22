@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/07/01 05:57:13 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/22 01:13:11 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int			struct_tab_fill(char **input, t_line *struct_tab, t_tools *tools)
 	if (!fill_tab_sizes(struct_tab, tools))
 		return (0);
 	if (!fill_lonely_labels(struct_tab, tools->tablen))
+		return (0);
+	if (!proofreader(struct_tab, tools->tablen))
 		return (0);
 	return (1);
 }

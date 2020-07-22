@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/11 18:16:32 by myener            #+#    #+#              #
-#    Updated: 2020/06/23 21:39:44 by myener           ###   ########.fr        #
+#    Updated: 2020/07/22 02:08:11 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS_NAME =		cleaner.c			\
 				init_free_tools.c	\
 				instruct_tools.c	\
 				main.c				\
+				proofreader.c		\
 				struct_tab_fill.c	\
 				tools.c				\
 				write_to_file.c		\
