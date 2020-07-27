@@ -15,7 +15,7 @@ fi
 printf "${YELLOW}Comparing bytecode${NC}\n"
 hexdump -vC corerection_srcs/champs/instructions.cor | tail -n +138 > $RES
 hexdump -vC corerection_srcs/champs/instructions_ref.cor | tail -n +138 > $REF
-DIFF= $(diff $REF $RES)
+DIFF=$(diff $REF $RES)
 if [ "$DIFF" = "" ]
 then
 	printf "${GREEN}Bytecodes are identical${NC}\n"

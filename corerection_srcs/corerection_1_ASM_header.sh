@@ -15,7 +15,7 @@ fi
 printf "${YELLOW}Comparing header${NC}\n"
 hexdump -vC corerection_srcs/champs/instructions.cor | head -n 8 > $RES
 hexdump -vC corerection_srcs/champs/instructions_ref.cor | head -n 8 > $REF
-DIFF= $(diff $REF $RES)
+DIFF=$(diff $REF $RES)
 if [ "$DIFF" = "" ]
 then
 	printf "${GREEN}Headers are identical${NC}\n"

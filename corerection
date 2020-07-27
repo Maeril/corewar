@@ -13,7 +13,7 @@ then
 	exit 1
 fi
 
-if [ ! -f "asm" ]
+if [ ! -f "asm/asm" ]
 then
 	printf "${RED}Couldn't run script: asm executable not found.${NC}"
 	exit 1
@@ -28,7 +28,7 @@ then
 	rm corerection_srcs/champs/instructions_ref.cor
 fi
 
-export ASM="./asm"
+export ASM="./asm/asm"
 export COREWAR="./corewar"
 export TMP=$(mktemp)
 export REF=$(mktemp)
