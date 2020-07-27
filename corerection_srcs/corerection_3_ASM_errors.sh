@@ -15,7 +15,7 @@ then
 	exit 1
 fi
 
-printf "${YELLOW}Testing various maps that should not get assembled by the ASM${NC}\n\n"
+printf "${YELLOW}Testing various champions that should not get assembled by the ASM${NC}\n\n"
 
 printf "${YELLOW}• Missing name:${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
@@ -94,7 +94,7 @@ then
 	rm corerection_srcs/champs/errors/wrong-label-char.cor
 fi
 
-printf "${YELLOW}\n\nTesting various maps that can be considered as errors or can be handled by the asm${NC}\n"
+printf "${YELLOW}\n\nTesting various champions that can be considered as errors or can be handled by the asm${NC}\n"
 
 printf "${YELLOW}\n• Wrong type of file :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"

@@ -12,15 +12,15 @@ then
 	printf "${RED}Script must be executed from corerection.sh${NC}\n"
 	exit 1
 fi
-printf "${YELLOW}Comparing header${NC}\n"
+printf "${YELLOW}Comparing header: magic number + name${NC}\n"
 hexdump -vC corerection_srcs/champs/instructions.cor | head -n 8 > $RES
 hexdump -vC corerection_srcs/champs/instructions_ref.cor | head -n 8 > $REF
 DIFF=$(diff $REF $RES)
 if [ "$DIFF" = "" ]
 then
-	printf "${GREEN}Headers are identical${NC}\n"
+	printf "${GREEN}Bytes are identical${NC}\n"
 else
-	printf "${PINK}Headers are different${NC}\n"
+	printf "${PINK}Bytes are different${NC}\n"
 fi
 printf "${YELLOW}Compare outputs manually? (Y/N)${NC} "
 read -p "" BOOLEAN
@@ -33,15 +33,15 @@ then
 	printf "${PINK}Result :${NC}\n"
 	cat $RES
 fi
-printf "${YELLOW}Comparing header comment${NC}\n"
+printf "${YELLOW}Comparing header: comment + code size${NC}\n"
 hexdump -vC corerection_srcs/champs/instructions.cor | sed -n 9,137p > $RES
 hexdump -vC corerection_srcs/champs/instructions_ref.cor | sed -n 9,137p > $REF
 DIFF= $(diff $REF $RES)
 if [ "$DIFF" = "" ]
 then
-	printf "${GREEN}Headers are identical (comment)\n${NC}"
+	printf "${GREEN}Bytes are identical\n${NC}"
 else
-	printf "${PINK}Headers are different (comment)\n${NC}"
+	printf "${PINK}Bytes are different\n${NC}"
 fi
 printf "${YELLOW}Compare outputs manually? (Y/N)${NC} "
 read -p "" BOOLEAN
