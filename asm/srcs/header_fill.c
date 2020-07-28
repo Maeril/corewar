@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/06/24 20:13:24 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/29 01:15:48 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,11 @@ static int	fill_name(t_header *header, char **input, t_tools *tools, int i)
 	while (input[i][j] && input[i][j] != '"')
 		j++;
 	j++;
+	if (input[i][j] == '"')
+	{
+		ft_strcpy(header->prog_name, "");
+		return (1);
+	}
 	beg = j++;
 	while (input[i][j] && input[i][j] != '"')
 		j++;
@@ -46,6 +51,11 @@ static int	fill_com(t_header *header, char **input, t_tools *tools, int i)
 	while (input[i][j] && input[i][j] != '"')
 		j++;
 	j++;
+	if (input[i][j] == '"')
+	{
+		ft_strcpy(header->comment, "");
+		return (1);
+	}
 	beg = j++;
 	while (input[i][j] && input[i][j] != '"')
 		j++;
