@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/07/29 01:15:48 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/29 01:42:46 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,18 @@ static int	fill_name(t_header *header, char **input, t_tools *tools, int i)
 	while (input[i][j] && input[i][j] != '"')
 		j++;
 	j++;
+	input[i][j] == '"' ? ft_strcpy(header->prog_name, "") : 0;
 	if (input[i][j] == '"')
-	{
-		ft_strcpy(header->prog_name, "");
 		return (1);
-	}
 	beg = j++;
 	while (input[i][j] && input[i][j] != '"')
 		j++;
 	if ((j - beg) > PROG_NAME_LENGTH)
 		return (0);
 	str = ft_strsub(input[i], beg, j - beg);
+	ft_strchr(str, '\n') && str ? ft_strdel(&str) : 0;
+	if (ft_strchr(str, '\n'))
+		return (0);
 	ft_strcpy(header->prog_name, str);
 	tools->name_filled = 1;
 	str ? ft_strdel(&str) : 0;
@@ -51,17 +52,18 @@ static int	fill_com(t_header *header, char **input, t_tools *tools, int i)
 	while (input[i][j] && input[i][j] != '"')
 		j++;
 	j++;
+	input[i][j] == '"' ? ft_strcpy(header->comment, "") : 0;
 	if (input[i][j] == '"')
-	{
-		ft_strcpy(header->comment, "");
 		return (1);
-	}
 	beg = j++;
 	while (input[i][j] && input[i][j] != '"')
 		j++;
 	if ((j - beg) > COMMENT_LENGTH)
 		return (0);
 	str = ft_strsub(input[i], beg, j - beg);
+	ft_strchr(str, '\n') && str ? ft_strdel(&str) : 0;
+	if (ft_strchr(str, '\n'))
+		return (0);
 	ft_strcpy(header->comment, str);
 	str ? ft_strdel(&str) : 0;
 	tools->com_filled = 1;
