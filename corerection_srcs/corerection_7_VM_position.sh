@@ -17,14 +17,23 @@ fi
 
 printf "${YELLOW}Showcasing the starting position of champions${NC}\n"
 
+EMPTY_REF=$($COREWAR_REF -d 1 Parasite.cor | sed -n 4,4p | cut -d ' ' -f3-)
+EMPTY_RES=$($COREWAR -d 1 Parasite.cor | cat -e  | grep -v Cycle | sed 's/\^\[\[0m//g' | rev | cut -d ' ' -f2- | rev | sed -n 3,3p | cut -d ' ' -f2-)
+
 printf "\n${YELLOW}• 2 champions:${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$COREWAR_REF -d 1 Parasite.cor Parasite.cor | grep -v "^0x0... : 00"
+$COREWAR_REF -d 1 Parasite.cor Parasite.cor | tail -n +4 | grep -v "$EMPTY_REF"
 printf "${PINK}Result :${NC}\n"
-$COREWAR -d 1 Parasite.cor Parasite.cor | grep -v "^0x0...:	00"
+$COREWAR -d 1 Parasite.cor Parasite.cor | cat -e  | grep -v Cycle | sed 's/\^\[\[0m//g' | rev | cut -d ' ' -f2- | rev | grep -v "$EMPTY_RES"
+
+printf "\n${YELLOW}• 3 champions:${NC}\n"
+printf "${GREEN}Reference :${NC}\n"
+$COREWAR_REF -d 1 Parasite.cor Parasite.cor Parasite.cor | tail -n +5 | grep -v "$EMPTY_REF"
+printf "${PINK}Result :${NC}\n"
+$COREWAR -d 1 Parasite.cor Parasite.cor Parasite.cor | cat -e  | grep -v Cycle | sed 's/\^\[\[0m//g' | rev | cut -d ' ' -f2- | rev | grep -v "$EMPTY_RES"
 
 printf "\n${YELLOW}• 4 champions:${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$COREWAR_REF -d 1 Parasite.cor Parasite.cor Parasite.cor Parasite.cor | grep -v "^0x0... : 00"
+$COREWAR_REF -d 1 Parasite.cor Parasite.cor Parasite.cor Parasite.cor | tail -n +6 | grep -v "$EMPTY_REF"
 printf "${PINK}Result :${NC}\n"
-$COREWAR -d 1 Parasite.cor Parasite.cor Parasite.cor Parasite.cor | grep -v "^0x0...:	00"
+$COREWAR -d 1 Parasite.cor Parasite.cor Parasite.cor Parasite.cor | cat -e | grep -v Cycle | sed 's/\^\[\[0m//g' | rev | cut -d ' ' -f2- | rev | grep -v "$EMPTY_RES"
