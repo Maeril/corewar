@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/07/29 02:04:38 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/29 23:41:42 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	fill_com(t_header *header, char **input, t_tools *tools, int i)
 	return (1);
 }
 
-int			header_fill(t_header *header, char **input, t_tools *tools)
+int			header_fill(t_header *header, char **input, t_tools *t)
 {
 	int		i;
 
@@ -80,20 +80,20 @@ int			header_fill(t_header *header, char **input, t_tools *tools)
 	while (input[i])
 	{
 		if (!ft_strncmp(input[i], NAME_CMD_STRING, 5)
-			&& tools->name_filled == 0)
+			&& t->name_filled == 0)
 		{
-			if (!fill_name(header, input, tools, i))
+			if (!fill_name(header, input, t, i))
 				return (0);
 		}
 		else if (!ft_strncmp(input[i], COMMENT_CMD_STRING, 8)
-			&& tools->com_filled == 0)
+			&& t->com_filled == 0)
 		{
-			if (!fill_com(header, input, tools, i))
+			if (!fill_com(header, input, t, i))
 				return (0);
 		}
 		i++;
 	}
-	header->prog_size = tools->prog_size;
+	header->prog_size = t->prog_size;
 	header->prog_size = swap_uint32(header->prog_size);
-	return (bad_dot_line(input) ? 0 : 1);
+	return (bad_dot_line(input) || !t->name_filled || !t->com_filled? 0 : 1);
 }

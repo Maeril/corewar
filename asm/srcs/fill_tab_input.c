@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:06:21 by myener            #+#    #+#             */
-/*   Updated: 2020/07/18 02:15:07 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/30 00:04:57 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static int	stock_instruc_helper(t_line *struct_tab, char *line, int i, char *n)
 	while (line[i] && ft_isblank(line[i]))
 		i++;
 	start = i;
-	while (line[i] && (has_two_params(n) ? !ft_isblank(line[i])
+	while (line[i] && (two_p(n) ? !ft_isblank(line[i])
 		&& line[i] != '\n' : line[i] != ','))
 		i++;
 	struct_tab->p2 = ft_strsub(line, start, i - start);
-	struct_tab->nb_param = has_two_params(n) ? 2 : struct_tab->nb_param;
-	if (has_two_params(n))
+	struct_tab->nb_param = two_p(n) ? 2 : struct_tab->nb_param;
+	if (two_p(n))
 		return (stock_instruct_clean_free(n, 1));
 	i++;
 	while (line[i] && ft_isblank(line[i]))
@@ -50,19 +50,17 @@ static int	stock_instruction(t_line *struct_tab, char *line, int i, t_tools *t)
 	tmp = ft_grabword(line, i, 0, 1);
 	n = string_cleaner(tmp);
 	tmp ? free(tmp) : 0;
-	if (!is_instruc(n))
-		return (stock_instruct_clean_free(n, 0));
 	struct_tab->instruc = ft_strdup(n);
 	i += ft_strlen(n);
 	while (line[i] && ft_isblank(line[i]))
 		i++;
 	t->start = i;
-	while (line[i] && (has_one_param(n) ? !ft_isblank(line[i])
+	while (line[i] && (one_p(n) ? !ft_isblank(line[i])
 		&& line[i] != '\n' : line[i] != ','))
 		i++;
 	struct_tab->p1 = ft_strsub(line, t->start, i - t->start);
-	struct_tab->nb_param = has_one_param(n) ? 1 : struct_tab->nb_param;
-	if (has_one_param(n))
+	struct_tab->nb_param = one_p(n) ? 1 : struct_tab->nb_param;
+	if (one_p(n))
 		return (stock_instruct_clean_free(n, 1));
 	return (stock_instruc_helper(struct_tab, line, i + 1, n));
 }
@@ -117,6 +115,8 @@ int			fill_tab_input(char **input, t_line *struct_tab, t_tools *t)
 			tmp ? free(tmp) : 0;
 			if (st[ft_strlen(st) - 1] == ':')
 				stock_label(&struct_tab[t->j], input[i], t);
+			else if (!is_instruc(st))
+				return (0);
 			else if (is_instruc(st))
 				stock_instruction(&struct_tab[t->j], input[i], 0, t);
 			t->j += (st[ft_strlen(st) - 1] == ':' || is_instruc(st)) ? 1 : 0;

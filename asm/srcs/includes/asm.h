@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/07/22 01:11:48 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/30 00:01:09 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ char				*get_param(t_line *tab, int i, char *param);
 int					get_param_sz(char *param, int label_size);
 int					has_cb(char *word);
 int					has_label_size(char *word);
-int					has_one_param(char *word);
-int					has_two_params(char *word);
-int					has_three_params(char *word);
-int					header_fill(t_header *header, char **input, t_tools *tools);
+int					one_p(char *word);
+int					two_p(char *word);
+int					three_p(char *word);
+int					header_fill(t_header *header, char **input, t_tools *t);
 int					is_called_label(char *str, int write_size);
 int					is_instruc(char *word);
 int					is_legit_label(char *label, t_line *tab, int len);

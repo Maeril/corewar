@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/07/29 22:49:09 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/29 23:29:57 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,16 @@ static int	asm_translator(int fd, char **input, char *out, t_tools *tools)
 	asm_struct_tab_init(struct_tab, tools->tablen);
 	if (!struct_tab_fill(input, struct_tab, tools)
 		|| !header_fill(header, input, tools))
+	{
+		remove(out);
 		return (asm_struct_tab_free(struct_tab, tools->tablen, header, 0));
+	}
 	tools->fd = fd;
 	if (!write_to_cor(struct_tab, header, tools))
+	{
+		remove(out);
 		return (asm_struct_tab_free(struct_tab, tools->tablen, header, 0));
+	}
 	return (asm_struct_tab_free(struct_tab, tools->tablen, header, 1));
 }
 
@@ -107,10 +113,7 @@ int			main(int ac, char **av)
 	if (fd < 0)
 		return (main_free_helper(in_fn, out_fn, in_fc, 1));
 	if (!asm_translator(fd, in_fc, out_fn, &tools))
-	{
-		remove (out_fn);
 		return (main_free_helper(in_fn, out_fn, in_fc, 1));
-	}
 	close(fd);
 	main_free_helper(in_fn, out_fn, in_fc, 0);
 	return (0);
