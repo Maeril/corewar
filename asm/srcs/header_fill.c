@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/07/29 01:42:46 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/29 02:04:38 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	fill_name(t_header *header, char **input, t_tools *tools, int i)
 		return (0);
 	str = ft_strsub(input[i], beg, j - beg);
 	ft_strchr(str, '\n') && str ? ft_strdel(&str) : 0;
-	if (ft_strchr(str, '\n'))
+	if (!str)
 		return (0);
 	ft_strcpy(header->prog_name, str);
 	tools->name_filled = 1;
@@ -62,7 +62,7 @@ static int	fill_com(t_header *header, char **input, t_tools *tools, int i)
 		return (0);
 	str = ft_strsub(input[i], beg, j - beg);
 	ft_strchr(str, '\n') && str ? ft_strdel(&str) : 0;
-	if (ft_strchr(str, '\n'))
+	if (!str)
 		return (0);
 	ft_strcpy(header->comment, str);
 	str ? ft_strdel(&str) : 0;
