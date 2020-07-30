@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/07/29 23:41:42 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/30 22:27:22 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	fill_name(t_header *header, char **input, t_tools *tools, int i)
 	j++;
 	input[i][j] == '"' ? ft_strcpy(header->prog_name, "") : 0;
 	if (input[i][j] == '"')
-		return (1);
+		return (tools->name_empty = 1);
 	beg = j++;
 	while (input[i][j] && input[i][j] != '"')
 		j++;
@@ -54,7 +54,7 @@ static int	fill_com(t_header *header, char **input, t_tools *tools, int i)
 	j++;
 	input[i][j] == '"' ? ft_strcpy(header->comment, "") : 0;
 	if (input[i][j] == '"')
-		return (1);
+		return (tools->com_empty = 1);
 	beg = j++;
 	while (input[i][j] && input[i][j] != '"')
 		j++;
@@ -95,5 +95,6 @@ int			header_fill(t_header *header, char **input, t_tools *t)
 	}
 	header->prog_size = t->prog_size;
 	header->prog_size = swap_uint32(header->prog_size);
-	return (bad_dot_line(input) || !t->name_filled || !t->com_filled? 0 : 1);
+	return (bad_dot_line(input) || (!t->name_filled && !t->name_empty)
+		|| (!t->com_filled && !t->com_empty)? 0 : 1);
 }

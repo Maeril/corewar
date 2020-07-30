@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/07/30 00:01:09 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/30 22:21:31 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@
 typedef	struct		s_tools
 {
 	bool			name_filled;
+	bool			name_empty;
 	bool			com_filled;
+	bool			com_empty;
 	int				cor_line_counter;
 	int				prog_size;
 	int				tablen;
