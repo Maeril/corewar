@@ -7,6 +7,8 @@ PINK='\033[1;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
+clear
+
 if [ "$RES" = "" ]
 then
 	printf "${RED}Script must be executed from corerection.sh${NC}\n"
