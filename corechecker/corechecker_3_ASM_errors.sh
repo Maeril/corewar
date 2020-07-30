@@ -11,7 +11,7 @@ clear
 
 if [ "$ASM_REF" = "" ]
 then
-	printf "${RED}Script must be executed from corerection.sh${NC}\n"
+	printf "${RED}Script must be executed from corechecker.sh${NC}\n"
 	exit 1
 fi
 
@@ -19,157 +19,157 @@ printf "${YELLOW}Testing various champions that should not get assembled by the 
 
 printf "${YELLOW}• Missing name:${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/no-name.s
+$ASM_REF corechecker/asm/errors/no-name.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/no-name.s
-if [ -f "corerection_srcs/champs/errors/no-name.cor" ]
+$ASM corechecker/asm/errors/no-name.s
+if [ -f "corechecker/asm/errors/no-name.cor" ]
 then
 	printf "${RED}A champion was created${NC}\n"
-	rm corerection_srcs/champs/errors/no-name.cor
+	rm corechecker/asm/errors/no-name.cor
 fi
 
 printf "${YELLOW}\n• Missing comment :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/no-comment.s
+$ASM_REF corechecker/asm/errors/no-comment.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/no-comment.s
-if [ -f "corerection_srcs/champs/errors/no-comment.cor" ]
+$ASM corechecker/asm/errors/no-comment.s
+if [ -f "corechecker/asm/errors/no-comment.cor" ]
 then
 	printf "${RED}A champion was created${NC}\n"
-	rm corerection_srcs/champs/errors/no-comment.cor
+	rm corechecker/asm/errors/no-comment.cor
 fi
 
 printf "${YELLOW}\n• Wrong number of parameters :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/parameter-number.s
+$ASM_REF corechecker/asm/errors/parameter-number.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/parameter-number.s
-if [ -f "corerection_srcs/champs/errors/parameter-number.cor" ]
+$ASM corechecker/asm/errors/parameter-number.s
+if [ -f "corechecker/asm/errors/parameter-number.cor" ]
 then
 	printf "${RED}A champion was created${NC}\n"
-	rm corerection_srcs/champs/errors/parameter-number.cor
+	rm corechecker/asm/errors/parameter-number.cor
 fi
 
 printf "${YELLOW}\n• Wrong parameter type :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/parameter-type.s
+$ASM_REF corechecker/asm/errors/parameter-type.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/parameter-type.s
-if [ -f "corerection_srcs/champs/errors/parameter-type.cor" ]
+$ASM corechecker/asm/errors/parameter-type.s
+if [ -f "corechecker/asm/errors/parameter-type.cor" ]
 then
 	printf "${RED}A champion was created${NC}\n"
-	rm corerection_srcs/champs/errors/parameter-type.cor
+	rm corechecker/asm/errors/parameter-type.cor
 fi
 
 printf "${YELLOW}\n• Unknown instruction :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/unknown-instruction.s
+$ASM_REF corechecker/asm/errors/unknown-instruction.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/unknown-instruction.s
-if [ -f "corerection_srcs/champs/errors/unknown-instruction.cor" ]
+$ASM corechecker/asm/errors/unknown-instruction.s
+if [ -f "corechecker/asm/errors/unknown-instruction.cor" ]
 then
 	printf "${RED}A champion was created${NC}\n"
-	rm corerection_srcs/champs/errors/unknown-instruction.cor
+	rm corechecker/asm/errors/unknown-instruction.cor
 fi
 
 printf "${YELLOW}\n• Reference to a non-existing label :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/unknown-label.s
+$ASM_REF corechecker/asm/errors/unknown-label.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/unknown-label.s
-if [ -f "corerection_srcs/champs/errors/unknown-label.cor" ]
+$ASM corechecker/asm/errors/unknown-label.s
+if [ -f "corechecker/asm/errors/unknown-label.cor" ]
 then
 	printf "${RED}A champion was created${NC}\n"
-	rm corerection_srcs/champs/errors/unknown-label.cor
+	rm corechecker/asm/errors/unknown-label.cor
 fi
 
 printf "${YELLOW}\n• Label contains a wrong char :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/wrong-label-char.s
+$ASM_REF corechecker/asm/errors/wrong-label-char.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/wrong-label-char.s
-if [ -f "corerection_srcs/champs/errors/wrong-label-char.cor" ]
+$ASM corechecker/asm/errors/wrong-label-char.s
+if [ -f "corechecker/asm/errors/wrong-label-char.cor" ]
 then
 	printf "${RED}A champion was created${NC}\n"
-	rm corerection_srcs/champs/errors/wrong-label-char.cor
+	rm corechecker/asm/errors/wrong-label-char.cor
 fi
 
 printf "${YELLOW}\n\nTesting various champions that can be considered as errors or can be handled by the asm${NC}\n"
 
 printf "${YELLOW}\n• Wrong type of file :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/wrong-file-type
+$ASM_REF corechecker/asm/errors/wrong-file-type
 if [ -f ".cor" ]
 then
 	rm .cor
 fi
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/wrong-file-type
+$ASM corechecker/asm/errors/wrong-file-type
 
 printf "${YELLOW}\n• Name too big :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/too-big-name.s
+$ASM_REF corechecker/asm/errors/too-big-name.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/too-big-name.s
-if [ -f "corerection_srcs/champs/errors/too-big-name.cor" ]
+$ASM corechecker/asm/errors/too-big-name.s
+if [ -f "corechecker/asm/errors/too-big-name.cor" ]
 then
 	printf "${ORANGE}A champion was created${NC}\n"
 	printf "${YELLOW}Check created champion? (Y/N)${NC} "
 	read -p "" BOOLEAN
 	if [ "$BOOLEAN" = "Y" ]
 	then
-		hexdump -vC corerection_srcs/champs/errors/too-big-name.cor
+		hexdump -vC corechecker/asm/errors/too-big-name.cor
 	fi
-	rm corerection_srcs/champs/errors/too-big-name.cor
+	rm corechecker/asm/errors/too-big-name.cor
 fi
 
 printf "${YELLOW}\n• Comment too big :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/too-big-comment.s
+$ASM_REF corechecker/asm/errors/too-big-comment.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/too-big-comment.s
-if [ -f "corerection_srcs/champs/errors/too-big-comment.cor" ]
+$ASM corechecker/asm/errors/too-big-comment.s
+if [ -f "corechecker/asm/errors/too-big-comment.cor" ]
 then
 	printf "${ORANGE}A champion was created${NC}\n"
 	printf "${YELLOW}Check created champion? (Y/N)${NC} "
 	read -p "" BOOLEAN
 	if [ "$BOOLEAN" = "Y" ]
 	then
-		hexdump -vC corerection_srcs/champs/errors/too-big-comment.cor
+		hexdump -vC corechecker/asm/errors/too-big-comment.cor
 	fi
-	rm corerection_srcs/champs/errors/too-big-comment.cor
+	rm corechecker/asm/errors/too-big-comment.cor
 fi
 
 printf "${YELLOW}\n• Empty name :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/empty-name.s
+$ASM_REF corechecker/asm/errors/empty-name.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/empty-name.s
-if [ -f "corerection_srcs/champs/errors/empty-name.cor" ]
+$ASM corechecker/asm/errors/empty-name.s
+if [ -f "corechecker/asm/errors/empty-name.cor" ]
 then
 	printf "${ORANGE}A champion was created${NC}\n"
 	printf "${YELLOW}Check created champion? (Y/N)${NC} "
 	read -p "" BOOLEAN
 	if [ "$BOOLEAN" = "Y" ]
 	then
-		hexdump -vC corerection_srcs/champs/errors/empty-name.cor
+		hexdump -vC corechecker/asm/errors/empty-name.cor
 	fi
-	rm corerection_srcs/champs/errors/empty-name.cor
+	rm corechecker/asm/errors/empty-name.cor
 fi
 
 printf "${YELLOW}\n• Empty comment :${NC}\n"
 printf "${GREEN}Reference :${NC}\n"
-$ASM_REF corerection_srcs/champs/errors/empty-comment.s
+$ASM_REF corechecker/asm/errors/empty-comment.s
 printf "${PINK}Result :${NC}\n"
-$ASM corerection_srcs/champs/errors/empty-comment.s
-if [ -f "corerection_srcs/champs/errors/empty-comment.cor" ]
+$ASM corechecker/asm/errors/empty-comment.s
+if [ -f "corechecker/asm/errors/empty-comment.cor" ]
 then
 	printf "${ORANGE}A champion was created${NC}\n"
 	printf "${YELLOW}Check created champion? (Y/N)${NC} "
 	read -p "" BOOLEAN
 	if [ "$BOOLEAN" = "Y" ]
 	then
-		hexdump -vC corerection_srcs/champs/errors/empty-comment.cor
+		hexdump -vC corechecker/asm/errors/empty-comment.cor
 	fi
-	rm corerection_srcs/champs/errors/empty-comment.cor
+	rm corechecker/asm/errors/empty-comment.cor
 fi

@@ -11,12 +11,12 @@ clear
 
 if [ "$RES" = "" ]
 then
-	printf "${RED}Script must be executed from corerection.sh${NC}\n"
+	printf "${RED}Script must be executed from corechecker.sh${NC}\n"
 	exit 1
 fi
 printf "${YELLOW}Comparing header: magic number + name${NC}\n"
-hexdump -vC corerection_srcs/champs/instructions.cor | head -n 8 > $RES
-hexdump -vC corerection_srcs/champs/instructions_ref.cor | head -n 8 > $REF
+hexdump -vC corechecker/asm/instructions.cor | head -n 8 > $RES
+hexdump -vC corechecker/asm/instructions_ref.cor | head -n 8 > $REF
 DIFF=$(diff $REF $RES)
 if [ "$DIFF" = "" ]
 then
@@ -36,8 +36,8 @@ then
 	cat $RES
 fi
 printf "${YELLOW}Comparing header: comment + code size${NC}\n"
-hexdump -vC corerection_srcs/champs/instructions.cor | sed -n 9,137p > $RES
-hexdump -vC corerection_srcs/champs/instructions_ref.cor | sed -n 9,137p > $REF
+hexdump -vC corechecker/asm/instructions.cor | sed -n 9,137p > $RES
+hexdump -vC corechecker/asm/instructions_ref.cor | sed -n 9,137p > $REF
 DIFF= $(diff $REF $RES)
 if [ "$DIFF" = "" ]
 then

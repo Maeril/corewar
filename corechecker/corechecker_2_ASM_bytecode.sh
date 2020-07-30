@@ -11,12 +11,12 @@ clear
 
 if [ "$RES" = "" ]
 then
-	printf "${RED}Script must be executed from corerection.sh${NC}\n"
+	printf "${RED}Script must be executed from corechecker.sh${NC}\n"
 	exit 1
 fi
 printf "${YELLOW}Comparing bytecode${NC}\n"
-hexdump -vC corerection_srcs/champs/instructions.cor | tail -n +138 > $RES
-hexdump -vC corerection_srcs/champs/instructions_ref.cor | tail -n +138 > $REF
+hexdump -vC corechecker/asm/instructions.cor | tail -n +138 > $RES
+hexdump -vC corechecker/asm/instructions_ref.cor | tail -n +138 > $REF
 DIFF=$(diff $REF $RES)
 if [ "$DIFF" = "" ]
 then

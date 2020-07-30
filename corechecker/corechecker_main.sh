@@ -19,13 +19,13 @@ then
 	exit 1
 fi
 
-if [ -f "corerection_srcs/champs/instructions.cor" ]
+if [ -f "corechecker/asm/instructions.cor" ]
 then
-	rm corerection_srcs/champs/instructions.cor
+	rm corechecker/asm/instructions.cor
 fi
-if [ -f "corerection_srcs/champs/instructions_ref.cor" ]
+if [ -f "corechecker/asm/instructions_ref.cor" ]
 then
-	rm corerection_srcs/champs/instructions_ref.cor
+	rm corechecker/asm/instructions_ref.cor
 fi
 
 export ASM="./asm/asm"
@@ -41,12 +41,12 @@ read -p "" VERSION
 
 case $VERSION in
 	"1")
-		export ASM_REF="./corerection_srcs/asm_mac"
-		export COREWAR_REF="./corerection_srcs/corewar_mac"
+		export ASM_REF="./corechecker/asm_mac"
+		export COREWAR_REF="./corechecker/corewar_mac"
 		;;
 	"2")
-		export ASM_REF="./corerection_srcs/asm_linux"
-		export COREWAR_REF="./corerection_srcs/corewar_linux"
+		export ASM_REF="./corechecker/asm_linux"
+		export COREWAR_REF="./corechecker/corewar_linux"
 		;;
 	*)
 		printf "Please enter a valid number"
@@ -63,37 +63,37 @@ do
 	read -p "" TEST
 	if [ "$TEST" = "1" ] || [ "$TEST" = "2" ]
 	then
-		if [ ! -f "corerection_srcs/champs/instructions.cor" ] && [ ! -f "corerection_srcs/champs/instructions_ref.cor" ]
+		if [ ! -f "corechecker/asm/instructions.cor" ] && [ ! -f "corechecker/asm/instructions_ref.cor" ]
 		then
-			$ASM_REF corerection_srcs/champs/instructions.s > $TMP
-			mv corerection_srcs/champs/instructions.cor corerection_srcs/champs/instructions_ref.cor
-			$ASM corerection_srcs/champs/instructions.s > $TMP
+			$ASM_REF corechecker/asm/instructions.s > $TMP
+			mv corechecker/asm/instructions.cor corechecker/asm/instructions_ref.cor
+			$ASM corechecker/asm/instructions.s > $TMP
 		fi
 	fi
 	case $TEST in
 		"1")
-			sh corerection_srcs/corerection_1_ASM_header.sh
+			sh corechecker/corechecker_1_ASM_header.sh
 			;;
 		"2")
-			sh corerection_srcs/corerection_2_ASM_bytecode.sh
+			sh corechecker/corechecker_2_ASM_bytecode.sh
 			;;
 		"3")
-			sh corerection_srcs/corerection_3_ASM_errors.sh
+			sh corechecker/corechecker_3_ASM_errors.sh
 			;;
 		"4")
-			sh corerection_srcs/corerection_4_VM_proof.sh
+			sh corechecker/corechecker_4_VM_proof.sh
 			;;
 		"5")
-			sh corerection_srcs/corerection_5_VM_instructions.sh
+			sh corechecker/corechecker_5_VM_instructions.sh
 			;;
 		"6")
-			sh corerection_srcs/corerection_6_VM_IDXmod.sh
+			sh corechecker/corechecker_6_VM_IDXmod.sh
 			;;
 		"7")
-			sh corerection_srcs/corerection_7_VM_position.sh
+			sh corechecker/corechecker_7_VM_position.sh
 			;;
 		"8")
-			sh corerection_srcs/corerection_8_VM_errors.sh
+			sh corechecker/corechecker_8_VM_errors.sh
 			;;
 		*)
 			printf "${RED}Please enter a valid number${NC}\n"
@@ -110,11 +110,11 @@ done
 rm $TMP
 rm $RES
 rm $REF
-if [ -f "corerection_srcs/champs/instructions.cor" ]
+if [ -f "corechecker/asm/instructions.cor" ]
 then
-	rm corerection_srcs/champs/instructions.cor
+	rm corechecker/asm/instructions.cor
 fi
-if [ -f "corerection_srcs/champs/instructions_ref.cor" ]
+if [ -f "corechecker/asm/instructions_ref.cor" ]
 then
-	rm corerection_srcs/champs/instructions_ref.cor
+	rm corechecker/asm/instructions_ref.cor
 fi
