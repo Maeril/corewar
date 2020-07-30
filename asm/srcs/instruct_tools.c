@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:03:42 by myener            #+#    #+#             */
-/*   Updated: 2020/06/23 01:51:33 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/30 00:00:45 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		has_cb(char *word)
 	return (0);
 }
 
-int		has_one_param(char *word)
+int		one_p(char *word)
 {
 	if (!ft_strcmp(word, "live") || !ft_strcmp(word, "zjmp")
 	|| !ft_strcmp(word, "fork") || !ft_strcmp(word, "lfork")
@@ -38,7 +38,7 @@ int		has_one_param(char *word)
 	return (0);
 }
 
-int		has_two_params(char *word)
+int		two_p(char *word)
 {
 	if (!ft_strcmp(word, "ld") || !ft_strcmp(word, "st")
 	|| !ft_strcmp(word, "lld"))
@@ -46,7 +46,7 @@ int		has_two_params(char *word)
 	return (0);
 }
 
-int		has_three_params(char *word)
+int		three_p(char *word)
 {
 	if (!ft_strcmp(word, "add") || !ft_strcmp(word, "sub")
 	|| !ft_strcmp(word, "and") || !ft_strcmp(word, "or")
