@@ -19,13 +19,13 @@ then
 	exit 1
 fi
 
-if [ -f "corechecker/asm/instructions.cor" ]
+if [ -f "corechecker/asm/header.cor" ]
 then
-	rm corechecker/asm/instructions.cor
+	rm corechecker/asm/header.cor
 fi
-if [ -f "corechecker/asm/instructions_ref.cor" ]
+if [ -f "corechecker/asm/header_ref.cor" ]
 then
-	rm corechecker/asm/instructions_ref.cor
+	rm corechecker/asm/header_ref.cor
 fi
 
 export ASM="./asm/asm"
@@ -61,15 +61,6 @@ do
 	printf "${PINK}4 • VM - Proof of concept\n5 • VM - Instruction execution\n6 • VM - IDX mod\n7 • VM - Champion positionning\n"
 	printf "8 • VM - Error management\n${NC}"
 	read -p "" TEST
-	if [ "$TEST" = "1" ] || [ "$TEST" = "2" ]
-	then
-		if [ ! -f "corechecker/asm/instructions.cor" ] && [ ! -f "corechecker/asm/instructions_ref.cor" ]
-		then
-			$ASM_REF corechecker/asm/instructions.s > $TMP
-			mv corechecker/asm/instructions.cor corechecker/asm/instructions_ref.cor
-			$ASM corechecker/asm/instructions.s > $TMP
-		fi
-	fi
 	case $TEST in
 		"1")
 			sh corechecker/corechecker_1_ASM_header.sh
@@ -110,11 +101,3 @@ done
 rm $TMP
 rm $RES
 rm $REF
-if [ -f "corechecker/asm/instructions.cor" ]
-then
-	rm corechecker/asm/instructions.cor
-fi
-if [ -f "corechecker/asm/instructions_ref.cor" ]
-then
-	rm corechecker/asm/instructions_ref.cor
-fi
