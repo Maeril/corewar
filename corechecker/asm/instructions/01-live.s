@@ -1,4 +1,4 @@
-.name		""
-.comment	""
+.name		"dummy"
+.comment	"dummy"
 
 live	%1
