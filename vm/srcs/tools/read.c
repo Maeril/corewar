@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 10:46:46 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/22 10:54:56 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/31 11:46:27 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,10 @@ void		read_arg(t_vm *vm, t_proc *p, t_arg *arg)
 	{
 		if (p->op->d2)
 		{
-			arg->index = read_field(vm, p, 2);
-			if (arg->index & 0x8000)
-				arg->index = arg->index - 0xFFFF - 1;
+			arg->val = read_field(vm, p, 2);
+			//arg->index = read_field(vm, p, 2);
+			if (arg->val & 0x8000)
+				arg->val = arg->val - 0xFFFF - 1;
 		}
 		else
 			arg->val = read_field(vm, p, 4);
@@ -87,6 +88,7 @@ void		read_val(t_vm *vm, t_proc *p, t_arg *arg)
 {
 	if (arg->type == T_REG)
 		arg->val = get_reg_val(p, arg->reg);
-	else if (arg->type == T_IND || (arg->type == T_DIR && p->op->d2))
+	//else if (arg->type == T_IND || (arg->type == T_DIR && p->op->d2))
+	else if (arg->type == T_IND)
 		arg->val = read_field_at(vm, get_address(p, arg->index), DIR_SIZE);
 }

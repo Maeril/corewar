@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/22 16:16:54 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/28 10:52:52 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@
 # define P2_COLOR		COLOR_BLUE
 # define P3_COLOR		COLOR_RED
 # define P4_COLOR		COLOR_CYAN
-# define P1_FCOLOR		"\033[1;32m" // green
-# define P2_FCOLOR		"\033[1;36m" // cyan
-# define P3_FCOLOR		"\033[1;35m" // purple
-# define P4_FCOLOR		"\033[1;33m" // Yellow
+# define P1_FCOLOR		"\033[1;32m"
+# define P2_FCOLOR		"\033[1;36m"
+# define P3_FCOLOR		"\033[1;35m"
+# define P4_FCOLOR		"\033[1;33m"
 # define P1_BCOLOR		"\033[0;30;42m"
 # define P2_BCOLOR		"\033[0;30;46m"
 # define P3_BCOLOR		"\033[0;30;45m"
@@ -73,12 +73,9 @@
 # define RCOLOR			256
 # define WCOLOR			128
 
-
 /*
 ** Structures
 */
-
-
 
 typedef struct			s_arg
 {
@@ -87,7 +84,6 @@ typedef struct			s_arg
 	int				index;
 	uintmax_t		val;
 }						t_arg;
-
 
 typedef struct			s_buff
 {

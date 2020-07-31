@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 09:05:49 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/10 07:48:13 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/28 12:22:10 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	del_proc(t_proc **ps)
 	{
 		todel = *ps;
 		*ps = (*ps)->next;
-		//free(todel->name);
 		free(todel);
 	}
 }

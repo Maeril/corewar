@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 09:04:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/08 10:14:46 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/28 12:17:22 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,4 +15,5 @@
 void	del_vm(t_vm *vm)
 {
 	del_champ_lst(&vm->champ);
+	del_proc_lst(&vm->proc);
 }

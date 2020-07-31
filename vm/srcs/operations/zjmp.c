@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/21 11:12:03 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/31 11:47:48 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void		put_zjmp(t_vm *vm, t_proc *p, t_arg arg)
 			printer(vm, 0, "sans effet\n");
 	}
 	else
-		printer(vm, 0, "%d %s\n", arg.index, p->carry == 1 ? "OK" : "FAILED");
+		printer(vm, 0, "%d %s\n", arg.val, p->carry == 1 ? "OK" : "FAILED");
 }
 
 void		operate_zjmp(t_vm *vm, t_proc *p)
@@ -40,6 +40,6 @@ void		operate_zjmp(t_vm *vm, t_proc *p)
 	arg.type = T_DIR;
 	read_arg(vm, p, &arg);
 	if (p->carry)
-		p->pc = get_address(p, arg.index);
+		p->pc = get_address(p, arg.val);
 	put_zjmp(vm, p, arg);
 }

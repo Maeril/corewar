@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/21 10:09:42 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/31 12:00:37 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void		put_lfork(t_vm *vm, t_proc *p, t_proc *new, t_arg arg)
 		printer(vm, 0, "\n");
 	}
 	else
-		printer(vm, 0, "%d (%d)\n", arg.index, p->prev_pc + arg.index);
+		printer(vm, 0, "%d (%d)\n", arg.val, p->prev_pc + arg.val);
 }
 
 void		operate_lfork(t_vm *vm, t_proc *p)
@@ -35,7 +35,7 @@ void		operate_lfork(t_vm *vm, t_proc *p)
 	arg.type = T_DIR;
 	read_arg(vm, p, &arg);
 	new = fork_proc(vm, p);
-	new->pc = get_address(new, arg.index);
+	new->pc = get_address(new, arg.val);
 	put_lfork(vm, p, new, arg);
 	new->op = NULL;
 }

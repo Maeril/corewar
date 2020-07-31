@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/22 11:08:36 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/31 11:58:16 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	check_args_types(t_arg *args)
 {
 	return ((args[0].type & T_REG)
 		&& (args[1].type & (T_REG | T_DIR | T_IND))
-		&& (args[2].type & (T_REG | T_DIR | T_IND)));
+		&& (args[2].type & (T_REG | T_DIR)));
 }
 
 static void		put_sti(t_vm *vm, t_proc *p, t_arg *args)
@@ -65,13 +65,20 @@ void		operate_sti(t_vm *vm, t_proc *p)
 	read_val(vm, p, &args[0]);
 	read_val(vm, p, &args[1]);
 	read_val(vm, p, &args[2]);
-	if (args[1].type != T_REG)
-		args[1].val = args[1].index;
-	if (args[2].type != T_REG)
-		args[2].val = args[2].index;
+	// if (args[1].type != T_REG)
+	// 	args[1].val = args[1].index;
+	// if (args[2].type != T_REG)
+	// 	args[2].val = args[2].index;
 	put_sti(vm, p, args);
+	// args[1].type = T_IND;
+	// args[1].index = args[1].val + args[2].val;
+	// read_val(vm, p, &args[1]);
+	// args[1].reg = args[0].reg;
+	// write_val(vm, p, args[1]);
+
 	args[1].type = T_IND;
 	args[1].index = args[1].val + args[2].val;
+	read_val(vm, p, &args[1]);
 	args[1].val = args[0].val;
 	write_val(vm, p, args[1]);
 }

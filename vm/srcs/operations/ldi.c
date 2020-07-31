@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/20 06:45:51 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/31 11:43:42 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 static int		check_args_types(t_arg *args)
 {
 	return ((args[0].type & (T_REG | T_DIR | T_IND))
-		&& (args[1].type & (T_IND | T_DIR))
+		&& (args[1].type & (T_REG | T_DIR))
 		&& (args[2].type & T_REG));
 }
 
 static void		put_ldi(t_vm *vm, t_proc *p, t_arg *args)
 {
+	int	add;
+
 	put_op(vm, p);
+	add = args[0].val + args[1].val;
 	if (vm->options & VM_OP_UP_V)
 	{
 		printer(vm, 0, "charge ");
@@ -29,16 +32,16 @@ static void		put_ldi(t_vm *vm, t_proc *p, t_arg *args)
 		printer(vm, 0, " + ");
 		put_arg(vm, 0, args[1]);
 		printer(vm, 0, " = ");
-		print_coords(vm, 0, args[0].val + args[1].val);
+		print_coords(vm, 0, add);
 		printer(vm, 0, " dans ");
 		put_arg(vm, 0, args[2]);
 		printer(vm, 0, "\n");
 	}
 	else
 	{
-		printer(vm, 0, "%d %d r%d\n", args[0].reg, args[1].val, args[2].val);
-		printer(vm, 0, "       | -> load from %d + %d = %d ",
-			args[0].val, args[1].val, args[0].val + args[1].val);
+		printer(vm, 0, "%d %d r%d\n", args[0].val, args[1].val, args[2].reg);
+		printer(vm, 0, "       | -> load from %d + %d = %d (with pc and mod %d)\n",
+			args[0].val, args[1].val, add, get_address(p, add));
 	}
 }
 
@@ -63,5 +66,5 @@ void		operate_ldi(t_vm *vm, t_proc *p)
 	read_val(vm, p, &args[0]);
 	args[2].val = args[0].val;
 	write_val(vm, p, args[2]);
-	set_carry(p, args[2].val);
+	set_carry(p, args[2].val); // verifier si carry flag ???
 }

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:44:06 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/18 06:41:10 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/28 11:52:19 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			main(int ac, char **av)
 	{
 		if (!(ret = read_champions(&vm)))
 		{
-			if (!vm.goto_cycle)
+			if (vm.options & VM_OP_C)
 				init_visualizer(&vm);
 			init_procs(&vm);
 			run_vm(&vm);

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 21:10:29 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/22 08:13:08 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/07/28 11:26:59 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ static void			dump(t_vm *vm)
 		pc %= MEM_SIZE;
 		printer(vm, 1, "%s", get_term_color(vm->cells[pc].color));
 		printer(vm, 1, "%02x%s ", vm->field[pc], "\033[0m");
-		if (!((pc + 1) % width))
+		++pc;
+		if (!(pc % width))
 			printer(vm, 1, "\n");
-		if (!((pc + 1) % width) && pc + 1 < MEM_SIZE)
+		if (!(pc % width) && pc < MEM_SIZE)
 			printer(vm, 1, "0x%s: ", fill_hex(addr, pc));
-		pc++;
 	}
 	if (vm->options & (VM_OP_V | VM_OP_S))
 		footer_players(vm);
@@ -98,12 +98,15 @@ static void			dump(t_vm *vm)
 
 void	dump_memory(t_vm *vm)
 {
+	char n;
+
 	if (vm->options & VM_OP_S
 		&& (!(vm->cycle % vm->option_nb) || vm->cycle_to_die <= 0))
 	{
 		ft_printf("        Cycle %d\n", vm->cycle);
 		dump(vm);
-		getchar();
+		while (read(0, &n, 1) && n != '\n')
+			;
 	}
 	else if (vm->cycle == vm->option_nb || vm->cycle_to_die <= 0)
 	{
