@@ -40,12 +40,22 @@ ldi		r1, r1, r1
 ldi		r1, %1, r1
 ldi		%1, %1, r1
 ldi		%1, r1, r1
+ldi		1, r1, r1
+ldi		1, %1, r1
 sti		r1, r1, r1
 sti		r1, r1, %1
 sti		r1, %1, %1
 sti		r1, %1, r1
+sti		r1, 1, %1
+sti		r1, 1, r1
 fork	%1
 lld		%1, r1
 lld		1, r1
+lldi	r1, r1, r1
+lldi	r1, %1, r1
+lldi	%1, %1, r1
+lldi	%1, r1, r1
+lldi	1, r1, r1
+lldi	1, %1, r1
 lfork	%1
 aff		r1
