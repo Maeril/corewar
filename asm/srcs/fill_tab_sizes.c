@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:09:22 by myener            #+#    #+#             */
-/*   Updated: 2020/07/01 06:04:41 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/31 17:24:47 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ int				fill_tab_sizes(t_line *tab, t_tools *tools)
 			tab[i].line_cor_ln = tab[i].p1_sz + tab[i].p2_sz + tab[i].p3_sz + 1;
 			tab[i].line_cor_ln += has_cb(tab[i].instruc) ? 1 : 0;
 			tab[i].relative_cor_addr = tools->cor_line_counter;
-			tab[i].called_label = get_called_label(tab, i, tools->tablen);
-			tools->prog_size += 1;
-			tools->prog_size += has_cb(tab[i].instruc) ? 1 : 0;
+			if (!(tab[i].called_label = get_called_label(tab, i, tools->tablen)))
+				return (0);
+			tools->prog_size += (has_cb(tab[i].instruc) ? 1 : 0) + 1;
 			tools->prog_size += tab[i].p1_sz + tab[i].p2_sz + tab[i].p3_sz;
 		}
 	return (fill_tab_sizes_helper(i, tab, tools));

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:06:21 by myener            #+#    #+#             */
-/*   Updated: 2020/07/30 22:14:03 by myener           ###   ########.fr       */
+/*   Updated: 2020/07/31 17:22:09 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ static int	stock_instruction(t_line *struct_tab, char *line, int i, t_tools *t)
 	return (stock_instruc_helper(struct_tab, line, i + 1, n));
 }
 
-static void	stock_label(t_line *struct_tab, char *line, t_tools *t)
+static int	stock_label(t_line *struct_tab, char *line, t_tools *t)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (line[i] && line[i] != ':')
@@ -76,8 +76,8 @@ static void	stock_label(t_line *struct_tab, char *line, t_tools *t)
 	while (line[i] && ft_isblank(line[i]))
 		i++;
 	if (line[i] == '\n' || line[i] == '#' || !line)
-		return ;
-	stock_instruction(struct_tab, line, i + 1, t);
+		return (1);
+	return (stock_instruction(struct_tab, line, i + 1, t));
 }
 
 static char	*fill_tab_input_helper(int i, char **input, t_tools *t)
@@ -113,8 +113,9 @@ int			fill_tab_input(char **input, t_line *struct_tab, t_tools *t)
 			st ? free(st) : 0;
 			st = string_cleaner(tmp);
 			tmp ? free(tmp) : 0;
-			if (st[ft_strlen(st) - 1] == ':')
-				stock_label(&struct_tab[t->j], input[i], t);
+			if ((st[ft_strlen(st) - 1] == ':')
+				&& (!stock_label(&struct_tab[t->j], input[i], t)))
+					return (0);
 			else if (!is_instruc(st) && st[0] != '#' && st[0] != '\0')
 				return (0);
 			else if (is_instruc(st))
