@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 12:16:21 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 14:56:47 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,4 @@ void		operate_ldi(t_vm *vm, t_proc *p)
 	read_val(vm, p, &args[0]);
 	args[2].val = args[0].val;
 	write_val(vm, p, args[2]);
-	set_carry(p, args[2].val); // verifier si carry flag ???
 }
