@@ -31,7 +31,6 @@ do
 		printf "${PINK}$ERR${NC}\n"
 		continue
 	fi
-	echo HEYA
 	hexdump -vC "corechecker/asm/instructions/$CHAMP.cor" | sed -n 138,138p > $REF
 	rm "corechecker/asm/instructions/$CHAMP.cor"
 	DIFF=$(diff $RES $REF)
