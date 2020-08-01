@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/07/30 22:21:31 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/01 03:36:46 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef	struct		s_tools
 	bool			name_empty;
 	bool			com_filled;
 	bool			com_empty;
+	bool			bad_label;
 	int				cor_line_counter;
 	int				prog_size;
 	int				tablen;
@@ -66,7 +67,7 @@ int					fill_tab_input(char **input, t_line *struct_tab,
 int					fill_tab_sizes(t_line *tab, t_tools *tools);
 char				*get_coding_byte_helper(char *byte, char c, int sz);
 char				**get_file_content(char *file_name);
-char				*get_param(t_line *tab, int i, char *param);
+char				*get_param_that_calls_label(t_line *tab, int i, char *p);
 int					get_param_sz(char *param, int label_size);
 int					has_cb(char *word);
 int					has_label_size(char *word);

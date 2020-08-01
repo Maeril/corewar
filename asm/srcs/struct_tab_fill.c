@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/07/30 22:19:01 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/01 23:44:06 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,20 @@ int			get_param_sz(char *param, int label_size)
 	return (0);
 }
 
-char		*get_param(t_line *tab, int i, char *param)
+char		*get_param_that_calls_label(t_line *tab, int i, char *p)
 {
-	if (tab[i].p1 && tab[i].p1_sz > 1)
-		param = ft_strdup(tab[i].p1);
-	else if (tab[i].p2 && tab[i].p2_sz > 1)
-		param = ft_strdup(tab[i].p2);
-	else if (tab[i].p3 && tab[i].p3_sz > 1)
-		param = ft_strdup(tab[i].p3);
+	if (tab[i].p1 && tab[i].p1_sz > 1 && (tab[i].p1[0] == ':'
+		|| (tab[i].p1[0] == '%' && tab[i].p1[1] && tab[i].p1[1] == ':')))
+		p = ft_strdup(tab[i].p1);
+	else if (tab[i].p2 && tab[i].p2_sz > 1 && (tab[i].p2[0] == ':'
+		|| (tab[i].p2[0] == '%' && tab[i].p2[1] && tab[i].p2[1] == ':')))
+		p = ft_strdup(tab[i].p2);
+	else if (tab[i].p3 && tab[i].p3_sz > 1 && (tab[i].p3[0] == ':'
+		|| (tab[i].p3[0] == '%' && tab[i].p3[1] && tab[i].p3[1] == ':')))
+		p = ft_strdup(tab[i].p3);
 	else
 		return (NULL);
-	return (param);
+	return (p);
 }
 
 static int	fill_lonely_labels(t_line *tab, int len)

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/07/30 22:27:22 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/01 23:43:55 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,5 @@ int			header_fill(t_header *header, char **input, t_tools *t)
 	header->prog_size = t->prog_size;
 	header->prog_size = swap_uint32(header->prog_size);
 	return (bad_dot_line(input) || (!t->name_filled && !t->name_empty)
-		|| (!t->com_filled && !t->com_empty)? 0 : 1);
+		|| (!t->com_filled && !t->com_empty) ? 0 : 1);
 }

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:06:21 by myener            #+#    #+#             */
-/*   Updated: 2020/07/31 17:22:09 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/02 00:20:52 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int			fill_tab_input(char **input, t_line *struct_tab, t_tools *t)
 			tmp ? free(tmp) : 0;
 			if ((st[ft_strlen(st) - 1] == ':')
 				&& (!stock_label(&struct_tab[t->j], input[i], t)))
-					return (0);
+				return (0);
 			else if (!is_instruc(st) && st[0] != '#' && st[0] != '\0')
 				return (0);
 			else if (is_instruc(st))

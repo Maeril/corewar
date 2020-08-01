@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 00:54:28 by myener            #+#    #+#             */
-/*   Updated: 2020/07/30 00:04:29 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/01 23:43:09 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ static int	proofreader_helper(t_line *tab, int i)
 		|| (!ft_strcmp(tab[i].instruc, "or") && !is_reg(tab[i].p3))
 		|| (!ft_strcmp(tab[i].instruc, "xor") && !is_reg(tab[i].p3))
 		|| (!ft_strcmp(tab[i].instruc, "zjmp") && !is_dir(tab[i].p1))
-		|| (!ft_strcmp(tab[i].instruc, "ldi") && (is_ind(tab[i].p1)
-		|| is_ind(tab[i].p2) || !is_reg(tab[i].p3)))
+		|| (!ft_strcmp(tab[i].instruc, "ldi") && (is_ind(tab[i].p2)
+		|| !is_reg(tab[i].p3)))
 		|| (!ft_strcmp(tab[i].instruc, "sti") && (!is_reg(tab[i].p1)
-		|| is_ind(tab[i].p2) || is_ind(tab[i].p3)))
+		|| is_ind(tab[i].p3)))
 		|| (!ft_strcmp(tab[i].instruc, "fork") && !is_dir(tab[i].p1))
 		|| (!ft_strcmp(tab[i].instruc, "lld") && (is_reg(tab[i].p1)
 		|| !is_reg(tab[i].p2)))
 		|| (!ft_strcmp(tab[i].instruc, "lldi") && (is_ind(tab[i].p2)
 		|| !is_reg(tab[i].p3)))
 		|| (!ft_strcmp(tab[i].instruc, "lfork") && !is_dir(tab[i].p1))
-		|| (!ft_strcmp(tab[i].instruc, "aff")&& !is_reg(tab[i].p1)))
+		|| (!ft_strcmp(tab[i].instruc, "aff") && !is_reg(tab[i].p1)))
 		return (0);
 	return (1);
 }

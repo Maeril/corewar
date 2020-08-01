@@ -6,22 +6,22 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:09:22 by myener            #+#    #+#             */
-/*   Updated: 2020/07/31 17:24:47 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/01 03:48:23 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/asm.h"
 
-static char		*get_called_label_helper(char *label, t_line *tab, int len)
+static char		*get_called_label_helper(char *label, t_line *tab, t_tools *t)
 {
-	if (is_legit_label(label, tab, len))
+	if (is_legit_label(label, tab, t->tablen))
 		return (label);
-	else
-		label ? free(label) : 0;
+	label ? free(label) : 0;
+	t->bad_label = 1;
 	return (NULL);
 }
 
-static char		*get_called_label(t_line *tab, int i, int len)
+static char		*get_called_label(t_line *tab, int i, t_tools *t)
 {
 	int		j;
 	int		start;
@@ -29,7 +29,7 @@ static char		*get_called_label(t_line *tab, int i, int len)
 	char	*param;
 
 	param = NULL;
-	if (!(param = get_param(tab, i, param)))
+	if (!(param = get_param_that_calls_label(tab, i, param)))
 		return (NULL);
 	j = -1;
 	start = 0;
@@ -43,7 +43,7 @@ static char		*get_called_label(t_line *tab, int i, int len)
 				j++;
 			label = ft_strsub(param, start, j - start);
 			param ? free(param) : 0;
-			return (get_called_label_helper(label, tab, len));
+			return (get_called_label_helper(label, tab, t));
 		}
 	param ? free(param) : 0;
 	return (NULL);
@@ -101,10 +101,9 @@ int				fill_tab_sizes(t_line *tab, t_tools *tools)
 			tab[i].line_cor_ln = tab[i].p1_sz + tab[i].p2_sz + tab[i].p3_sz + 1;
 			tab[i].line_cor_ln += has_cb(tab[i].instruc) ? 1 : 0;
 			tab[i].relative_cor_addr = tools->cor_line_counter;
-			if (!(tab[i].called_label = get_called_label(tab, i, tools->tablen)))
-				return (0);
+			tab[i].called_label = get_called_label(tab, i, tools);
 			tools->prog_size += (has_cb(tab[i].instruc) ? 1 : 0) + 1;
 			tools->prog_size += tab[i].p1_sz + tab[i].p2_sz + tab[i].p3_sz;
 		}
-	return (fill_tab_sizes_helper(i, tab, tools));
+	return (tools->bad_label ? 0 : fill_tab_sizes_helper(i, tab, tools));
 }
