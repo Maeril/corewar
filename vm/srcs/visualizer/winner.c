@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 09:39:34 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/21 19:43:56 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 14:23:59 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ static void		display_winner_name(t_vm *vm, t_champ *c, int y, int x)
 		display_winner_border(vm, len, y, x);
 		wattroff(vm->display.winfo, COLOR_PAIR(RCOLOR - ft_abs(c->id) - 1));
 	}
-	else
-	{
-		len = ft_min(4, vm->display.info.col - 10);
-		mvwprintw(vm->display.winfo, y, x, "%.*s", len, "DRAW");
-		wattron(vm->display.winfo, COLOR_PAIR(RCOLOR - ERR_COLOR) - 1);
-		display_winner_border(vm, len, y, x);
-		wattroff(vm->display.winfo, COLOR_PAIR(RCOLOR - ERR_COLOR) - 1);
-	}
+	// else
+	// {
+	// 	len = ft_min(4, vm->display.info.col - 10);
+	// 	mvwprintw(vm->display.winfo, y, x, "%.*s", len, "DRAW");
+	// 	wattron(vm->display.winfo, COLOR_PAIR(RCOLOR - ERR_COLOR) - 1);
+	// 	display_winner_border(vm, len, y, x);
+	// 	wattroff(vm->display.winfo, COLOR_PAIR(RCOLOR - ERR_COLOR) - 1);
+	// }
 	x = (vm->display.info.col / 2) - 9; // 9 == len("Press END to finish") / 2
 	mvwprintw(vm->display.winfo, y + 4, x - 5, "%s", "Appuyez sur END pour quitter");
 	wattroff(vm->display.winfo, A_BOLD);
@@ -59,11 +59,11 @@ void			display_winner(t_vm *vm)
 
 	if (vm->cycle_to_die <= 0)
 	{
-		if (vm->survivor)
+		//if (vm->last_live_champ)
 			x = (vm->display.info.col / 2)
-				- (ft_strlen(vm->survivor->header.prog_name) / 2);
-		else
-			x = (vm->display.info.col / 2) - 2;
-		display_winner_name(vm, vm->survivor, 50, x);
+				- (ft_strlen(vm->last_live_champ->header.prog_name) / 2);
+		//else
+		//	x = (vm->display.info.col / 2) - 2;
+		display_winner_name(vm, vm->last_live_champ, 50, x);
 	}
 }

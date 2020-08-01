@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 17:44:06 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/21 11:31:25 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 13:57:52 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void		init_procs(t_vm *vm)
 	{
 		init_proc(vm, champ, pc);
 		pc += gap;
+		vm->last_live_champ = champ;
 		champ = champ->next;
 	}
 	display_refresh(vm);

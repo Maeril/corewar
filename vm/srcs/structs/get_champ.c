@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 07:36:39 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/21 17:57:29 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 14:06:10 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,39 @@ t_champ		*get_champ_max_lives(t_vm *vm)
 	return (max);
 }
 
-t_champ		*get_champ_survivor(t_vm *vm)
+int		count_champs_alive(t_vm *vm)
 {
 	t_champ		*c;
-	t_champ		*survivor;
+	int			i;
 
 	c = vm->champ;
-	survivor = NULL;
+	i = 0;
 	while (c)
 	{
 		if (c->alive)
-		{
-			if (survivor)
-				return (NULL);
-			survivor = c;
-		}
+			++i;
 		c = c->next;
 	}
-	return (survivor);
+	return (i);
 }
+
+// t_champ		*get_champ_survivor(t_vm *vm)
+// {
+// 	t_champ		*c;
+// 	t_champ		*survivor;
+
+// 	c = vm->champ;
+// 	survivor = NULL;
+// 	while (c)
+// 	{
+// 		if (c->alive)
+// 		{
+// 			if (survivor)
+// 				return (NULL);
+// 			survivor = c;
+// 		}
+// 		c = c->next;
+// 	}
+// 	return (survivor);
+// }
 

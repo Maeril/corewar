@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 20:26:22 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/04/16 20:26:22 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 14:06:20 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,5 +130,7 @@ void			visualizer_handle_keys(t_vm *vm, int key);
 void			init_colors(void);
 int				get_champion_color(t_vm *vm, int reg);
 void			display_color(t_vm *vm, t_proc *p, int index, int size);
+int				check_args_types(t_op *op, t_arg *args);
+int				count_champs_alive(t_vm *vm);
 
 #endif

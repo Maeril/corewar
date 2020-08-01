@@ -6,18 +6,11 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/07/31 11:43:42 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 12:16:21 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-static int		check_args_types(t_arg *args)
-{
-	return ((args[0].type & (T_REG | T_DIR | T_IND))
-		&& (args[1].type & (T_REG | T_DIR))
-		&& (args[2].type & T_REG));
-}
 
 static void		put_ldi(t_vm *vm, t_proc *p, t_arg *args)
 {
@@ -40,8 +33,10 @@ static void		put_ldi(t_vm *vm, t_proc *p, t_arg *args)
 	else
 	{
 		printer(vm, 0, "%d %d r%d\n", args[0].val, args[1].val, args[2].reg);
-		printer(vm, 0, "       | -> load from %d + %d = %d (with pc and mod %d)\n",
-			args[0].val, args[1].val, add, get_address(p, add));
+		printer(vm, 0, "       | -> load from %d + %d = %d ",
+			args[0].val, args[1].val, add);
+		printer(vm, 0,  "(with pc and mod %d)\n",
+			p->prev_pc + (add % IDX_MOD));
 	}
 }
 
@@ -51,7 +46,7 @@ void		operate_ldi(t_vm *vm, t_proc *p)
 
 	ft_bzero(&args, sizeof(args));
 	set_args_types(args, vm->field[move_pc(p, 1)]);
-	if (!check_args_types(args))
+	if (!check_args_types(p->op, args))
 		return (move_pc_through_args(p, args, p->op));
 	read_arg(vm, p, &args[0]);
 	read_arg(vm, p, &args[1]);

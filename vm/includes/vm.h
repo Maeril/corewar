@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/07/28 10:52:52 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 14:09:28 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ typedef struct			s_vm
 
 	char				*err;
 
-	t_champ				*survivor;
+	//t_champ				*survivor;
 }						t_vm;
 
 extern void				(*g_op_func_tab[18])(t_vm *, t_proc *);

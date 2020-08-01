@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 20:29:30 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/21 19:26:24 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 12:19:33 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_coords(t_vm *vm, int force, int addr)
 
 	if (vm->options & VM_OP_C)
 	{
-		max = vm->display.el_per_line;
+		max = ft_max(vm->display.el_per_line, 1);
 		printer(vm, force, "#(%02d,%02d)", addr / max, addr % max);
 	}
 	else

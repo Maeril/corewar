@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/07/31 11:38:19 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 12:12:14 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void		put_fork(t_vm *vm, t_proc *p, t_proc *new, t_arg arg)
 	if (vm->options & VM_OP_UP_V)
 	{
 		printer(vm, 0, "fork dans ");
-		printer(vm, 0, " %d ", arg.index);
+		printer(vm, 0, " %d ", arg.val);
 		print_coords(vm, 0, new->pc);
 		printer(vm, 0, "\n");
 	}

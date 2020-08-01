@@ -6,28 +6,11 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 21:10:29 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/07/28 11:26:59 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 12:08:47 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-// a refaire
-
-static char		*fill_hex(char *addr, int nb)
-{
-	int		i;
-
-	i = 0;
-	while (i < 4)
-	{
-		addr[3 - i] = g_base[nb % 16];
-		nb /= 16;
-		++i;
-	}
-	addr[4] = 0;
-	return (addr);
-}
 
 static char		*get_term_color(int color)
 {
@@ -76,11 +59,10 @@ static void			dump(t_vm *vm)
 {
 	int		pc;
 	int		width;
-	char	addr[5];
 
 	pc = 0;
 	width = 32;
-	printer(vm, 1, "0x%s: ", fill_hex(addr, pc));
+	printer(vm, 1, "0x%0.4x: ", pc);
 	while (pc < MEM_SIZE)
 	{
 		pc %= MEM_SIZE;
@@ -90,7 +72,7 @@ static void			dump(t_vm *vm)
 		if (!(pc % width))
 			printer(vm, 1, "\n");
 		if (!(pc % width) && pc < MEM_SIZE)
-			printer(vm, 1, "0x%s: ", fill_hex(addr, pc));
+			printer(vm, 1, "%#0.4x: ", pc);
 	}
 	if (vm->options & (VM_OP_V | VM_OP_S))
 		footer_players(vm);
