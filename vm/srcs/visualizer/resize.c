@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 16:16:01 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/06/18 08:40:54 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 18:19:20 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void		display_message(t_vm *vm, int y, int x)
 		mvprintw(3, 1, "%d colonnes nécessaires", xmax - x);
 	if (y < ymax)
 		mvprintw(4, 1, "%d lignes nécessaires", ymax - y);
-	attroff(A_BLINK | COLOR_PAIR(RCOLOR - ERR_COLOR) - 1);
+	attroff(A_BLINK | (COLOR_PAIR(RCOLOR - ERR_COLOR) - 1));
 }
 
 void			display_resize(t_vm *vm)

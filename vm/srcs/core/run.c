@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 20:26:44 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 14:08:37 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/01 18:31:59 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void			run_vm(t_vm *vm)
 			}
 			//if (((vm->survivor = get_champ_survivor(vm))
 			//	&& vm->cycle_to_die < 0) || !vm->n_procs)
-			if (count_champs_alive(vm) == 1 || vm->n_procs == 0)
+			if ((count_champs_alive(vm) == 1 && vm->cycle_to_die < 0) || vm->n_procs == 0)
 				vm->cycle_to_die = 0;
 			vm->nbr_live = 0;
 			vm->cycle_ctd = 0;
