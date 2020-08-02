@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_join.c                                     :+:      :+:    :+:   */
+/*   ft_strdup2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 17:31:04 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 20:14:46 by myener           ###   ########.fr       */
+/*   Created: 2018/11/13 15:13:22 by myener            #+#    #+#             */
+/*   Updated: 2020/08/02 20:09:59 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_free_join(const char *s1, const char *s2)
+char	*ft_strdup2(const char *str)
 {
-	char *dst;
+	int		i;
+	char	*dest;
 
-	dst = ft_strjoin2(s1, s2);
-	ft_strdel((char **)&s1);
-	return (dst);
+	if (!(dest = malloc(sizeof(*str) * (ft_strlen((char*)str) + 1))))
+		return (0);
+	i = 0;
+	while (str[i])
+	{
+		dest[i] = str[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

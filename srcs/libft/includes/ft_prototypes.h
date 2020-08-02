@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_prototypes.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 20:26:23 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 18:15:39 by tferrieu         ###   ########.fr       */
+/*   Updated: 2020/08/02 20:59:30 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		ht_tabclear(t_hashtab *ht, void (*del)(void *, size_t));
 void		ht_tabdel(t_hashtab **ht, void (*del)(void *, size_t));
 size_t		ht_hash(char *key, size_t size);
 t_hashtab	*ht_new(size_t size);
+int			ft_linelen(char *stock);
 void		ht_del(t_hashtab *ht, char *key, void (*del)(void *, size_t));
 int			ht_add(t_hashtab *ht, char *key, void *data, size_t size);
 void		*ht_get(t_hashtab *ht, char *key);
@@ -54,6 +55,7 @@ void		*ft_memmove(void *dst, const void *src, size_t len);
 void		ft_sortstrtab(char **tab);
 void		ft_sortinttab(int *tab, size_t size);
 int			get_next_line(const int fd, char **line);
+int			get_next_line2(const int fd, char **line);
 void		ft_putstr_fd(char const *s, int fd);
 void		ft_putstr2_fd(char const *s1, char const *s2, int fd);
 void		ft_putstr3_fd(char const *s1, char const *s2,
@@ -219,6 +221,7 @@ char		*ft_strchr(const char *s, int c);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		*ft_stralloc(size_t size);
 char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_strjoin2(char const *s1, char const *s2);
 char		*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char		*ft_strjoin4(char const *s1, char const *s2,
 				char const *s3, char const *s4);
@@ -243,6 +246,7 @@ char		*ft_strjoin3fs(char *s1, char *s2, char *s3, char flag);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_strrmvstr(char *haystack, char *needle);
 char		*ft_strtrim(char const *s);
+char		*ft_strtrim2(char const *s);
 size_t		ft_wrdcnt(const char *s, char c);
 char		*ft_strnew(size_t size);
 char		**ft_split_chars(char const *s, int (*is_separator)(int));
@@ -250,12 +254,15 @@ size_t		ft_strlcat(char *dst, const char *src, size_t size);
 char		*ft_strntrim(char const *s, int n);
 char		*ft_strrev(char *str);
 char		*ft_strdup(const char *s1);
+char		*ft_strdup2(const char *s1);
+char		*ft_strndup2(const char *str, size_t n);
 char		*ft_strrmvfirst(char *s);
 char		*ft_strrealloc(char *str, size_t len);
 char		*ft_strtoupper(char *str);
 int			ft_hasnodupl(char *str);
 void		ft_striter(char *s, void (*f)(char *));
 char		*ft_strsub(char const *s, unsigned int start, size_t len);
+char		*ft_strsub2(char const *s, unsigned int start, size_t len);
 char		*ft_strncpy(char *dst, const char *src, size_t len);
 int			ft_strcmp(const char *s1, const char *s2);
 char		*ft_strjoinf(char *s1, char *s2);

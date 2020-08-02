@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 18:46:00 by tferrieu         ###   ########.fr       */
+/*   Updated: 2020/08/02 20:58:31 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	**get_fc(char *file_name)
 	stock = ft_strnew(1);
 	if ((fd = open(file_name, O_RDONLY)) < 0)
 		return (NULL);
-	while (get_next_line(fd, &line))
+	while (get_next_line2(fd, &line))
 	{
 		tmp = line;
 		stock = ft_free_join(stock, line);
@@ -101,12 +101,12 @@ int			main(int ac, char **av)
 	asm_tools_init(&tools);
 	if (usage_checkup(ac, av))
 		return (usage_output());
-	in_fn = ft_strdup(av[1]);
+	in_fn = ft_strdup2(av[1]);
 	if (!(in_fc = get_fc(in_fn)))
 		return (main_free_helper(in_fn, NULL, in_fc, 1));
 	if (bad_dot_line(in_fc))
 		return (main_free_helper(in_fn, NULL, in_fc, 0));
-	out_fn = ft_strsub(in_fn, 0, ft_strlen(in_fn) - 1);
+	out_fn = ft_strsub2(in_fn, 0, ft_strlen(in_fn) - 1);
 	out_fn = ft_free_join(out_fn, "cor");
 	fd = open(out_fn, O_RDWR | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);

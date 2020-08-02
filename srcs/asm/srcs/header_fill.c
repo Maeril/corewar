@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header_fill.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:47:05 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 18:45:45 by tferrieu         ###   ########.fr       */
+/*   Updated: 2020/08/02 20:15:36 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	fill_name(t_header *header, char **input, t_tools *tools, int i)
 		j++;
 	if ((j - beg) > PROG_NAME_LENGTH)
 		return (0);
-	str = ft_strsub(input[i], beg, j - beg);
+	str = ft_strsub2(input[i], beg, j - beg);
 	ft_strchr(str, '\n') && str ? ft_strdel(&str) : 0;
 	if (!str)
 		return (0);
@@ -60,7 +60,7 @@ static int	fill_com(t_header *header, char **input, t_tools *tools, int i)
 		j++;
 	if ((j - beg) > COMMENT_LENGTH)
 		return (0);
-	str = ft_strsub(input[i], beg, j - beg);
+	str = ft_strsub2(input[i], beg, j - beg);
 	ft_strchr(str, '\n') && str ? ft_strdel(&str) : 0;
 	if (!str)
 		return (0);

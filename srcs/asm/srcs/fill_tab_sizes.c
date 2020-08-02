@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_tab_sizes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/23 01:09:22 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 18:45:52 by tferrieu         ###   ########.fr       */
+/*   Updated: 2020/08/02 20:13:49 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char		*get_called_label(t_line *tab, int i, t_tools *t)
 			while (param[j] && (ft_isalphalow(param[j])
 				|| ft_isdigit(param[j]) || param[j] == '_'))
 				j++;
-			label = ft_strsub(param, start, j - start);
+			label = ft_strsub2(param, start, j - start);
 			param ? free(param) : 0;
 			return (get_called_label_helper(label, tab, t));
 		}

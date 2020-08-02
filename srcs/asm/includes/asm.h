@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 19:02:17 by tferrieu         ###   ########.fr       */
+/*   Updated: 2020/08/02 21:06:42 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int					asm_struct_tab_free(t_line *l, int len, t_header *h, int r);
 void				asm_tools_init(t_tools *tools);
 int					bad_dot_line(char **input);
 void				decimal_to_hex_2scomplement(int fd, int value);
+int					easyfree(char *st);
 int					empty_or_comment_line(char *str);
 int					error_output(void);
 int					fill_tab_input(char **input, t_line *struct_tab,
@@ -85,7 +86,7 @@ int					main_free_helper(char *str1, char *str2, char **tab1,
 int					proofreader(t_line *tab, int len);
 char				*quickclean(char *st, char *tmp);
 int					stock_instruct_clean_free(char *n, int ret);
-char				*string_cleaner(char *str);
+char				*string_cleaner(char *in);
 int					struct_tab_fill(char **input, t_line *struct_tab,
 					t_tools *tools);
 unsigned int		swap_uint32(unsigned int nb);

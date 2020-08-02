@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+         #
+#    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/16 20:26:23 by hben-yah          #+#    #+#              #
-#    Updated: 2020/08/02 18:16:13 by tferrieu         ###   ########.fr        #
+#    Updated: 2020/08/02 21:00:09 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ FILES_C			=   \
 					sort/ft_sortstrtab.c \
 					sort/ft_sortinttab.c \
 					input/get_next_line.c \
+					input/get_next_line2.c \
 					output/ft_putstr_fd.c \
 					output/ft_putstrnbr.c \
 					output/ft_putnbr.c \
@@ -116,6 +117,7 @@ FILES_C			=   \
 					boolean/ft_isalphalow.c \
 					boolean/ft_isalphaup.c \
 					boolean/ft_isblank.c \
+					string/ft_linelen.c \
 					string/ft_strncat.c \
 					string/ft_strnstr.c \
 					string/ft_strmove.c \
@@ -132,6 +134,7 @@ FILES_C			=   \
 					string/ft_striteri.c \
 					string/ft_stralloc.c \
 					string/ft_strjoin.c \
+					string/ft_strjoin2.c \
 					string/ft_strstr.c \
 					string/ft_strrmvlast.c \
 					string/ft_strcat.c \
@@ -149,6 +152,7 @@ FILES_C			=   \
 					string/ft_strmapi.c \
 					string/ft_strrmvstr.c \
 					string/ft_strtrim.c \
+					string/ft_strtrim2.c \
 					string/ft_wrdcnt.c \
 					string/ft_strnew.c \
 					string/ft_split_chars.c \
@@ -156,12 +160,15 @@ FILES_C			=   \
 					string/ft_strntrim.c \
 					string/ft_strrev.c \
 					string/ft_strdup.c \
+					string/ft_strdup2.c \
+					string/ft_strndup2.c \
 					string/ft_strrmvfirst.c \
 					string/ft_strrealloc.c \
 					string/ft_strtoupper.c \
 					string/ft_hasnodupl.c \
 					string/ft_striter.c \
 					string/ft_strsub.c \
+					string/ft_strsub2.c \
 					string/ft_strncpy.c \
 					string/ft_strcmp.c \
 					string/ft_strjoinf.c \

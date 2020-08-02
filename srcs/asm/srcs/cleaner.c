@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaner.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:08:34 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 18:57:50 by tferrieu         ###   ########.fr       */
+/*   Updated: 2020/08/02 21:06:58 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ char	*get_coding_byte_helper(char *byte, char c, int sz)
 	else
 		tmp = ft_free_join(byte, sz == 1 ? "01" : "11");
 	return (tmp);
+}
+
+int		easyfree(char *st)
+{
+	st ? free(st) : 0;
+	return (0);
 }
 
 char	*quickclean(char *st, char *tmp)
@@ -48,14 +54,17 @@ int		lines_to_deduce(char **input)
 	return (nb);
 }
 
-char	*string_cleaner(char *str)
+char	*string_cleaner(char *in)
 {
 	char	*out;
 	char	*tmp;
+	char	*str;
 
 	out = NULL;
 	tmp = NULL;
-	str = ft_strtrim(str);
+	str = NULL;
+	str = ft_strtrim(in);
+	in ? free(in) : 0;
 	if (str[0] == ',')
 		out = ft_strsub(str, 1, ft_strlen(str) - 1);
 	if (str[ft_strlen(str) - 1] == ',')
