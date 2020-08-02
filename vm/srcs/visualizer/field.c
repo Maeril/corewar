@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 16:15:08 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/22 18:15:47 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:45:05 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		display_cell(t_vm *vm, int pc, int color)
+static void	display_cell(t_vm *vm, int pc, int color)
 {
 	wattron(vm->display.wfield, color);
 	mvwprintw(vm->display.wfield,
@@ -22,7 +22,28 @@ static void		display_cell(t_vm *vm, int pc, int color)
 	wattroff(vm->display.wfield, color);
 }
 
-void	display_field(t_vm *vm)
+static int	get_color(t_vm *vm, int pc)
+{
+	int color;
+
+	if (vm->cells[pc].color)
+	{
+		if (vm->cells[pc].live && vm->cells[pc].cycle + 50 > vm->cycle)
+			color = COLOR_PAIR(WCOLOR - vm->cells[pc].color - 1) | A_BOLD;
+		else
+		{
+			color = COLOR_PAIR(vm->cells[pc].color)
+			| (vm->cells[pc].reverse > 0 ? A_REVERSE : 0);
+			if (vm->cells[pc].modified && vm->cells[pc].cycle + 50 > vm->cycle)
+				color |= A_BOLD;
+		}
+	}
+	else
+		color = COLOR_PAIR(20) | A_BOLD;
+	return (color);
+}
+
+void		display_field(t_vm *vm)
 {
 	int		pc;
 	int		color;
@@ -36,20 +57,7 @@ void	display_field(t_vm *vm)
 		while (pc < MEM_SIZE)
 		{
 			pc = pc % MEM_SIZE;
-			if (vm->cells[pc].color)
-			{
-				if (vm->cells[pc].live && vm->cells[pc].cycle + 50 > vm->cycle)
-					color = COLOR_PAIR(WCOLOR - vm->cells[pc].color - 1) | A_BOLD;
-				else
-				{
-					color = COLOR_PAIR(vm->cells[pc].color)
-					| (vm->cells[pc].reverse > 0 ? A_REVERSE : 0);
-					if (vm->cells[pc].modified && vm->cells[pc].cycle + 50 > vm->cycle)
-						color |= A_BOLD;
-				}
-			}
-			else
-				color = COLOR_PAIR(20) | A_BOLD;
+			color = get_color(vm, pc);
 			display_cell(vm, pc, color);
 			++pc;
 		}

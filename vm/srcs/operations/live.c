@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 13:53:49 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:02:41 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		display_live(t_vm *vm, t_proc *p)
+static void	display_live(t_vm *vm, t_proc *p)
 {
 	if (vm->options & VM_OP_C)
 	{
@@ -21,7 +21,7 @@ static void		display_live(t_vm *vm, t_proc *p)
 	}
 }
 
-static void		set_alive(t_vm *vm, int number)
+static void	set_alive(t_vm *vm, int number)
 {
 	t_champ *c;
 
@@ -41,10 +41,10 @@ static void		set_alive(t_vm *vm, int number)
 	}
 }
 
-void			operate_live(t_vm *vm, t_proc *p)
+void		operate_live(t_vm *vm, t_proc *p)
 {
 	t_arg	arg;
-	
+
 	ft_bzero(&arg, sizeof(arg));
 	arg.type = T_DIR;
 	read_arg(vm, p, &arg);

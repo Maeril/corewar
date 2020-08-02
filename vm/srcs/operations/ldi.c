@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 14:56:47 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:03:12 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		put_ldi(t_vm *vm, t_proc *p, t_arg *args)
+static void	put_ldi(t_vm *vm, t_proc *p, t_arg *args)
 {
 	int	add;
 
@@ -35,8 +35,7 @@ static void		put_ldi(t_vm *vm, t_proc *p, t_arg *args)
 		printer(vm, 0, "%d %d r%d\n", args[0].val, args[1].val, args[2].reg);
 		printer(vm, 0, "       | -> load from %d + %d = %d ",
 			args[0].val, args[1].val, add);
-		printer(vm, 0,  "(with pc and mod %d)\n",
-			p->prev_pc + (add % IDX_MOD));
+		printer(vm, 0, "(with pc and mod %d)\n", p->prev_pc + (add % IDX_MOD));
 	}
 }
 

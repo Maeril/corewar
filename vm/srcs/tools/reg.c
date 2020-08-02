@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 14:54:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/15 11:39:47 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:09:21 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ uintmax_t	get_reg_val(t_proc *p, int reg)
 	return (p->regs[reg - 1]);
 }
 
-int		check_regs(t_arg *args)
+int			check_regs(t_arg *args)
 {
 	if (args[0].type == T_REG && (args[0].reg < 1 || args[0].reg > REG_NUMBER))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 07:44:25 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/22 15:52:13 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:55:17 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ void		check_procs(t_vm *vm)
 	}
 }
 
-
-void			exec_operation(t_vm *vm, t_proc *p)
+void		exec_operation(t_vm *vm, t_proc *p)
 {
 	g_op_func_tab[p->op->op_code](vm, p);
 	if (p->op->op_code != 9 || !p->carry)
@@ -68,7 +67,7 @@ void			exec_operation(t_vm *vm, t_proc *p)
 	p->op = NULL;
 }
 
-void			set_next_operation(t_vm *vm, t_proc *p)
+void		set_next_operation(t_vm *vm, t_proc *p)
 {
 	int op_code;
 

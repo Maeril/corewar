@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 11:47:13 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:03:19 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void		put_aff(t_vm *vm, t_proc *p, t_arg arg)
 	{
 		put_op(vm, p);
 		printer(vm, 0, "Le caractère %c a été ajouté !\n", (char)arg.val);
-	//	else
-	//	printer(vm, 0, "aff -> added character : |%c|\n", (char)arg.val);
 	}
 }
 

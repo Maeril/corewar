@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:02:59 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/14 07:13:35 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 11:07:10 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int		parse_champion(t_vm *vm, int number, char *file)
 	champ->id = ++vm->n_champs;
 	champ->number = number;
 	champ->next = vm->champ;
+	champ->alive = 1;
 	vm->champ = champ;
 	return (0);
 }

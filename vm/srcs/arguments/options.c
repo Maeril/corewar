@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:02:54 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/14 17:47:38 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:51:36 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		options_stack(int *options)
+static void	options_stack(int *options)
 {
 	if (*options & VM_OP_C)
 		*options &= ~VM_OP_D | ~VM_OP_S;
@@ -22,7 +22,7 @@ static void		options_stack(int *options)
 		*options |= VM_OP_V;
 }
 
-int	parse_options(int *options, char *arg)
+int			parse_options(int *options, char *arg)
 {
 	int index;
 

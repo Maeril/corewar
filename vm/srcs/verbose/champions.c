@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 06:55:35 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/18 07:12:45 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:07:28 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	put_contestants(t_vm *vm)
 	else
 		printer(vm, 0, "Introducing contestants...\n");
 }
-
 
 void	put_champion(t_vm *vm, t_champ *c)
 {

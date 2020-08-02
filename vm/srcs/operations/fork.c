@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 12:12:14 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:03:54 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		put_fork(t_vm *vm, t_proc *p, t_proc *new, t_arg arg)
+static void	put_fork(t_vm *vm, t_proc *p, t_proc *new, t_arg arg)
 {
 	put_op(vm, p);
 	if (vm->options & VM_OP_UP_V)
