@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 20:26:44 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 18:31:59 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 11:32:17 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static void		reset_to_next_period(t_vm *vm)
 
 void			run_vm(t_vm *vm)
 {
-	while (vm->cycle_to_die > 0)
+	while (1)//vm->cycle_to_die > 0)
 	{
 		check_options(vm);
 		++vm->cycle;
 		put_cycle(vm);
 		exec_procs(vm);
-		if (++vm->cycle_ctd == vm->cycle_to_die)
+		if (++vm->cycle_ctd >= vm->cycle_to_die)
 		{
 			check_procs(vm);		
 			if (++vm->max_checks == MAX_CHECKS || vm->nbr_live >= NBR_LIVE)
@@ -69,10 +69,11 @@ void			run_vm(t_vm *vm)
 				put_ctd_change(vm);
 				reset_to_next_period(vm);
 			}
-			//if (((vm->survivor = get_champ_survivor(vm))
+			//if (((get_champ_survivor(vm))
 			//	&& vm->cycle_to_die < 0) || !vm->n_procs)
-			if ((count_champs_alive(vm) == 1 && vm->cycle_to_die < 0) || vm->n_procs == 0)
-				vm->cycle_to_die = 0;
+			//	vm->cycle_to_die = 0;
+			if (count_champs_alive(vm) == 1 || vm->n_procs == 0)
+				break ;//vm->cycle_to_die = 0;
 			vm->nbr_live = 0;
 			vm->cycle_ctd = 0;
 		}

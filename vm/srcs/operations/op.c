@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 08:02:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 18:23:44 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 11:24:02 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,23 @@ void	(*g_op_func_tab[18])(t_vm *, t_proc *) =
 
 int		check_args_types(t_op *op, t_arg *args)
 {
-	return ((op->args_types[0] & args[0].type) == args[0].type
-		&& (op->args_types[1] & args[1].type) == args[1].type
-		&& (op->args_types[2] & args[2].type) == args[2].type);
+	int i;
+
+	i = 0;
+	while (i < 4)
+	{
+		if (op->args_types[i])
+		{
+			if (!(op->args_types[i] & args[i].type)
+				|| (args[i].type != T_REG && args[i].type != T_IND && args[i].type != T_DIR))
+				return (0);
+		}
+		else
+		{
+			if (args[i].type)
+				return (0);
+		}
+		++i;
+	}
+	return (1);
 }
