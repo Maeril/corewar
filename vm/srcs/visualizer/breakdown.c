@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 19:02:42 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/21 20:07:45 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:29:20 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void			display_current_live_breakdown(t_vm *vm, int *y, int x)
 	int			n;
 
 	total = get_total_lives(vm, 0);
-	mvwprintw(vm->display.winfo, (*y)++, x, "Répartition des Lives pour la période actuelle :");
+	mvwprintw(vm->display.winfo, (*y)++, x,
+		"Répartition des Lives pour la période actuelle :");
 	display_default_breakdown(vm, y, x, !total);
 	c = vm->champ;
 	if (total > 0)
@@ -99,7 +100,8 @@ void			display_last_live_breakdown(t_vm *vm, int *y, int x)
 	int			n;
 
 	total = get_total_lives(vm, 1);
-	mvwprintw(vm->display.winfo, (*y)++, x, "Répartition des Lives pour la période précédente :");
+	mvwprintw(vm->display.winfo, (*y)++, x,
+		"Répartition des Lives pour la période précédente :");
 	display_default_breakdown(vm, y, x, !total);
 	c = vm->champ;
 	if (total > 0)

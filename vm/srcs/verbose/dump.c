@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 21:10:29 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 12:08:47 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:08:27 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static char		*get_term_color(int color)
+static char	*get_term_color(int color)
 {
 	if (color == 1)
 		return (P1_FCOLOR);
@@ -33,9 +33,9 @@ static char		*get_term_color(int color)
 	return ("\033[0m");
 }
 
-static void		footer_players(t_vm *vm)
+static void	footer_players(t_vm *vm)
 {
-	t_champ	*c;
+	t_champ		*c;
 	int			i;
 	const char	*colors[] = { P1_BCOLOR, P2_BCOLOR, P3_BCOLOR,
 		P4_BCOLOR, 0 };
@@ -55,7 +55,7 @@ static void		footer_players(t_vm *vm)
 	printer(vm, 1, "\n");
 }
 
-static void			dump(t_vm *vm)
+static void	dump(t_vm *vm)
 {
 	int		pc;
 	int		width;
@@ -78,7 +78,7 @@ static void			dump(t_vm *vm)
 		footer_players(vm);
 }
 
-void	dump_memory(t_vm *vm)
+void		dump_memory(t_vm *vm)
 {
 	char n;
 

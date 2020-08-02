@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 09:29:17 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 11:24:26 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:05:27 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_arg_type	get_arg_type(unsigned char ocp)
 	return (0);
 }
 
-void	set_args_types(t_arg *args, unsigned char ocp)
+void				set_args_types(t_arg *args, unsigned char ocp)
 {
 	args[0].type = get_arg_type((ocp >> 6) & 0x3);
 	args[1].type = get_arg_type((ocp >> 4) & 0x3);

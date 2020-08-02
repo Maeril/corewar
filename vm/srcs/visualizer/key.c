@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 11:00:57 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/14 17:01:32 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:25:41 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void		handle_space(t_vm *vm)
 		vm->goto_cycle = 0;
 		vm->display.run = PAUSE;
 	}
-	//display_refresh(vm);
 }
 
 static void		handle_at(t_vm *vm)
@@ -51,7 +50,8 @@ static void		handle_at(t_vm *vm)
 	{
 		wattron(vm->display.winfo, COLOR_PAIR(ERR_COLOR));
 		mvwprintw(vm->display.winfo, 8, 2, "ERROR : ");
-		wprintw(vm->display.winfo, "Must be an number bigger than %d", vm->cycle);
+		wprintw(vm->display.winfo, "Must be an number bigger than %d",
+			vm->cycle);
 		wattroff(vm->display.winfo, COLOR_PAIR(ERR_COLOR));
 		c = 0;
 	}
@@ -61,7 +61,6 @@ static void		handle_at(t_vm *vm)
 		vm->display.run = FW;
 	}
 	wattroff(vm->display.winfo, A_BOLD);
-	//display_refresh(vm);
 	vm->goto_cycle = c;
 }
 

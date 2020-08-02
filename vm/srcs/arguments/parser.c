@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:03:13 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/18 06:34:49 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:54:17 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,20 @@ static int	parse_n(t_vm *vm, int *ac, char ***av)
 	return (parse_champion(vm, id, **av));
 }
 
+static int	parse_flags(t_vm *vm, int *ac, char ***av)
+{
+	int ret;
+
+	if (ft_strequ(**av + 1, "d") || ft_strequ(**av + 1, "s")
+		|| ft_strequ(**av + 1, "c"))
+		ret = parse_cycle(vm, ac, av, *(**av + 1));
+	else if (ft_strequ(**av + 1, "n"))
+		ret = parse_n(vm, ac, av);
+	else
+		ret = parse_options(&vm->options, **av);
+	return (ret);
+}
+
 int			parse_arguments(t_vm *vm, int ac, char **av)
 {
 	int ret;
@@ -60,14 +74,7 @@ int			parse_arguments(t_vm *vm, int ac, char **av)
 	while (ac)
 	{
 		if (**av == '-')
-		{
-			if (ft_strequ(*av + 1, "d") || ft_strequ(*av + 1, "s") || ft_strequ(*av + 1, "c"))
-				ret = parse_cycle(vm, &ac, &av, *(*av + 1));
-			else if (ft_strequ(*av + 1, "n"))
-				ret = parse_n(vm, &ac, &av);
-			else
-				ret = parse_options(&vm->options, *av);
-		}
+			ret = parse_flags(vm, &ac, &av);
 		else
 			ret = parse_champion(vm, number--, *av);
 		if (vm->n_champs > MAX_PLAYERS)

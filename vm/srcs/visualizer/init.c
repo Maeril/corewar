@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 14:53:05 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/21 20:18:01 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:24:53 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void	init_boxes(t_display *d)
 
 void	init_windows(t_vm *vm, t_display *d)
 {
-	if (!(d->wfield = newwin(d->field.row, d->field.col, d->field.y, d->field.x)))
+	if (!(d->wfield = newwin(d->field.row, d->field.col,
+								d->field.y, d->field.x)))
 		exit_vm(vm, "init_windows ~> newwin error : d->wfield == NULL", 1);
 	if (!(d->winfo = newwin(d->info.row, d->info.col, d->info.y, d->info.x)))
 		exit_vm(vm, "init_windows ~> newwin error : d->winfo == NULL", 1);
@@ -43,7 +44,7 @@ void	init_windows(t_vm *vm, t_display *d)
 		exit_vm(vm, "init_windows ~> newwin error : d->wleg == NULL", 1);
 	if (!(d->wout = newwin(d->out.row, d->out.col, d->out.y, d->out.x)))
 		exit_vm(vm, "init_windows ~> newwin error : d->wout == NULL", 1);
-    scrollok(d->wout,TRUE);
+	scrollok(d->wout, TRUE);
 }
 
 void	init_visualizer(t_vm *vm)

@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/01 11:46:29 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:59:58 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		put_sti(t_vm *vm, t_proc *p, t_arg *args)
+static void	put_sti(t_vm *vm, t_proc *p, t_arg *args)
 {
 	int	add;
 
@@ -36,15 +36,14 @@ static void		put_sti(t_vm *vm, t_proc *p, t_arg *args)
 		printer(vm, 0, "r%d %d %d\n",
 			args[0].reg, args[1].val, args[2].val);
 		printer(vm, 0, "       | -> store to %d + %d = %d ",
-		args[1].val, args[2].val, add);	
-		printer(vm, 0,  "(with pc and mod %d)\n",
-			p->prev_pc + (add % IDX_MOD));
+		args[1].val, args[2].val, add);
+		printer(vm, 0, "(with pc and mod %d)\n", p->prev_pc + (add % IDX_MOD));
 	}
 }
 
 void		operate_sti(t_vm *vm, t_proc *p)
 {
-	t_arg		args[4];
+	t_arg	args[4];
 
 	ft_bzero(&args, sizeof(args));
 	set_args_types(args, vm->field[move_pc(p, 1)]);
@@ -58,17 +57,7 @@ void		operate_sti(t_vm *vm, t_proc *p)
 	read_val(vm, p, &args[0]);
 	read_val(vm, p, &args[1]);
 	read_val(vm, p, &args[2]);
-	// if (args[1].type != T_REG)
-	// 	args[1].val = args[1].index;
-	// if (args[2].type != T_REG)
-	// 	args[2].val = args[2].index;
 	put_sti(vm, p, args);
-	// args[1].type = T_IND;
-	// args[1].index = args[1].val + args[2].val;
-	// read_val(vm, p, &args[1]);
-	// args[1].reg = args[0].reg;
-	// write_val(vm, p, args[1]);
-
 	args[1].type = T_IND;
 	args[1].index = args[1].val + args[2].val;
 	read_val(vm, p, &args[1]);

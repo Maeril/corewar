@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/07/31 11:47:48 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:58:43 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		put_zjmp(t_vm *vm, t_proc *p, t_arg arg)
+static void	put_zjmp(t_vm *vm, t_proc *p, t_arg arg)
 {
 	put_op(vm, p);
 	if (vm->options & VM_OP_UP_V)
@@ -35,7 +35,7 @@ static void		put_zjmp(t_vm *vm, t_proc *p, t_arg arg)
 void		operate_zjmp(t_vm *vm, t_proc *p)
 {
 	t_arg	arg;
-	
+
 	ft_bzero(&arg, sizeof(arg));
 	arg.type = T_DIR;
 	read_arg(vm, p, &arg);

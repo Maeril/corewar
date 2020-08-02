@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 12:10:07 by hben-yah          #+#    #+#             */
-/*   Updated: 2019/12/08 18:00:05 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:04:43 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static int	check_numbers(t_header *header)
 {
-	unsigned char 	*m1;
+	unsigned char	*m1;
 
 	m1 = (unsigned char*)&header->prog_size;
 	header->prog_size = (m1[0] << 24) + (m1[1] << 16) + (m1[2] << 8) + m1[3];

@@ -6,12 +6,11 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 20:26:44 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 11:32:17 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 14:56:34 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
 
 static void		check_options(t_vm *vm)
 {
@@ -53,7 +52,7 @@ static void		reset_to_next_period(t_vm *vm)
 
 void			run_vm(t_vm *vm)
 {
-	while (1)//vm->cycle_to_die > 0)
+	while (1)
 	{
 		check_options(vm);
 		++vm->cycle;
@@ -61,7 +60,7 @@ void			run_vm(t_vm *vm)
 		exec_procs(vm);
 		if (++vm->cycle_ctd >= vm->cycle_to_die)
 		{
-			check_procs(vm);		
+			check_procs(vm);
 			if (++vm->max_checks == MAX_CHECKS || vm->nbr_live >= NBR_LIVE)
 			{
 				vm->max_checks = 0;
@@ -69,11 +68,8 @@ void			run_vm(t_vm *vm)
 				put_ctd_change(vm);
 				reset_to_next_period(vm);
 			}
-			//if (((get_champ_survivor(vm))
-			//	&& vm->cycle_to_die < 0) || !vm->n_procs)
-			//	vm->cycle_to_die = 0;
 			if (count_champs_alive(vm) == 1 || vm->n_procs == 0)
-				break ;//vm->cycle_to_die = 0;
+				break ;
 			vm->nbr_live = 0;
 			vm->cycle_ctd = 0;
 		}

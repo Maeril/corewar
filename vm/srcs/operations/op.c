@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 08:02:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 11:24:02 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 15:00:25 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	(*g_op_func_tab[18])(t_vm *, t_proc *) =
 	0, &operate_live, &operate_ld, &operate_st, &operate_add, &operate_sub,
 	&operate_and, &operate_or, &operate_xor, &operate_zjmp, &operate_ldi,
 	&operate_sti, &operate_fork, &operate_lld, &operate_lldi, &operate_lfork,
-	&operate_aff, 0 
+	&operate_aff, 0
 };
 
 int		check_args_types(t_op *op, t_arg *args)
@@ -58,7 +58,8 @@ int		check_args_types(t_op *op, t_arg *args)
 		if (op->args_types[i])
 		{
 			if (!(op->args_types[i] & args[i].type)
-				|| (args[i].type != T_REG && args[i].type != T_IND && args[i].type != T_DIR))
+				|| (args[i].type != T_REG && args[i].type
+					!= T_IND && args[i].type != T_DIR))
 				return (0);
 		}
 		else

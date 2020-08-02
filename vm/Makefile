@@ -6,7 +6,7 @@
 #    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/16 20:26:22 by hben-yah          #+#    #+#              #
-#    Updated: 2020/06/18 08:05:11 by hben-yah         ###   ########.fr        #
+#    Updated: 2020/08/02 15:10:12 by hben-yah         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,10 +91,10 @@ FILES_C			=   \
 					visualizer/events.c \
 					visualizer/field.c \
 					visualizer/key.c \
-					visualizer/color.c
+					visualizer/color.c \
+					visualizer/player.c
 FILES_O			=	$(FILES_C:.c=.o)
 FILES_H			=	\
-					prototypes.h \
 					vm.h
 
 #Directories
