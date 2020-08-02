@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/08 20:26:44 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 14:56:34 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/02 16:40:55 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ void			run_vm(t_vm *vm)
 				put_ctd_change(vm);
 				reset_to_next_period(vm);
 			}
-			if (count_champs_alive(vm) == 1 || vm->n_procs == 0)
+			//if (count_champs_alive(vm) == 1 || vm->n_procs == 0)
+			if (vm->n_procs == 0)
 				break ;
 			vm->nbr_live = 0;
 			vm->cycle_ctd = 0;
