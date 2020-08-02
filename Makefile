@@ -3,12 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+         #
+#    By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/20 15:37:51 by hben-yah          #+#    #+#              #
-#    Updated: 2019/11/20 08:04:16 by hben-yah         ###   ########.fr        #
+#    Updated: 2020/08/02 17:06:04 by tferrieu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+LFT_DIR		=	srcs/libft
+ASM_DIR		=	srcs/asm
+VM_DIR		=	srcs/vm
 
 ASM_NAME	=	asm
 VM_NAME		=	corewar
@@ -16,10 +20,6 @@ NAME		=	$(ASM_NAME) $(VM_NAME)
 
 LFT_NAME	=	libft.a
 LFT_FILE	=	$(LFT_DIR)/$(LFT_NAME)
-
-LFT_DIR		=	libft
-ASM_DIR		=	asm
-VM_DIR		=	vm
 
 all			:	clibft casm cvm $(NAME)
 
@@ -32,13 +32,13 @@ clibft		:
 				@make -C $(LFT_DIR)/
 
 casm		:
-				#@make -C $(ASM_DIR)/
+				@make -C $(ASM_DIR)/
 
 cvm			:
 				@make -C $(VM_DIR)/
 
-$(NAME)		: 	$(VM_DIR)/$(VM_NAME) #$(ASM_DIR)/$(ASM_NAME)
-				#@cp $(ASM_DIR)/$(ASM_NAME) $(ASM_NAME)
+$(NAME)		: 	$(VM_DIR)/$(VM_NAME) $(ASM_DIR)/$(ASM_NAME)
+				@cp $(ASM_DIR)/$(ASM_NAME) $(ASM_NAME)
 				@cp $(VM_DIR)/$(VM_NAME) $(VM_NAME)
 
 clean		:

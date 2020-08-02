@@ -13,9 +13,9 @@ then
 	exit 1
 fi
 
-if [ ! -f "asm/asm" ]
+if [ ! -f "asm" ]
 then
-	printf "${RED}Couldn't run script: asm executable not found.${NC}"
+	printf "${RED}Couldn't run script: asm executable not found.${NC}\n"
 	exit 1
 fi
 
@@ -28,7 +28,7 @@ then
 	rm corechecker/asm/header_ref.cor
 fi
 
-export ASM="./asm/asm"
+export ASM="./asm"
 export COREWAR="./corewar"
 export TMP=$(mktemp)
 export REF=$(mktemp)
