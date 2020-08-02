@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:08:34 by myener            #+#    #+#             */
-/*   Updated: 2020/07/01 04:05:49 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/02 18:41:44 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ int		lines_to_deduce(char **input)
 		i++;
 	}
 	return (nb);
+}
+
+char	*quickclean(char *st, char *tmp)
+{
+	st ? free(st) : 0;
+	st = string_cleaner(tmp);
+	tmp ? free(tmp) : 0;
+	return (st);
 }
 
 char	*string_cleaner(char *str)

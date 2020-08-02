@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/08/01 03:36:46 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/02 18:41:51 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int					lines_to_deduce(char **input);
 int					main_free_helper(char *str1, char *str2, char **tab1,
 					int err_out);
 int					proofreader(t_line *tab, int len);
+char				*quickclean(char *st, char *tmp);
 int					stock_instruct_clean_free(char *n, int ret);
 char				*string_cleaner(char *str);
 int					struct_tab_fill(char **input, t_line *struct_tab,
