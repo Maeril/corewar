@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/07 11:24:39 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:58:14 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 */
 
 # define VM_NAME				"Corewar"
-# define HEADER_PATH			"./header"
+# define HEADER_PATH			"./srcs/vm/header"
 
 # define VM_OPTIONS				"havVdsc"
 # define VM_OP_H				1
