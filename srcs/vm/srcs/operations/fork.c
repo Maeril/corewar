@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 15:03:54 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 14:44:36 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	put_fork(t_vm *vm, t_proc *p, t_proc *new, t_arg arg)
 		printer(vm, 0, "\n");
 	}
 	else
-		printer(vm, 0, "%d (%d)\n", arg.val, new->pc);
+		printer(vm, 0, "%d (%d)\n", arg.val, new->prev_pc
+			+ ft_abs((int)arg.val) % IDX_MOD * ((int)arg.val < 0 ? -1 : 1));
 }
 
 void		operate_fork(t_vm *vm, t_proc *p)
