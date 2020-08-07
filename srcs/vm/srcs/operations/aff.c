@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 15:03:19 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 10:33:25 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			operate_aff(t_vm *vm, t_proc *p)
 	if (!check_args_types(p->op, args))
 		return (move_pc_through_args(p, args, p->op));
 	read_arg(vm, p, &args[0]);
-	if (!check_regs(args))
+	if (!check_regs(p->op, args))
 		return ;
 	read_val(vm, p, &args[0]);
 	args[0].val %= 256;

@@ -6,13 +6,13 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 10:59:51 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 15:05:33 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 11:24:20 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void	set_carry(t_proc *p, intmax_t value)
+void	set_carry(t_proc *p, int value)
 {
 	p->carry = !value;
 }

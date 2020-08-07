@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 14:58:59 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 11:23:58 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		operate_xor(t_vm *vm, t_proc *p)
 	read_arg(vm, p, &args[0]);
 	read_arg(vm, p, &args[1]);
 	read_arg(vm, p, &args[2]);
-	if (!check_regs(args))
+	if (!check_regs(p->op, args))
 		return ;
 	read_val(vm, p, &args[0]);
 	read_val(vm, p, &args[1]);

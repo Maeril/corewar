@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 08:02:53 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 15:00:25 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 10:34:47 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,13 @@ int		check_args_types(t_op *op, t_arg *args)
 	int i;
 
 	i = 0;
-	while (i < 4)
+	while (i < 3)
 	{
 		if (op->args_types[i])
 		{
 			if (!(op->args_types[i] & args[i].type)
 				|| (args[i].type != T_REG && args[i].type
 					!= T_IND && args[i].type != T_DIR))
-				return (0);
-		}
-		else
-		{
-			if (args[i].type)
 				return (0);
 		}
 		++i;

@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/10 07:44:25 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 14:55:17 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 11:25:02 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		check_procs(t_vm *vm)
 	while (cur)
 	{
 		next = cur->next;
-		if (!cur->lives)
+		if (!cur->lives || vm->cycle_to_die <= 0)
 			kill_proc(vm, cur);
 		else
 			cur->lives = 0;

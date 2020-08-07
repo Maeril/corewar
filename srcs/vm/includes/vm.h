@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 08:09:19 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 15:13:53 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 11:24:39 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ typedef void			(*t_operation_code)(t_vm *vm, t_proc *ps);
 */
 
 int						read_champions(t_vm *vm);
-void					set_carry(t_proc *p, intmax_t value);
+void					set_carry(t_proc *p, int value);
 void					move_pc_through_args(t_proc *p, t_arg *args, t_op *op);
 int						get_address(t_proc *p, int index);
 int						move_pc(t_proc *p, int i);
@@ -208,7 +208,7 @@ void					read_arg(t_vm *vm, t_proc *p, t_arg *arg);
 void					read_val(t_vm *vm, t_proc *p, t_arg *arg);
 void					set_reg_val(t_proc *p, int reg, uintmax_t val);
 uintmax_t				get_reg_val(t_proc *p, int reg);
-int						check_regs(t_arg *args);
+int						check_regs(t_op *op, t_arg *args);
 void					set_args_types(t_arg *args, unsigned char ocp);
 void					write_field_at(t_vm *vm, int i, intmax_t val,
 															size_t size);

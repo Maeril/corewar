@@ -6,7 +6,7 @@
 /*   By: hben-yah <hben-yah@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:52:45 by hben-yah          #+#    #+#             */
-/*   Updated: 2020/08/02 15:02:16 by hben-yah         ###   ########.fr       */
+/*   Updated: 2020/08/07 10:32:46 by hben-yah         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		operate_lld(t_vm *vm, t_proc *p)
 		return (move_pc_through_args(p, args, p->op));
 	read_arg(vm, p, &args[0]);
 	read_arg(vm, p, &args[1]);
-	if (!check_regs(args))
+	if (!check_regs(p->op, args))
 		return ;
 	read_val(vm, p, &args[0]);
 	args[1].val = args[0].val;
