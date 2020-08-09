@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:40:01 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 21:11:04 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/09 02:20:10 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static int	get_cb(t_line *tab, int i)
 	while (++j < (8 - counter))
 		byte = ft_free_join(byte, "0");
 	tmp = base_converter(byte, BIN, DECI);
-	byte ? free(byte) : 0;
 	ret = ft_atoi(tmp);
 	tmp ? free(tmp) : 0;
+	byte ? free(byte) : 0;
 	return (ret);
 }
 
@@ -91,13 +91,13 @@ static void	write_param(int fd, char *str, int wr_sz)
 	tmp = NULL;
 	if (wr_sz == 1)
 	{
-		tmp = ft_strsub2(str, 1, ft_strlen(str) - 1);
+		tmp = ft_strsub(str, 1, ft_strlen(str) - 1);
 		dec = ft_atoi(tmp);
 		tmp ? free(tmp) : 0;
 	}
 	else
 	{
-		tmp = str[0] == '%' ? ft_strsub2(str, 1, ft_strlen(str) - 1) : NULL;
+		tmp = str[0] == '%' ? ft_strsub(str, 1, ft_strlen(str) - 1) : NULL;
 		dec = str[0] == '%' ? ft_atoi(tmp) : ft_atoi(str);
 		tmp ? free(tmp) : 0;
 	}

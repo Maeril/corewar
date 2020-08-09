@@ -6,7 +6,7 @@
 #    By: myener <myener@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/11 18:16:32 by myener            #+#    #+#              #
-#    Updated: 2020/08/02 20:30:12 by myener           ###   ########.fr        #
+#    Updated: 2020/08/09 02:04:36 by myener           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS_NAME =		cleaner.c			\
 				tools.c				\
 				write_to_file.c		\
 
-FLAGS =	 -ggdb3 -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 OBJS	:=	$(addprefix $(OBJDIR)/,$(SRCS_NAME:.c=.o))
 SRCS	:=	$(addprefix $(SRCDIR)/,$(SRCS_NAME))

@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/22 01:08:34 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 21:06:58 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/09 02:43:22 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,6 @@ char	*get_coding_byte_helper(char *byte, char c, int sz)
 	else
 		tmp = ft_free_join(byte, sz == 1 ? "01" : "11");
 	return (tmp);
-}
-
-int		easyfree(char *st)
-{
-	st ? free(st) : 0;
-	return (0);
-}
-
-char	*quickclean(char *st, char *tmp)
-{
-	st ? free(st) : 0;
-	st = string_cleaner(tmp);
-	tmp ? free(tmp) : 0;
-	return (st);
 }
 
 int		lines_to_deduce(char **input)
@@ -54,17 +40,28 @@ int		lines_to_deduce(char **input)
 	return (nb);
 }
 
-char	*string_cleaner(char *in)
+int		easy_free(char *str, int nb)
+{
+	str ? free(str) : 0;
+	return (nb);
+}
+
+char	*quickclean(char *st, char *tmp)
+{
+	st ? free(st) : 0;
+	st = string_cleaner(tmp);
+	tmp ? free(tmp) : 0;
+	return (st);
+}
+
+char	*string_cleaner(char *str)
 {
 	char	*out;
 	char	*tmp;
-	char	*str;
 
 	out = NULL;
 	tmp = NULL;
-	str = NULL;
-	str = ft_strtrim(in);
-	in ? free(in) : 0;
+	str = ft_strtrim(str);
 	if (str[0] == ',')
 		out = ft_strsub(str, 1, ft_strlen(str) - 1);
 	if (str[ft_strlen(str) - 1] == ',')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_tab_fill.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tferrieu <tferrieu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 16:35:00 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 20:12:50 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/02 18:46:10 by tferrieu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ char		*get_param_that_calls_label(t_line *tab, int i, char *p)
 {
 	if (tab[i].p1 && tab[i].p1_sz > 1 && (tab[i].p1[0] == ':'
 		|| (tab[i].p1[0] == '%' && tab[i].p1[1] && tab[i].p1[1] == ':')))
-		p = ft_strdup2(tab[i].p1);
+		p = ft_strdup(tab[i].p1);
 	else if (tab[i].p2 && tab[i].p2_sz > 1 && (tab[i].p2[0] == ':'
 		|| (tab[i].p2[0] == '%' && tab[i].p2[1] && tab[i].p2[1] == ':')))
-		p = ft_strdup2(tab[i].p2);
+		p = ft_strdup(tab[i].p2);
 	else if (tab[i].p3 && tab[i].p3_sz > 1 && (tab[i].p3[0] == ':'
 		|| (tab[i].p3[0] == '%' && tab[i].p3[1] && tab[i].p3[1] == ':')))
-		p = ft_strdup2(tab[i].p3);
+		p = ft_strdup(tab[i].p3);
 	else
 		return (NULL);
 	return (p);

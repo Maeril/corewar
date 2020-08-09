@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 23:01:01 by myener            #+#    #+#             */
-/*   Updated: 2020/08/02 21:06:42 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/09 02:24:38 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdbool.h>
 # include <limits.h>
 # include "../../libft/includes/libft.h"
-# include "op.h"
+# include "../../shared/op.h"
 
 typedef	struct		s_tools
 {
@@ -61,7 +61,7 @@ int					asm_struct_tab_free(t_line *l, int len, t_header *h, int r);
 void				asm_tools_init(t_tools *tools);
 int					bad_dot_line(char **input);
 void				decimal_to_hex_2scomplement(int fd, int value);
-int					easyfree(char *st);
+int					easy_free(char *str, int nb);
 int					empty_or_comment_line(char *str);
 int					error_output(void);
 int					fill_tab_input(char **input, t_line *struct_tab,
@@ -86,7 +86,7 @@ int					main_free_helper(char *str1, char *str2, char **tab1,
 int					proofreader(t_line *tab, int len);
 char				*quickclean(char *st, char *tmp);
 int					stock_instruct_clean_free(char *n, int ret);
-char				*string_cleaner(char *in);
+char				*string_cleaner(char *str);
 int					struct_tab_fill(char **input, t_line *struct_tab,
 					t_tools *tools);
 unsigned int		swap_uint32(unsigned int nb);
