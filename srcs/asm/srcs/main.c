@@ -6,7 +6,7 @@
 /*   By: myener <myener@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 18:15:35 by myener            #+#    #+#             */
-/*   Updated: 2020/08/05 18:53:39 by myener           ###   ########.fr       */
+/*   Updated: 2020/08/11 21:56:28 by myener           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	**get_fc(char *file_name)
 	if ((fd = open(file_name, O_RDONLY)) < 0)
 		return (NULL);
 	stock = ft_strnew(1);
-	while (get_next_line(fd, &line))
+	while (get_next_line2(fd, &line))
 	{
 		tmp = line;
 		stock = ft_free_join(stock, line);
